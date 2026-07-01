@@ -10,7 +10,7 @@ import { cn } from '../../lib/utils'
 
 // ─── SLIDE DATA ──────────────────────────────────────────────────────────────
 
-type SlideType = 'hero' | 'data' | 'compare' | 'concept' | 'activity' | 'artifact' | 'summary'
+type SlideType = 'hero' | 'data' | 'compare' | 'concept' | 'activity' | 'artifact' | 'summary' | 'fishbone' | 'flowdiagram'
 
 interface Stat { value: string; label: string; color: string }
 interface CompareItem { label: string; before: string; after: string }
@@ -152,9 +152,38 @@ Point out: the right column is not technology. It is a business outcome. The tec
     accentColor: 'from-emerald-500 to-brand-500',
   },
 
-  // ── SLIDE 5: ACTIVITY ──────────────────────────────────────────────────────
+  // ── SLIDE 5: FLOW DIAGRAM ─────────────────────────────────────────────────
   {
     id: 5,
+    type: 'flowdiagram' as SlideType,
+    title: 'Payment Flow Diagram',
+    subtitle: 'How Priya\'s UPI payment travels from her phone to ShopEase\'s bank in 4 seconds',
+    priyaMoment: 'Priya taps Pay ₹12,000. In 4 seconds her money passes through 6 systems before ShopEase gets confirmed. The BA must document every hop — because any one of them can fail.',
+    keyTakeaway: 'Each arrow is a system integration. Each integration needs a requirement. Each requirement needs an acceptance criterion. One missed arrow = one production incident.',
+    speakerNotes: `The payment flow diagram is one of the most valuable artifacts a BA can produce for a payments project.
+
+Walk through each step:
+
+1. Customer App — Priya taps Pay. BA defines: input fields, button state during processing, timeout message.
+
+2. ShopEase Payment Service — creates a payment order, calls the gateway API. BA defines: what data is sent, what happens if this internal service fails before calling the gateway.
+
+3. Payment Gateway (Razorpay/PayU) — routes to NPCI or bank. BA defines: response codes that must be handled, timeout duration, retry strategy.
+
+4. NPCI / Bank — processes UPI or card transaction. BA does not control this — but must document: what if the bank is down? Maximum wait time before auto-cancel.
+
+5. Confirmation Callback — gateway sends success or failure back to ShopEase. BA defines: what does ShopEase do with each code? Create order? Reserve stock? Trigger SMS?
+
+6. Customer Notification — SMS, email, in-app receipt. BA defines: exact content, trigger timing, what happens if notification fails.
+
+Key question: "Which step is most likely to fail in production?" Answer: Step 5 — the callback from gateway to ShopEase. Network issues can cause the callback to be lost — money debited, order not created. The BA must define a reconciliation process for this exact case.`,
+    duration: 5,
+    accentColor: 'from-emerald-500 to-brand-500',
+  },
+
+  // ── SLIDE 6: ACTIVITY ──────────────────────────────────────────────────────
+  {
+    id: 6,
     type: 'activity',
     title: 'Root Cause Analysis — Class Activity',
     subtitle: 'Why doesn\'t ShopEase already have digital payment?',
@@ -186,9 +215,34 @@ Key teaching moment: "Policy must be fixed before Technology. You cannot build a
     accentColor: 'from-amber-500 to-rose-500',
   },
 
-  // ── SLIDE 6: CONCEPT — BRD ────────────────────────────────────────────────
+  // ── SLIDE 6: FISHBONE DIAGRAM ─────────────────────────────────────────────
   {
-    id: 6,
+    id: 7,
+    type: 'fishbone',
+    title: 'Fishbone Diagram — ShopEase Root Causes',
+    subtitle: 'Why ShopEase has been losing ₹64 Crore/month for 18 months',
+    priyaMoment: 'Every branch of this diagram is a reason Priya had to leave ShopEase and buy from Amazon instead.',
+    keyTakeaway: 'Fix order: Policy → Technology → Process → People → Market. You cannot build UPI without PCI-DSS. Policy comes first.',
+    speakerNotes: `Walk through each bone slowly — left to right, top to bottom.
+
+People bone: No one in ShopEase was assigned to own the payments problem. No BA. No product manager. Without ownership, nothing gets prioritised.
+
+Process bone: No formal process existed to evaluate payment gateways. No RFP. No vendor comparison. No requirements document. The decision to "stay with COD" was made by default — not by design.
+
+Technology bone: The platform was built COD-only from day one. No PCI-DSS infrastructure. No tokenisation. Adding UPI now is not a button — it requires rebuilding the payment layer from scratch.
+
+Policy bone: RBI mandates 2FA for all card transactions above ₹5,000. PCI-DSS requires card data encryption. These are not optional. If the BA doesn't document them as constraints, the project will fail compliance at go-live.
+
+Market bone: 80% of online shoppers in India actively use UPI. Flipkart and Amazon both offer 15+ payment methods. High-value buyers (₹10,000+) simply never pay COD — ShopEase is invisible to its most valuable customers.
+
+Key teaching question: "Which bone must be addressed FIRST before any technology is built?" — Policy. PCI-DSS certification takes 4-8 weeks. If the BA misses this, the project delays by 2 months after development is complete.`,
+    duration: 5,
+    accentColor: 'from-rose-500 to-amber-500',
+  },
+
+  // ── SLIDE 7: CONCEPT — BRD ────────────────────────────────────────────────
+  {
+    id: 8,
     type: 'concept',
     title: 'Business Requirements Document (BRD)',
     subtitle: 'The BA\'s contract with the business and the development team',
@@ -218,9 +272,9 @@ Constraints section: emphasise that PCI-DSS is a constraint, not a nice-to-have.
     accentColor: 'from-brand-500 to-emerald-500',
   },
 
-  // ── SLIDE 7: ARTIFACT — USER STORIES ──────────────────────────────────────
+  // ── SLIDE 8: ARTIFACT — USER STORIES ──────────────────────────────────────
   {
-    id: 7,
+    id: 9,
     type: 'artifact',
     title: 'User Stories',
     subtitle: 'Requirements written in the customer\'s voice',
@@ -259,7 +313,7 @@ Finance team story is always surprising to students. They forget that internal u
 
   // ── SLIDE 8: ARTIFACT — ACCEPTANCE CRITERIA ───────────────────────────────
   {
-    id: 8,
+    id: 10,
     type: 'artifact',
     title: 'Acceptance Criteria',
     subtitle: 'The exact conditions that define "done" — testable, unambiguous',
@@ -291,7 +345,7 @@ This is where students start to see the depth of BA work. One user story about U
 
   // ── SLIDE 9: CONCEPT — UAT ────────────────────────────────────────────────
   {
-    id: 9,
+    id: 11,
     type: 'concept',
     title: 'User Acceptance Testing (UAT)',
     subtitle: 'The BA\'s final quality gate before production',
@@ -325,7 +379,7 @@ This is why BA work is not documentation — it is risk management.`,
 
   // ── SLIDE 10: SUMMARY ─────────────────────────────────────────────────────
   {
-    id: 10,
+    id: 12,
     type: 'summary',
     title: 'The Complete BA Journey',
     subtitle: 'From ₹64 Crore problem to production-ready payment portal',
@@ -363,6 +417,8 @@ const SLIDE_ICONS: Record<SlideType, React.ReactNode> = {
   activity: <Users className="w-4 h-4" />,
   artifact: <FileText className="w-4 h-4" />,
   summary: <Award className="w-4 h-4" />,
+  fishbone: <AlertTriangle className="w-4 h-4" />,
+  flowdiagram: <Zap className="w-4 h-4" />,
 }
 
 const SLIDE_TYPE_LABEL: Record<SlideType, string> = {
@@ -373,6 +429,8 @@ const SLIDE_TYPE_LABEL: Record<SlideType, string> = {
   activity: 'Activity',
   artifact: 'BA Artifact',
   summary: 'Summary',
+  fishbone: 'Fishbone Diagram',
+  flowdiagram: 'Flow Diagram',
 }
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
@@ -587,6 +645,8 @@ function SlideCanvas({ slide, accentBg }: { slide: Slide; accentBg: string }) {
   if (slide.type === 'compare') return <CompareSlide slide={slide} accentBg={accentBg} />
   if (slide.type === 'activity') return <ActivitySlide slide={slide} accentBg={accentBg} />
   if (slide.type === 'summary') return <SummarySlide slide={slide} accentBg={accentBg} />
+  if (slide.type === 'fishbone') return <FishboneSlide slide={slide} accentBg={accentBg} />
+  if (slide.type === 'flowdiagram') return <FlowDiagramSlide slide={slide} accentBg={accentBg} />
   return <ConceptSlide slide={slide} accentBg={accentBg} />
 }
 
@@ -825,6 +885,239 @@ function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
           ))}
         </motion.div>
       )}
+
+      {slide.keyTakeaway && <Callout text={slide.keyTakeaway} color={slide.accentColor} />}
+    </div>
+  )
+}
+
+// ─── FISHBONE SLIDE ───────────────────────────────────────────────────────────
+const FISHBONE_CATS = [
+  {
+    label: 'People', color: '#8b5cf6', isTop: true, jx: 185,
+    causes: ['No BA assigned', 'Leadership unaware', 'No payments team'],
+  },
+  {
+    label: 'Process', color: '#ef4444', isTop: false, jx: 300,
+    causes: ['No vendor evaluation', 'Manual COD settlement', 'No RFP process'],
+  },
+  {
+    label: 'Technology', color: '#0d8fe6', isTop: true, jx: 430,
+    causes: ['No payment gateway', 'No PCI-DSS infra', 'COD-only platform'],
+  },
+  {
+    label: 'Policy', color: '#f59e0b', isTop: false, jx: 555,
+    causes: ['No RBI compliance', 'No refund policy', 'No MDR negotiated'],
+  },
+  {
+    label: 'Market', color: '#10b981', isTop: true, jx: 670,
+    causes: ['Competitors: 15+ methods', 'UPI: 80% penetration', 'High-value avoid COD'],
+  },
+]
+
+function FishboneSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
+  const SY = 220   // spine y
+  const BONE_H = 90 // vertical reach of each main bone
+
+  return (
+    <div className="min-h-full flex flex-col p-6 lg:p-8">
+      <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${slide.accentColor}`} />
+      <SlideHeader slide={slide} accentBg={accentBg} />
+
+      {slide.priyaMoment && <PriyaBox text={slide.priyaMoment} />}
+
+      {/* SVG Fishbone */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2 }}
+        className="bg-gray-900 border border-gray-800 rounded-2xl p-4 mb-5 overflow-x-auto"
+      >
+        <svg viewBox="0 0 860 380" className="w-full" style={{ minWidth: 600 }}>
+          {/* ── SPINE ── */}
+          <line x1="80" y1={SY} x2="780" y2={SY} stroke="#4b5563" strokeWidth="3" />
+          {/* Arrow head */}
+          <polygon points="780,213 800,220 780,227" fill="#4b5563" />
+
+          {/* ── PROBLEM BOX ── */}
+          <rect x="800" y={SY - 52} width="55" height="104" rx="8" fill="#1f2937" stroke="#ef4444" strokeWidth="2" />
+          <text x="827" y={SY - 14} textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">ShopEase</text>
+          <text x="827" y={SY - 2} textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">losing</text>
+          <text x="827" y={SY + 10} textAnchor="middle" fill="#ef4444" fontSize="10" fontWeight="bold">₹64 Cr</text>
+          <text x="827" y={SY + 22} textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">/month</text>
+          <text x="827" y={SY + 36} textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">No Digital</text>
+          <text x="827" y={SY + 48} textAnchor="middle" fill="#fca5a5" fontSize="8" fontWeight="bold">Payment</text>
+
+          {/* ── BONES ── */}
+          {FISHBONE_CATS.map((cat, ci) => {
+            const boneEndY = cat.isTop ? SY - BONE_H : SY + BONE_H
+            const labelY = cat.isTop ? boneEndY - 28 : boneEndY + 14
+            const dx = cat.isTop ? -35 : -35
+
+            return (
+              <motion.g
+                key={cat.label}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 + ci * 0.12 }}
+              >
+                {/* Main bone */}
+                <line
+                  x1={cat.jx} y1={SY}
+                  x2={cat.jx + dx} y2={boneEndY}
+                  stroke={cat.color} strokeWidth="2.5"
+                />
+
+                {/* Category label box */}
+                <rect
+                  x={cat.jx + dx - 44} y={cat.isTop ? boneEndY - 52 : boneEndY + 2}
+                  width="88" height="44" rx="6"
+                  fill={`${cat.color}22`} stroke={cat.color} strokeWidth="1.5"
+                />
+                <text
+                  x={cat.jx + dx - 0} y={cat.isTop ? boneEndY - 32 : boneEndY + 24}
+                  textAnchor="middle" fill={cat.color} fontSize="11" fontWeight="bold"
+                >{cat.label}</text>
+
+                {/* Sub-causes */}
+                {cat.causes.map((cause, i) => {
+                  // interpolate along the main bone for sub-junction
+                  const t = (i + 1) / (cat.causes.length + 1)
+                  const subJx = cat.jx + (cat.jx + dx - cat.jx) * t
+                  const subJy = SY + (boneEndY - SY) * t
+                  const subEndX = subJx + (cat.isTop ? -50 : -50)
+                  const subEndY = subJy + (cat.isTop ? -28 : 28)
+
+                  return (
+                    <g key={i}>
+                      <line
+                        x1={subJx} y1={subJy}
+                        x2={subEndX} y2={subEndY}
+                        stroke={cat.color} strokeWidth="1.2" strokeOpacity="0.6"
+                      />
+                      <text
+                        x={subEndX - 2} y={cat.isTop ? subEndY - 4 : subEndY + 10}
+                        textAnchor="end" fill="#d1d5db" fontSize="8.5"
+                      >{cause}</text>
+                    </g>
+                  )
+                })}
+              </motion.g>
+            )
+          })}
+
+          {/* BA label on spine */}
+          <text x="130" y={SY - 10} fill="#6b7280" fontSize="9">← Start Root Cause Investigation</text>
+        </svg>
+      </motion.div>
+
+      {slide.keyTakeaway && <Callout text={slide.keyTakeaway} color={slide.accentColor} />}
+    </div>
+  )
+}
+
+// ─── FLOW DIAGRAM SLIDE ───────────────────────────────────────────────────────
+const FLOW_STEPS = [
+  { icon: '📱', label: 'Customer App', sub: 'Priya taps Pay ₹12,000', color: '#8b5cf6', desc: 'Input validation\nButton state\nTimeout message' },
+  { icon: '⚙️', label: 'ShopEase\nPayment Service', sub: 'Creates payment order', color: '#0d8fe6', desc: 'Order ID created\nGateway API called\nFailure fallback' },
+  { icon: '🔗', label: 'Payment\nGateway', sub: 'Razorpay / PayU', color: '#10b981', desc: 'Routes to bank/NPCI\nResponse codes\nTimeout handling' },
+  { icon: '🏦', label: 'NPCI / Bank', sub: 'Processes UPI/Card', color: '#f59e0b', desc: 'Auth & debit\nApprove or decline\nSends response' },
+  { icon: '📨', label: 'Confirmation\nCallback', sub: 'Gateway → ShopEase', color: '#ef4444', desc: 'Success/Fail code\nOrder created\nStock reserved', highlight: true },
+  { icon: '✅', label: 'Customer\nNotification', sub: 'SMS + Email + App', color: '#10b981', desc: 'Receipt generated\nOrder confirmed\nDelivery ETA' },
+]
+
+function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
+  return (
+    <div className="min-h-full flex flex-col p-6 lg:p-8">
+      <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${slide.accentColor}`} />
+      <SlideHeader slide={slide} accentBg={accentBg} />
+
+      {slide.priyaMoment && <PriyaBox text={slide.priyaMoment} />}
+
+      {/* Flow boxes */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+        className="mb-5"
+      >
+        {/* Top row: steps */}
+        <div className="flex items-start gap-0 overflow-x-auto pb-2">
+          {FLOW_STEPS.map((step, i) => (
+            <div key={i} className="flex items-center flex-shrink-0">
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 + i * 0.1 }}
+                className={`flex flex-col items-center w-32 ${step.highlight ? 'relative' : ''}`}
+              >
+                {step.highlight && (
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-rose-500 text-white text-[9px] font-bold whitespace-nowrap">
+                    ⚠️ Most Failure-Prone
+                  </div>
+                )}
+                {/* Icon box */}
+                <div
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-2 border-2"
+                  style={{ backgroundColor: `${step.color}18`, borderColor: `${step.color}50` }}
+                >
+                  {step.icon}
+                </div>
+                {/* Label */}
+                <p className="text-xs font-bold text-white text-center leading-tight whitespace-pre-line mb-1">{step.label}</p>
+                <p className="text-[9px] text-gray-500 text-center leading-tight">{step.sub}</p>
+                {/* BA requirements hint */}
+                <div className="mt-2 w-full bg-gray-900 border border-gray-800 rounded-lg p-2">
+                  <p className="text-[8px] text-gray-400 leading-relaxed whitespace-pre-line">{step.desc}</p>
+                </div>
+              </motion.div>
+
+              {/* Arrow */}
+              {i < FLOW_STEPS.length - 1 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="flex flex-col items-center mx-1 flex-shrink-0"
+                >
+                  <ChevronRight className="w-5 h-5 text-gray-600 mt-5" />
+                  <p className="text-[8px] text-gray-600 mt-1 text-center">
+                    {i === 0 ? 'API call' : i === 1 ? 'Route' : i === 2 ? 'Auth' : i === 3 ? 'Callback' : 'Trigger'}
+                  </p>
+                </motion.div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Timeline bar */}
+        <div className="mt-4 flex items-center gap-2">
+          <p className="text-xs text-gray-500 flex-shrink-0">0 sec</p>
+          <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              transition={{ delay: 0.8, duration: 1.2 }}
+              className="h-full bg-gradient-to-r from-emerald-500 to-brand-500 rounded-full"
+            />
+          </div>
+          <p className="text-xs text-emerald-400 flex-shrink-0 font-bold">~4 seconds ✓</p>
+        </div>
+      </motion.div>
+
+      {/* Reconciliation warning */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.9 }}
+        className="bg-rose-950/40 border border-rose-700/50 rounded-xl px-5 py-3.5 mb-4 flex items-start gap-3"
+      >
+        <span className="text-xl flex-shrink-0">⚡</span>
+        <div>
+          <p className="text-xs font-bold text-rose-400 mb-1">BA Critical Requirement — Payment-Order Mismatch</p>
+          <p className="text-rose-200 text-sm">If Step 5 callback is lost (network failure), Priya's bank is debited but ShopEase has no order. The BA must define: auto-reconciliation within 60 seconds + auto-refund if order cannot be created + customer notification with reference ID.</p>
+        </div>
+      </motion.div>
 
       {slide.keyTakeaway && <Callout text={slide.keyTakeaway} color={slide.accentColor} />}
     </div>
