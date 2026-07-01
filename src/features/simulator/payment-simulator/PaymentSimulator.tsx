@@ -85,7 +85,7 @@ export function PaymentSimulator({ onNext }: Props) {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* ─── LEFT: CHECKOUT MOCK UI ─────────────────────────── */}
         <div className="xl:col-span-2">
           <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-premium overflow-hidden">
@@ -104,7 +104,7 @@ export function PaymentSimulator({ onNext }: Props) {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col lg:flex-row">
               {/* Payment methods panel */}
               <div className="flex-1 p-6">
                 <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
@@ -112,7 +112,7 @@ export function PaymentSimulator({ onNext }: Props) {
                 </p>
 
                 {/* Method tabs */}
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mb-6">
+                <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 mb-6">
                   {PAYMENT_METHODS.map(method => (
                     <button
                       key={method.id}
@@ -163,7 +163,7 @@ export function PaymentSimulator({ onNext }: Props) {
               </div>
 
               {/* Order summary sidebar */}
-              <div className="w-full md:w-60 bg-gray-50 dark:bg-gray-800/50 border-t md:border-t-0 md:border-l border-gray-100 dark:border-gray-800 p-5 flex-shrink-0">
+              <div className="w-full lg:w-60 bg-gray-50 dark:bg-gray-800/50 border-t lg:border-t-0 lg:border-l border-gray-100 dark:border-gray-800 p-5 flex-shrink-0">
                 <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Order Summary</p>
                 <div className="space-y-3 mb-4">
                   {ORDER.items.map((item, i) => (
