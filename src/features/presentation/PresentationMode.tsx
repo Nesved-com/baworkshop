@@ -1017,107 +1017,266 @@ function FishboneSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
 }
 
 // ─── FLOW DIAGRAM SLIDE ───────────────────────────────────────────────────────
-const FLOW_STEPS = [
-  { icon: '📱', label: 'Customer App', sub: 'Priya taps Pay ₹12,000', color: '#8b5cf6', desc: 'Input validation\nButton state\nTimeout message' },
-  { icon: '⚙️', label: 'ShopEase\nPayment Service', sub: 'Creates payment order', color: '#0d8fe6', desc: 'Order ID created\nGateway API called\nFailure fallback' },
-  { icon: '🔗', label: 'Payment\nGateway', sub: 'Razorpay / PayU', color: '#10b981', desc: 'Routes to bank/NPCI\nResponse codes\nTimeout handling' },
-  { icon: '🏦', label: 'NPCI / Bank', sub: 'Processes UPI/Card', color: '#f59e0b', desc: 'Auth & debit\nApprove or decline\nSends response' },
-  { icon: '📨', label: 'Confirmation\nCallback', sub: 'Gateway → ShopEase', color: '#ef4444', desc: 'Success/Fail code\nOrder created\nStock reserved', highlight: true },
-  { icon: '✅', label: 'Customer\nNotification', sub: 'SMS + Email + App', color: '#10b981', desc: 'Receipt generated\nOrder confirmed\nDelivery ETA' },
+// phase model: 0=idle, odd=step active, even=connector traveling, 12=done
+// phase 1=s0, 2=c0, 3=s1, 4=c1, 5=s2, 6=c2, 7=s3, 8=c3, 9=s4, 10=c4, 11=s5, 12=done
+const SIM_STEPS = [
+  { icon: '📱', label: 'Customer App',       sub: 'Priya taps Pay', color: '#8b5cf6',
+    reqs: 'UPI ID validation\nButton state UI\nTimeout message' },
+  { icon: '⚙️', label: 'ShopEase\nService',  sub: 'Creates order',  color: '#3b82f6',
+    reqs: 'Order ID creation\nGateway API call\nDuplicate check' },
+  { icon: '🔗', label: 'Payment\nGateway',   sub: 'Razorpay routes', color: '#10b981',
+    reqs: 'Method routing\nTimeout: 30 sec\nResponse codes' },
+  { icon: '🏦', label: 'NPCI / Bank',        sub: 'Auth & debit',   color: '#f59e0b',
+    reqs: 'PIN verification\nInsufficient funds\nBank downtime' },
+  { icon: '📨', label: 'Callback',           sub: 'Gateway→ShopEase', color: '#ef4444',
+    reqs: 'Success/Fail code\nOrder confirmation\nStock reservation', critical: true },
+  { icon: '✅', label: 'Notification',        sub: 'SMS + Receipt',  color: '#10b981',
+    reqs: 'SMS template\nReceipt PDF\nRetry if fails' },
 ]
 
+// ms to stay on each phase before auto-advancing
+const PHASE_MS =      [0, 700, 380, 550, 320, 900, 480, 1400, 650, 900, 400, 1000, 0]
+const PHASE_MS_FAIL = [0, 700, 380, 550, 320, 900, 480, 1400, 650, 2800, 400, 1000, 0]
+
+const SIM_MSGS = [
+  'Validating UPI ID: priya@hdfc · Amount: ₹12,000 · Merchant: ShopEase',
+  'Order #SHE-29471 created · Calling Razorpay API...',
+  'Transaction TXN-892341 routed to NPCI UPI network...',
+  'HDFC Bank: UPI PIN verified ✓ · Debiting ₹12,000 from Priya\'s account...',
+  'SUCCESS callback received · ShopEase confirms order · Stock reserved',
+  '📩 SMS: "Your order #SHE-29471 is confirmed! Delivery in 3 days."',
+]
+const FAIL_MSG = '⚠️ TIMEOUT — Callback not received · Reconciliation triggered · Checking TXN-892341...'
+
 function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
+  const [phase, setPhase] = useState(0)
+  const [failed, setFailed] = useState(false)
+  const timings = failed ? PHASE_MS_FAIL : PHASE_MS
+
+  // Auto-advance through phases
+  useEffect(() => {
+    if (phase === 0 || phase >= 12) return
+    const t = setTimeout(() => setPhase(p => p + 1), timings[phase])
+    return () => clearTimeout(t)
+  }, [phase, timings])
+
+  const start = (withFail = false) => { setFailed(withFail); setPhase(1) }
+  const reset = () => setPhase(0)
+
+  const isIdle = phase === 0
+  const isDone = phase >= 12
+
+  // helpers
+  const stepActive  = (i: number) => phase === 2 * i + 1
+  const stepDone    = (i: number) => phase > 2 * i + 1
+  const connActive  = (i: number) => phase === 2 * i + 2
+  const connDone    = (i: number) => phase > 2 * i + 2
+
+  // current status msg
+  const currentStepIdx = phase > 0 ? Math.floor((phase - 1) / 2) : -1
+  const isStepPhase    = phase > 0 && phase % 2 === 1
+  const statusMsg = isStepPhase
+    ? (failed && currentStepIdx === 4 ? FAIL_MSG : SIM_MSGS[currentStepIdx] ?? '')
+    : ''
+
+  // elapsed ms
+  const elapsed = timings.slice(1, Math.max(phase, 1)).reduce((a, b) => a + b, 0)
+
   return (
-    <div className="min-h-full flex flex-col p-6 lg:p-8">
+    <div className="min-h-full flex flex-col p-6 lg:p-8 relative">
       <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${slide.accentColor}`} />
       <SlideHeader slide={slide} accentBg={accentBg} />
 
       {slide.priyaMoment && <PriyaBox text={slide.priyaMoment} />}
 
-      {/* Flow boxes */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="mb-5"
-      >
-        {/* Top row: steps */}
-        <div className="flex items-start gap-0 overflow-x-auto pb-2">
-          {FLOW_STEPS.map((step, i) => (
-            <div key={i} className="flex items-center flex-shrink-0">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 + i * 0.1 }}
-                className={`flex flex-col items-center w-32 ${step.highlight ? 'relative' : ''}`}
-              >
-                {step.highlight && (
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-rose-500 text-white text-[9px] font-bold whitespace-nowrap">
-                    ⚠️ Most Failure-Prone
+      {/* ── Control bar ── */}
+      <div className="flex flex-wrap items-center gap-2.5 mb-4">
+        {isIdle ? (
+          <>
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              onClick={() => start(false)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg">
+              <Play className="w-4 h-4" /> Simulate Payment
+            </motion.button>
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              onClick={() => start(true)}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-900/60 hover:bg-rose-800/80 border border-rose-700/50 text-rose-300 text-sm font-bold">
+              ⚡ Simulate Callback Failure
+            </motion.button>
+          </>
+        ) : (
+          <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+            onClick={reset}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm font-semibold">
+            <RotateCcw className="w-4 h-4" /> Reset
+          </motion.button>
+        )}
+
+        {/* Live timer */}
+        {!isIdle && (
+          <div className="flex items-center gap-1.5 ml-auto">
+            <motion.div
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ repeat: isDone ? 0 : Infinity, duration: 0.7 }}
+              className={`w-2 h-2 rounded-full ${isDone ? 'bg-emerald-500' : failed && phase >= 9 ? 'bg-rose-500' : 'bg-amber-400'}`}
+            />
+            <span className="text-sm font-mono text-gray-300">{(elapsed / 1000).toFixed(1)}s</span>
+            <span className="text-xs text-gray-600">/ ~4.0s</span>
+          </div>
+        )}
+      </div>
+
+      {/* ── Flow diagram ── */}
+      <div className="bg-gray-900/70 border border-gray-800 rounded-2xl p-5 mb-4">
+
+        {/* Steps + connectors row */}
+        <div className="flex items-start justify-between overflow-x-auto pb-1 gap-0">
+          {SIM_STEPS.map((step, i) => {
+            const active   = stepActive(i)
+            const done     = stepDone(i)
+            const isFail   = failed && i === 4
+            const dotColor = isFail && (active || done) ? '#ef4444' : step.color
+
+            return (
+              <div key={i} className="flex items-start flex-shrink-0">
+
+                {/* ── Step box ── */}
+                <motion.div
+                  animate={{ scale: active ? [1, 1.07, 1.04] : 1, opacity: isIdle ? 0.4 : done || active ? 1 : 0.3 }}
+                  transition={{ scale: { duration: 0.35 } }}
+                  className="flex flex-col items-center w-[96px]"
+                >
+                  {/* Icon circle with glow */}
+                  <motion.div
+                    animate={{
+                      boxShadow: active
+                        ? [`0 0 0px ${dotColor}00`, `0 0 22px ${dotColor}90`, `0 0 14px ${dotColor}60`]
+                        : '0 0 0px transparent',
+                    }}
+                    transition={{ duration: 0.55, repeat: active ? Infinity : 0, repeatType: 'reverse' }}
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-2 border-2 transition-all duration-300"
+                    style={{
+                      backgroundColor: (active || done) ? `${dotColor}22` : '#0f172a',
+                      borderColor: done ? '#10b981' : active ? dotColor : '#1f2937',
+                    }}
+                  >
+                    {isFail && active ? '❌' : done && i < 5 ? '✅' : step.icon}
+                  </motion.div>
+
+                  {/* Name */}
+                  <p className="text-[10px] font-bold text-center whitespace-pre-line leading-tight mb-0.5 transition-colors duration-300"
+                    style={{ color: active ? dotColor : done ? '#10b981' : '#6b7280' }}>
+                    {step.label}
+                  </p>
+                  <p className="text-[8px] text-gray-600 text-center leading-tight">{step.sub}</p>
+
+                  {/* BA requirement hints — light up when step is active */}
+                  <div className="mt-2 w-full rounded-lg border px-2 py-1.5 transition-all duration-300"
+                    style={{
+                      borderColor: active ? `${dotColor}50` : '#1f2937',
+                      backgroundColor: active ? `${dotColor}12` : '#0f172a',
+                    }}>
+                    <p className="text-[7.5px] leading-relaxed whitespace-pre-line transition-colors duration-300"
+                      style={{ color: active ? '#d1d5db' : '#374151' }}>
+                      {step.reqs}
+                    </p>
+                    {step.critical && (
+                      <span className="inline-block mt-1 px-1 py-0.5 bg-rose-900/50 border border-rose-700/50 rounded text-[7px] text-rose-400 font-bold">
+                        ⚠️ FAILURE POINT
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+
+                {/* ── Connector + traveling dot ── */}
+                {i < SIM_STEPS.length - 1 && (
+                  <div className="relative flex flex-col items-center mt-7 mx-0.5 flex-shrink-0" style={{ width: 28 }}>
+                    {/* Static line */}
+                    <div className="w-full h-0.5 rounded-full transition-colors duration-300"
+                      style={{ backgroundColor: connDone(i) ? '#10b981' : '#1f2937' }} />
+
+                    {/* Traveling comet dot */}
+                    <AnimatePresence>
+                      {connActive(i) && (
+                        <motion.div
+                          key={`c${i}-${phase}`}
+                          className="absolute top-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+                          style={{
+                            width: 22, height: 7,
+                            background: `linear-gradient(90deg, transparent, ${SIM_STEPS[i + 1].color}70, white)`,
+                            filter: 'blur(0.5px)',
+                          }}
+                          initial={{ x: -22 }}
+                          animate={{ x: 30 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: timings[phase] / 1000 * 0.88, ease: 'linear' }}
+                        />
+                      )}
+                    </AnimatePresence>
                   </div>
                 )}
-                {/* Icon box */}
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-2 border-2"
-                  style={{ backgroundColor: `${step.color}18`, borderColor: `${step.color}50` }}
-                >
-                  {step.icon}
-                </div>
-                {/* Label */}
-                <p className="text-xs font-bold text-white text-center leading-tight whitespace-pre-line mb-1">{step.label}</p>
-                <p className="text-[9px] text-gray-500 text-center leading-tight">{step.sub}</p>
-                {/* BA requirements hint */}
-                <div className="mt-2 w-full bg-gray-900 border border-gray-800 rounded-lg p-2">
-                  <p className="text-[8px] text-gray-400 leading-relaxed whitespace-pre-line">{step.desc}</p>
-                </div>
-              </motion.div>
+              </div>
+            )
+          })}
+        </div>
 
-              {/* Arrow */}
-              {i < FLOW_STEPS.length - 1 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className="flex flex-col items-center mx-1 flex-shrink-0"
-                >
-                  <ChevronRight className="w-5 h-5 text-gray-600 mt-5" />
-                  <p className="text-[8px] text-gray-600 mt-1 text-center">
-                    {i === 0 ? 'API call' : i === 1 ? 'Route' : i === 2 ? 'Auth' : i === 3 ? 'Callback' : 'Trigger'}
-                  </p>
-                </motion.div>
+        {/* Progress bar */}
+        <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
+          <motion.div
+            animate={{ width: `${Math.min((phase / 12) * 100, 100)}%` }}
+            className={`h-full rounded-full transition-colors duration-300 ${failed && phase >= 9 ? 'bg-rose-500' : 'bg-gradient-to-r from-emerald-500 to-brand-500'}`}
+          />
+        </div>
+
+        {/* Live status message */}
+        <AnimatePresence mode="wait">
+          {statusMsg && (
+            <motion.div
+              key={statusMsg}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.2 }}
+              className={`mt-3 rounded-xl px-4 py-2.5 text-sm font-mono border ${
+                failed && phase >= 9 && phase < 11
+                  ? 'bg-rose-950/60 border-rose-700/50 text-rose-300'
+                  : 'bg-gray-800/60 border-gray-700/40 text-emerald-300'
+              }`}
+            >
+              <span className="text-gray-600 mr-2 text-xs select-none">›</span>
+              {statusMsg}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* ── Result card (shown when done) ── */}
+      <AnimatePresence>
+        {isDone && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`rounded-xl px-5 py-3.5 mb-4 flex items-start gap-3 border ${
+              failed ? 'bg-rose-950/40 border-rose-700/50' : 'bg-emerald-950/40 border-emerald-700/50'
+            }`}
+          >
+            <span className="text-xl flex-shrink-0">{failed ? '⚡' : '🎉'}</span>
+            <div>
+              {failed ? (
+                <>
+                  <p className="text-xs font-bold text-rose-400 mb-1">BA Critical Requirement — Payment-Order Mismatch</p>
+                  <p className="text-rose-200 text-sm">Priya's bank debited ₹12,000 but ShopEase has no order. The BA must define: auto-reconciliation within 60s → if unresolved, trigger auto-refund → send Priya a reference ID via SMS. This is the most common production failure in payment systems.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs font-bold text-emerald-400 mb-1">Payment completed in ~{(elapsed / 1000).toFixed(1)} seconds ✓</p>
+                  <p className="text-emerald-200 text-sm">Priya's ₹12,000 debited · ShopEase has a confirmed order · SMS delivered. All 6 system hops worked. The BA documented the requirements for every single hop — that's what made this possible.</p>
+                </>
               )}
             </div>
-          ))}
-        </div>
-
-        {/* Timeline bar */}
-        <div className="mt-4 flex items-center gap-2">
-          <p className="text-xs text-gray-500 flex-shrink-0">0 sec</p>
-          <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: '100%' }}
-              transition={{ delay: 0.8, duration: 1.2 }}
-              className="h-full bg-gradient-to-r from-emerald-500 to-brand-500 rounded-full"
-            />
-          </div>
-          <p className="text-xs text-emerald-400 flex-shrink-0 font-bold">~4 seconds ✓</p>
-        </div>
-      </motion.div>
-
-      {/* Reconciliation warning */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.9 }}
-        className="bg-rose-950/40 border border-rose-700/50 rounded-xl px-5 py-3.5 mb-4 flex items-start gap-3"
-      >
-        <span className="text-xl flex-shrink-0">⚡</span>
-        <div>
-          <p className="text-xs font-bold text-rose-400 mb-1">BA Critical Requirement — Payment-Order Mismatch</p>
-          <p className="text-rose-200 text-sm">If Step 5 callback is lost (network failure), Priya's bank is debited but ShopEase has no order. The BA must define: auto-reconciliation within 60 seconds + auto-refund if order cannot be created + customer notification with reference ID.</p>
-        </div>
-      </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {slide.keyTakeaway && <Callout text={slide.keyTakeaway} color={slide.accentColor} />}
     </div>
