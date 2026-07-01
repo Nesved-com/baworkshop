@@ -1051,20 +1051,28 @@ const FAIL_MSG = '⚠️ TIMEOUT — Callback not received · Reconciliation tri
 function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
   const [phase, setPhase] = useState(0)
   const [failed, setFailed] = useState(false)
-  const timings = failed ? PHASE_MS_FAIL : PHASE_MS
+  // Connector animation auto-plays (fast), then waits for instructor tap
+  const CONN_MS = 520  // comet travel duration ms
 
-  // Auto-advance through phases
+  // When on an even (connector) phase, auto-advance after CONN_MS then wait on the step
   useEffect(() => {
-    if (phase === 0 || phase >= 12) return
-    const t = setTimeout(() => setPhase(p => p + 1), timings[phase])
+    if (phase === 0 || phase % 2 === 1 || phase >= 12) return
+    const t = setTimeout(() => setPhase(p => p + 1), CONN_MS)
     return () => clearTimeout(t)
-  }, [phase, timings])
+  }, [phase])
 
   const start = (withFail = false) => { setFailed(withFail); setPhase(1) }
   const reset = () => setPhase(0)
 
-  const isIdle = phase === 0
-  const isDone = phase >= 12
+  // Instructor taps this to advance: triggers connector animation then pauses at next step
+  const nextStep = () => {
+    if (phase >= 12 || phase % 2 === 0) return   // ignore tap during connector travel
+    setPhase(p => p + 1)
+  }
+
+  const isIdle    = phase === 0
+  const isDone    = phase >= 12
+  const isTraveling = phase > 0 && phase % 2 === 0  // connector animating
 
   // helpers
   const stepActive  = (i: number) => phase === 2 * i + 1
@@ -1072,15 +1080,15 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
   const connActive  = (i: number) => phase === 2 * i + 2
   const connDone    = (i: number) => phase > 2 * i + 2
 
-  // current status msg
+  // current status msg — shown while paused on a step (odd phase)
   const currentStepIdx = phase > 0 ? Math.floor((phase - 1) / 2) : -1
   const isStepPhase    = phase > 0 && phase % 2 === 1
   const statusMsg = isStepPhase
     ? (failed && currentStepIdx === 4 ? FAIL_MSG : SIM_MSGS[currentStepIdx] ?? '')
     : ''
 
-  // elapsed ms
-  const elapsed = timings.slice(1, Math.max(phase, 1)).reduce((a, b) => a + b, 0)
+  const currentStepName = isStepPhase ? SIM_STEPS[currentStepIdx]?.label.replace('\n', ' ') : ''
+  const stepsCompleted  = Math.max(0, Math.floor((phase - 1) / 2))
 
   return (
     <div className="min-h-full flex flex-col p-6 lg:p-8 relative">
@@ -1096,32 +1104,58 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={() => start(false)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg">
-              <Play className="w-4 h-4" /> Simulate Payment
+              <Play className="w-4 h-4" /> Start (tap to advance)
             </motion.button>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={() => start(true)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-900/60 hover:bg-rose-800/80 border border-rose-700/50 text-rose-300 text-sm font-bold">
-              ⚡ Simulate Callback Failure
+              ⚡ Failure Scenario
             </motion.button>
           </>
         ) : (
-          <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
-            onClick={reset}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm font-semibold">
-            <RotateCcw className="w-4 h-4" /> Reset
-          </motion.button>
-        )}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {/* Main tap button */}
+            {!isDone && (
+              <motion.button
+                whileHover={{ scale: isTraveling ? 1 : 1.04 }}
+                whileTap={{ scale: isTraveling ? 1 : 0.95 }}
+                onClick={nextStep}
+                disabled={isTraveling}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-all ${
+                  isTraveling
+                    ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                    : failed && currentStepIdx === 4
+                    ? 'bg-rose-600 hover:bg-rose-500 text-white'
+                    : 'bg-brand-600 hover:bg-brand-500 text-white'
+                }`}
+              >
+                {isTraveling ? (
+                  <>
+                    <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 0.5 }}>→</motion.span>
+                    Sending...
+                  </>
+                ) : isDone ? null : (
+                  <>
+                    <ChevronRight className="w-4 h-4" />
+                    {currentStepIdx < SIM_STEPS.length - 1 ? `Next: ${SIM_STEPS[currentStepIdx + 1]?.label.replace('\n', ' ')}` : 'Complete'}
+                  </>
+                )}
+              </motion.button>
+            )}
 
-        {/* Live timer */}
-        {!isIdle && (
-          <div className="flex items-center gap-1.5 ml-auto">
-            <motion.div
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: isDone ? 0 : Infinity, duration: 0.7 }}
-              className={`w-2 h-2 rounded-full ${isDone ? 'bg-emerald-500' : failed && phase >= 9 ? 'bg-rose-500' : 'bg-amber-400'}`}
-            />
-            <span className="text-sm font-mono text-gray-300">{(elapsed / 1000).toFixed(1)}s</span>
-            <span className="text-xs text-gray-600">/ ~4.0s</span>
+            {/* Step counter */}
+            {!isDone && (
+              <span className="text-xs text-gray-500 font-mono">
+                Step {Math.min(currentStepIdx + 1, 6)} / 6 — <span className="text-gray-300">{currentStepName}</span>
+              </span>
+            )}
+
+            {/* Reset always visible */}
+            <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
+              onClick={reset}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-400 text-xs font-semibold ml-auto">
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
+            </motion.button>
           </div>
         )}
       </div>
@@ -1209,7 +1243,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                           initial={{ x: -22 }}
                           animate={{ x: 30 }}
                           exit={{ opacity: 0 }}
-                          transition={{ duration: timings[phase] / 1000 * 0.88, ease: 'linear' }}
+                          transition={{ duration: CONN_MS / 1000 * 0.9, ease: 'linear' }}
                         />
                       )}
                     </AnimatePresence>
@@ -1223,7 +1257,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
         {/* Progress bar */}
         <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
           <motion.div
-            animate={{ width: `${Math.min((phase / 12) * 100, 100)}%` }}
+            animate={{ width: `${Math.min((stepsCompleted / 6) * 100, 100)}%` }}
             className={`h-full rounded-full transition-colors duration-300 ${failed && phase >= 9 ? 'bg-rose-500' : 'bg-gradient-to-r from-emerald-500 to-brand-500'}`}
           />
         </div>
@@ -1269,7 +1303,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                 </>
               ) : (
                 <>
-                  <p className="text-xs font-bold text-emerald-400 mb-1">Payment completed in ~{(elapsed / 1000).toFixed(1)} seconds ✓</p>
+                  <p className="text-xs font-bold text-emerald-400 mb-1">Payment completed — all 6 steps passed ✓</p>
                   <p className="text-emerald-200 text-sm">Priya's ₹12,000 debited · ShopEase has a confirmed order · SMS delivered. All 6 system hops worked. The BA documented the requirements for every single hop — that's what made this possible.</p>
                 </>
               )}
