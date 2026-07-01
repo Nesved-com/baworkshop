@@ -46,7 +46,7 @@ const NAV_ITEMS: { id: SimulatorSection; label: string; icon: React.ReactNode; g
 
 const GROUPS = ['Start', 'Investigation', 'Analysis', 'Artifacts', 'Assessment']
 
-export function SimulatorLayout() {
+export function SimulatorLayout({ isFullscreen = false }: { isFullscreen?: boolean }) {
   const [section, setSection] = useState<SimulatorSection>('dashboard')
   const [started, setStarted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -68,7 +68,7 @@ export function SimulatorLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-950 pt-14">
+    <div className={`flex h-screen bg-gray-50 dark:bg-gray-950 ${isFullscreen ? '' : 'pt-14'}`}>
       <AnimatePresence>
         {sidebarOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -79,7 +79,7 @@ export function SimulatorLayout() {
 
       {/* Sidebar */}
       <aside className={cn(
-        'fixed left-0 top-14 bottom-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col transition-transform duration-300 md:translate-x-0',
+        `fixed left-0 bottom-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col transition-transform duration-300 md:translate-x-0 ${isFullscreen ? 'top-0' : 'top-14'}`,
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
       )}>
         <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-800">
