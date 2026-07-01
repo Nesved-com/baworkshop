@@ -9,6 +9,7 @@ const SECTION_WEIGHTS: Record<SimulatorSection, number> = {
   'pain-points': 8,
   'root-cause': 8,
   'to-be-process': 8,
+  'payment-simulator': 10,
   'brd': 12,
   'user-stories': 12,
   'acceptance-criteria': 10,

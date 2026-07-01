@@ -165,6 +165,11 @@ const GRAPHICS: Record<SimulatorSection, { title: string; nodes: string[]; accen
     nodes: ['Eligibility Early', 'Compare EMI', 'Safe Retry', 'Clear Status'],
     accent: 'from-emerald-500 to-brand-500',
   },
+  'payment-simulator': {
+    title: 'Payment Portal Live',
+    nodes: ['UPI', 'Card / EMI', 'Wallet / BNPL', 'Net Banking'],
+    accent: 'from-violet-500 to-brand-500',
+  },
   brd: {
     title: 'From Discussion to Document',
     nodes: ['Problem', 'Scope', 'Rules', 'Success Metrics'],
