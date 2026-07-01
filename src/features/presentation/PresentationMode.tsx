@@ -640,7 +640,7 @@ function HeroSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="max-w-2xl bg-amber-50 border border-amber-300 rounded-2xl p-6 mb-8 text-left">
           <p className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-2">📖 Real Customer Story</p>
-          <p className="text-amber-100 text-lg leading-relaxed italic">"{slide.priyaMoment}"</p>
+          <p className="text-amber-900 text-lg leading-relaxed italic">"{slide.priyaMoment}"</p>
         </motion.div>
       )}
 
@@ -767,7 +767,7 @@ function ConceptSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
           className="bg-amber-50 border border-amber-300 rounded-2xl p-5 mb-5">
           <p className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-2">✏️ Class Activity · {slide.activity.time}</p>
-          <p className="text-amber-100 text-sm mb-3 font-medium">{slide.activity.task}</p>
+          <p className="text-amber-900 text-sm mb-3 font-medium">{slide.activity.task}</p>
           <div className="flex flex-wrap gap-2">
             {slide.activity.steps.map((s, i) => (
               <span key={i} className="px-3 py-1.5 rounded-lg bg-amber-100 border border-amber-300 text-amber-900 text-xs">{s.step}</span>
@@ -800,18 +800,18 @@ function ActivitySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
             </div>
             <div>
               <p className="font-bold text-amber-800 text-lg">{slide.activity.title}</p>
-              <p className="text-amber-500 text-xs">⏱ {slide.activity.time} — Groups of 3</p>
+              <p className="text-amber-700 text-xs">⏱ {slide.activity.time} — Groups of 3</p>
             </div>
           </div>
-          <p className="text-amber-100 text-base leading-relaxed mb-5 font-medium">{slide.activity.task}</p>
+          <p className="text-amber-900 text-base leading-relaxed mb-5 font-medium">{slide.activity.task}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {slide.activity.steps.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 + i * 0.1 }}
                 className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
                 <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
                 <div>
-                  <p className="text-amber-100 text-sm font-medium">{s.step}</p>
-                  <p className="text-amber-500 text-xs">{s.time}</p>
+                  <p className="text-amber-900 text-sm font-medium">{s.step}</p>
+                  <p className="text-amber-700 text-xs">{s.time}</p>
                 </div>
               </motion.div>
             ))}
@@ -1311,7 +1311,7 @@ function PriyaBox({ text }: { text: string }) {
       <span className="text-xl flex-shrink-0 mt-0.5">👩‍💼</span>
       <div>
         <p className="text-xs font-bold text-amber-700 mb-1">Priya's Moment</p>
-        <p className="text-amber-100 text-sm leading-relaxed">{text}</p>
+        <p className="text-amber-900 text-sm leading-relaxed">{text}</p>
       </div>
     </motion.div>
   )
