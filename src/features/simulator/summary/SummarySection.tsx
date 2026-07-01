@@ -296,6 +296,289 @@ function generateCanvasBlob(name: string): Promise<Blob> {
   })
 }
 
+// ── BA Toolkit data ────────────────────────────────────────────────────────
+
+const BA_TOOLS = [
+  {
+    name: 'Jira',
+    category: 'Story Tracking',
+    desc: 'User stories, sprints & backlog management',
+    url: 'https://www.atlassian.com/software/jira',
+    bg: '#0052CC',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#0052CC"/>
+        {/* Jira diamond bolt */}
+        <path d="M20 7 L27 16 L20 20 L27 29 M20 7 L13 16 L20 20" stroke="#2684FF" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M20 7 L27 16 L20 20 L27 29" stroke="#DEEBFF" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M20 7 L13 16 L20 20 L13 29" stroke="#4C9AFF" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="6" fontWeight="700" fontFamily="Arial">Jira</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Confluence',
+    category: 'BRD / Docs',
+    desc: 'BRD, meeting notes & requirement wikis',
+    url: 'https://www.atlassian.com/software/confluence',
+    bg: '#0052CC',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#0065FF"/>
+        {/* Confluence wave shape */}
+        <path d="M8 26 Q12 18 20 20 Q28 22 32 14" stroke="#4C9AFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+        <path d="M8 20 Q12 12 20 14 Q28 16 32 8" stroke="#DEEBFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="4.5" fontWeight="700" fontFamily="Arial">Confluence</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Figma',
+    category: 'Wireframing',
+    desc: 'UI mockups, prototypes & screen flows',
+    url: 'https://www.figma.com',
+    bg: '#1E1E1E',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#1E1E1E"/>
+        {/* Figma logo — 3 circles + rectangles */}
+        <rect x="14" y="7" width="8" height="8" rx="4" fill="#F24E1E"/>
+        <rect x="22" y="7" width="8" height="8" rx="4" fill="#FF7262"/>
+        <rect x="14" y="15" width="8" height="8" rx="4" fill="#A259FF"/>
+        <circle cx="26" cy="19" r="4" fill="#1ABCFE"/>
+        <rect x="14" y="23" width="8" height="8" rx="4" fill="#0ACF83"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="6" fontWeight="700" fontFamily="Arial">Figma</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Lucidchart',
+    category: 'Process Diagrams',
+    desc: 'As-Is / To-Be process flow diagrams',
+    url: 'https://www.lucidchart.com',
+    bg: '#F75D00',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#F75D00"/>
+        {/* Lucidchart — simplified L + chart */}
+        <rect x="10" y="9" width="4" height="16" rx="2" fill="white"/>
+        <rect x="10" y="22" width="14" height="4" rx="2" fill="white"/>
+        <rect x="22" y="14" width="4" height="12" rx="2" fill="white" opacity="0.7"/>
+        <rect x="28" y="9" width="4" height="17" rx="2" fill="white" opacity="0.5"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="4" fontWeight="700" fontFamily="Arial">Lucidchart</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Miro',
+    category: 'Brainstorming',
+    desc: 'Stakeholder maps, mind maps & workshops',
+    url: 'https://miro.com',
+    bg: '#FFD02F',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#FFD02F"/>
+        {/* Miro M shape */}
+        <path d="M9 28 L9 12 L15 22 L20 15 L25 22 L31 12 L31 28" stroke="#1a1a1a" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <text x="20" y="37" textAnchor="middle" fill="#1a1a1a" fontSize="6" fontWeight="800" fontFamily="Arial">Miro</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Microsoft Excel',
+    category: 'Data Analysis',
+    desc: 'KPI tracking, data analysis & reporting',
+    url: 'https://www.microsoft.com/en-in/microsoft-365/excel',
+    bg: '#217346',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#217346"/>
+        {/* Excel X */}
+        <text x="20" y="24" textAnchor="middle" fill="white" fontSize="20" fontWeight="900" fontFamily="Arial, sans-serif">X</text>
+        <text x="20" y="37" textAnchor="middle" fill="#A9D18E" fontSize="5" fontWeight="700" fontFamily="Arial">Excel</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Power BI',
+    category: 'Reporting',
+    desc: 'Executive dashboards & KPI reports',
+    url: 'https://powerbi.microsoft.com',
+    bg: '#F2C811',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#F2C811"/>
+        {/* Power BI bar chart */}
+        <rect x="9"  y="22" width="6" height="8"  rx="1.5" fill="#1a1a1a"/>
+        <rect x="17" y="15" width="6" height="15" rx="1.5" fill="#1a1a1a" opacity="0.8"/>
+        <rect x="25" y="10" width="6" height="20" rx="1.5" fill="#1a1a1a" opacity="0.7"/>
+        <text x="20" y="37" textAnchor="middle" fill="#1a1a1a" fontSize="5" fontWeight="800" fontFamily="Arial">Power BI</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Postman',
+    category: 'API Testing',
+    desc: 'Test & document payment API flows',
+    url: 'https://www.postman.com',
+    bg: '#FF6C37',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#FF6C37"/>
+        {/* Postman — astronaut-like P */}
+        <circle cx="20" cy="18" r="9" fill="none" stroke="white" strokeWidth="2.5"/>
+        <circle cx="20" cy="18" r="5" fill="white" opacity="0.3"/>
+        <path d="M20 9 Q26 12 26 18 Q26 24 20 27" stroke="white" strokeWidth="1.5" fill="none"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="5" fontWeight="700" fontFamily="Arial">Postman</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Slack',
+    category: 'Communication',
+    desc: 'Stakeholder communication & BA channels',
+    url: 'https://slack.com',
+    bg: '#4A154B',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#4A154B"/>
+        {/* Slack # hashtag */}
+        <line x1="14" y1="11" x2="12" y2="25" stroke="#E01E5A" strokeWidth="3" strokeLinecap="round"/>
+        <line x1="20" y1="11" x2="18" y2="25" stroke="#36C5F0" strokeWidth="3" strokeLinecap="round"/>
+        <line x1="10" y1="16" x2="24" y2="16" stroke="#2EB67D" strokeWidth="3" strokeLinecap="round"/>
+        <line x1="9" y1="21" x2="23" y2="21" stroke="#ECB22E" strokeWidth="3" strokeLinecap="round"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="6" fontWeight="700" fontFamily="Arial">Slack</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Notion',
+    category: 'Documentation',
+    desc: 'Requirements docs, trackers & templates',
+    url: 'https://www.notion.so',
+    bg: '#191919',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#191919"/>
+        {/* Notion N */}
+        <path d="M11 28 L11 12 L23 25 L23 12" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+        <line x1="11" y1="12" x2="19" y2="12" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+        <line x1="23" y1="12" x2="29" y2="12" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.5"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="5.5" fontWeight="700" fontFamily="Arial">Notion</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'Azure DevOps',
+    category: 'ALM / Agile',
+    desc: 'End-to-end BA lifecycle & release tracking',
+    url: 'https://azure.microsoft.com/en-in/products/devops',
+    bg: '#0078D4',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#0078D4"/>
+        {/* Azure DevOps infinity-like swoosh */}
+        <path d="M8 20 Q10 10 20 14 Q30 18 32 10" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+        <path d="M32 20 Q30 30 20 26 Q10 22 8 30" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.7"/>
+        <text x="20" y="37" textAnchor="middle" fill="white" fontSize="4" fontWeight="700" fontFamily="Arial">Azure DevOps</text>
+      </svg>
+    ),
+  },
+  {
+    name: 'draw.io',
+    category: 'Flow Diagrams',
+    desc: 'Free diagramming — process & swimlane flows',
+    url: 'https://www.drawio.com',
+    bg: '#F08705',
+    logo: (
+      <svg viewBox="0 0 40 40" fill="none">
+        <rect width="40" height="40" rx="8" fill="#F08705"/>
+        {/* draw.io — simple flow diagram */}
+        <rect x="6"  y="10" width="12" height="8" rx="2" fill="white" opacity="0.9"/>
+        <rect x="22" y="10" width="12" height="8" rx="2" fill="white" opacity="0.9"/>
+        <rect x="14" y="24" width="12" height="8" rx="2" fill="white" opacity="0.9"/>
+        <line x1="12" y1="18" x2="20" y2="24" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="28" y1="18" x2="20" y2="24" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <text x="20" y="39" textAnchor="middle" fill="white" fontSize="5.5" fontWeight="700" fontFamily="Arial">draw.io</text>
+      </svg>
+    ),
+  },
+]
+
+const CATEGORY_COLORS: Record<string, string> = {
+  'Story Tracking': 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300',
+  'BRD / Docs': 'bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300',
+  'Wireframing': 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300',
+  'Process Diagrams': 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+  'Flow Diagrams': 'bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300',
+  'Brainstorming': 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300',
+  'Data Analysis': 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300',
+  'Reporting': 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
+  'API Testing': 'bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300',
+  'Communication': 'bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300',
+  'Documentation': 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
+  'ALM / Agile': 'bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300',
+}
+
+function BAToolkit() {
+  return (
+    <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl p-6 shadow-card">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xl">🛠️</span>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white">BA Toolkit</h2>
+            <span className="px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 text-xs font-bold">12 tools</span>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            These are the tools real Business Analysts use every day — across the full BA lifecycle.
+          </p>
+        </div>
+      </div>
+
+      {/* Tool grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {BA_TOOLS.map((tool, i) => (
+          <motion.a
+            key={tool.name}
+            href={tool.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: i * 0.05 }}
+            whileHover={{ y: -3, scale: 1.02 }}
+            className="group flex flex-col items-center text-center p-4 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-md transition-all cursor-pointer bg-gray-50 dark:bg-gray-800/50"
+          >
+            {/* Logo */}
+            <div className="w-11 h-11 rounded-xl overflow-hidden mb-3 shadow-sm flex-shrink-0">
+              {tool.logo}
+            </div>
+            {/* Name */}
+            <p className="text-sm font-bold text-gray-900 dark:text-white leading-tight mb-1">{tool.name}</p>
+            {/* Category pill */}
+            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full mb-2 ${CATEGORY_COLORS[tool.category] ?? 'bg-gray-100 text-gray-600'}`}>
+              {tool.category}
+            </span>
+            {/* Desc */}
+            <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug">{tool.desc}</p>
+            {/* Link indicator */}
+            <span className="mt-2 text-[10px] text-brand-500 dark:text-brand-400 font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              Visit website →
+            </span>
+          </motion.a>
+        ))}
+      </div>
+
+      {/* Footer note */}
+      <p className="text-xs text-gray-400 dark:text-gray-600 text-center mt-5">
+        Click any tool to visit its official website. Most offer free tiers for students.
+      </p>
+    </div>
+  )
+}
+
 export function SummarySection() {
   const [visibleSteps, setVisibleSteps] = useState(0)
   const [showCelebration, setShowCelebration] = useState(false)
@@ -651,6 +934,20 @@ export function SummarySection() {
             ))}
           </div>
         </div>
+
+        {/* ── BA Toolkit ── */}
+        <AnimatePresence>
+          {showCelebration && (
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mb-10"
+            >
+              <BAToolkit />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Celebration card */}
         <AnimatePresence>
