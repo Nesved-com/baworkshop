@@ -1002,18 +1002,120 @@ function FishboneSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
 // ─── FLOW DIAGRAM SLIDE ───────────────────────────────────────────────────────
 // phase model: 0=idle, odd=step active, even=connector traveling, 12=done
 // phase 1=s0, 2=c0, 3=s1, 4=c1, 5=s2, 6=c2, 7=s3, 8=c3, 9=s4, 10=c4, 11=s5, 12=done
+// ── Brand logos ──────────────────────────────────────────────────────────────
+
+// Priya's phone — UPI / Google Pay style
+const LogoCustomer = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#4f46e5"/>
+    {/* Phone outline */}
+    <rect x="15" y="8" width="18" height="28" rx="3" stroke="white" strokeWidth="2" fill="none"/>
+    <rect x="20" y="32" width="8" height="2" rx="1" fill="white"/>
+    {/* UPI color stripes */}
+    <rect x="19" y="16" width="3" height="9" rx="1" fill="#F97316"/>
+    <rect x="23" y="16" width="3" height="9" rx="1" fill="white"/>
+    <rect x="27" y="16" width="3" height="9" rx="1" fill="#22C55E"/>
+    {/* UPI text */}
+    <text x="24" y="44" textAnchor="middle" fill="white" fontSize="5" fontWeight="800" fontFamily="Arial">UPI Pay</text>
+  </svg>
+)
+
+// ShopEase — Flipkart exact theme (blue + yellow bag)
+const LogoShopEase = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#2874F0"/>
+    {/* Shopping bag */}
+    <path d="M16 20h16l-2 14H18L16 20z" fill="#FFE11A"/>
+    <path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="#FFE11A" strokeWidth="2" fill="none" strokeLinecap="round"/>
+    {/* Handle dot */}
+    <circle cx="24" cy="27" r="1.5" fill="#2874F0"/>
+    {/* Brand text */}
+    <text x="24" y="44" textAnchor="middle" fill="#FFE11A" fontSize="5.5" fontWeight="900" fontFamily="Arial, sans-serif">ShopEase</text>
+  </svg>
+)
+
+// Razorpay — dark navy + electric bolt
+const LogoRazorpay = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#071437"/>
+    {/* Razorpay bolt — their signature shape */}
+    <polygon points="27,8 17,26 23,26 20,40 31,21 25,21" fill="#3395FF"/>
+    <text x="24" y="46" textAnchor="middle" fill="#3395FF" fontSize="5" fontWeight="700" fontFamily="Arial">razorpay</text>
+  </svg>
+)
+
+// NPCI — their blue/green official palette
+const LogoNPCI = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1"/>
+    {/* Wheel / arc motif inspired by NPCI logo */}
+    <circle cx="24" cy="20" r="10" stroke="#003087" strokeWidth="2" fill="none"/>
+    <circle cx="24" cy="20" r="6"  stroke="#009B77" strokeWidth="1.5" fill="none"/>
+    <circle cx="24" cy="20" r="2.5" fill="#003087"/>
+    {/* Spokes */}
+    <line x1="24" y1="10" x2="24" y2="14" stroke="#003087" strokeWidth="1.5"/>
+    <line x1="24" y1="26" x2="24" y2="30" stroke="#003087" strokeWidth="1.5"/>
+    <line x1="14" y1="20" x2="18" y2="20" stroke="#003087" strokeWidth="1.5"/>
+    <line x1="30" y1="20" x2="34" y2="20" stroke="#003087" strokeWidth="1.5"/>
+    <text x="24" y="38" textAnchor="middle" fill="#003087" fontSize="6.5" fontWeight="900" fontFamily="Arial">NPCI</text>
+    <text x="24" y="45" textAnchor="middle" fill="#009B77" fontSize="4" fontFamily="Arial">UPI Network</text>
+  </svg>
+)
+
+// HDFC Bank — maroon/red + dark blue (their official palette)
+const LogoHDFC = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#004B8D"/>
+    {/* Red stripe — HDFC signature */}
+    <rect x="0" y="34" width="48" height="8" rx="0" fill="#C81818"/>
+    <rect x="0" y="40" width="48" height="8" rx="0" fill="#C81818"/>
+    {/* HDFC text */}
+    <text x="24" y="25" textAnchor="middle" fill="white" fontSize="10" fontWeight="900" fontFamily="Arial, sans-serif" letterSpacing="1">HDFC</text>
+    <text x="24" y="34" textAnchor="middle" fill="#9FC9F7" fontSize="4.5" fontFamily="Arial">Bank</text>
+    <text x="24" y="45" textAnchor="middle" fill="white" fontSize="4" fontFamily="Arial">Auth &amp; Debit</text>
+  </svg>
+)
+
+// Callback — gateway returning to ShopEase
+const LogoCallback = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#dc2626"/>
+    {/* Return arrow */}
+    <path d="M32 16 C32 12 20 12 14 18 L14 14" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    <path d="M14 18 L10 14 M14 18 L18 14" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* Webhook / callback symbol */}
+    <rect x="12" y="24" width="24" height="14" rx="3" fill="none" stroke="white" strokeWidth="1.8"/>
+    <text x="24" y="34" textAnchor="middle" fill="white" fontSize="6" fontWeight="700" fontFamily="monospace">200 OK</text>
+    <text x="24" y="45" textAnchor="middle" fill="white" fontSize="4" fontFamily="Arial">Webhook Callback</text>
+  </svg>
+)
+
+// Notification — SMS + app receipt
+const LogoNotification = (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="12" fill="#059669"/>
+    {/* Checkmark */}
+    <circle cx="24" cy="20" r="9" fill="none" stroke="white" strokeWidth="2"/>
+    <path d="M18 20 L22 24 L30 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* SMS lines */}
+    <rect x="11" y="33" width="26" height="2" rx="1" fill="white" opacity="0.7"/>
+    <rect x="14" y="37" width="20" height="2" rx="1" fill="white" opacity="0.5"/>
+    <text x="24" y="46" textAnchor="middle" fill="white" fontSize="4" fontFamily="Arial">SMS + Receipt</text>
+  </svg>
+)
+
 const SIM_STEPS = [
-  { icon: '📱', label: 'Customer App',       sub: 'Priya taps Pay', color: '#8b5cf6',
+  { logo: LogoCustomer,     label: 'Customer App',       sub: 'Priya taps Pay', color: '#4f46e5',
     reqs: 'UPI ID validation\nButton state UI\nTimeout message' },
-  { icon: '⚙️', label: 'ShopEase\nService',  sub: 'Creates order',  color: '#3b82f6',
+  { logo: LogoShopEase,     label: 'ShopEase\nService',  sub: 'Creates order',  color: '#2874F0',
     reqs: 'Order ID creation\nGateway API call\nDuplicate check' },
-  { icon: '🔗', label: 'Payment\nGateway',   sub: 'Razorpay routes', color: '#10b981',
+  { logo: LogoRazorpay,     label: 'Payment\nGateway',   sub: 'Razorpay',       color: '#3395FF',
     reqs: 'Method routing\nTimeout: 30 sec\nResponse codes' },
-  { icon: '🏦', label: 'NPCI / Bank',        sub: 'Auth & debit',   color: '#f59e0b',
+  { logo: LogoNPCI,         label: 'NPCI / HDFC',        sub: 'Auth & debit',   color: '#003087',
     reqs: 'PIN verification\nInsufficient funds\nBank downtime' },
-  { icon: '📨', label: 'Callback',           sub: 'Gateway→ShopEase', color: '#ef4444',
+  { logo: LogoCallback,     label: 'Callback',           sub: 'Gateway→ShopEase', color: '#dc2626',
     reqs: 'Success/Fail code\nOrder confirmation\nStock reservation', critical: true },
-  { icon: '✅', label: 'Notification',        sub: 'SMS + Receipt',  color: '#10b981',
+  { logo: LogoNotification, label: 'Notification',        sub: 'SMS + Receipt',  color: '#059669',
     reqs: 'SMS template\nReceipt PDF\nRetry if fails' },
 ]
 
@@ -1171,13 +1273,18 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                         : '0 0 0px transparent',
                     }}
                     transition={{ duration: 0.55, repeat: active ? Infinity : 0, repeatType: 'reverse' }}
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-2 border-2 transition-all duration-300"
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-2 border-2 transition-all duration-300 overflow-hidden"
                     style={{
-                      backgroundColor: (active || done) ? `${dotColor}22` : '#f8fafc',
+                      backgroundColor: (active || done) ? `${dotColor}15` : '#f8fafc',
                       borderColor: done ? '#10b981' : active ? dotColor : '#e2e8f0',
+                      padding: isFail && active ? '0' : done && i < 5 ? '0' : '3px',
                     }}
                   >
-                    {isFail && active ? '❌' : done && i < 5 ? '✅' : step.icon}
+                    {isFail && active
+                      ? <span className="text-2xl">❌</span>
+                      : done && i < 5
+                        ? <span className="text-2xl">✅</span>
+                        : step.logo}
                   </motion.div>
 
                   {/* Name */}
