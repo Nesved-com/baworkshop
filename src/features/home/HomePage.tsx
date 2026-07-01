@@ -1,12 +1,15 @@
-import { motion } from 'framer-motion'
-import { ArrowRight, BookOpen, BarChart2, Briefcase } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, BookOpen, BarChart2, Download, Briefcase } from 'lucide-react'
 import type { AppMode } from '../../types'
+import { SessionPlanExport } from '../export/SessionPlanExport'
 
 interface HomePageProps {
   onNavigate: (mode: AppMode) => void
 }
 
 export function HomePage({ onNavigate }: HomePageProps) {
+  const [showExport, setShowExport] = useState(false)
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 overflow-hidden relative">
       {/* Animated background */}
@@ -142,7 +145,19 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Start Workshop
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
+            <button
+              onClick={() => setShowExport(true)}
+              className="group flex items-center justify-center gap-2 border-2 border-gray-200 dark:border-gray-700 hover:border-brand-400 dark:hover:border-brand-500 text-gray-700 dark:text-gray-300 hover:text-brand-700 dark:hover:text-brand-400 font-semibold px-8 py-4 rounded-2xl transition-all duration-300 hover:scale-105 text-base bg-white dark:bg-gray-900"
+            >
+              <Download className="w-5 h-5" />
+              Download Session Plan
+            </button>
           </motion.div>
+
+          {/* Export modal */}
+          <AnimatePresence>
+            {showExport && <SessionPlanExport onClose={() => setShowExport(false)} />}
+          </AnimatePresence>
 
           {/* Mode Cards */}
           <motion.div

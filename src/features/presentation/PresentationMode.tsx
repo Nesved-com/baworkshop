@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  ChevronLeft, ChevronRight, Eye, EyeOff, Clock,
+  ChevronLeft, ChevronRight, Eye, EyeOff,
   BookOpen, BarChart2, Lightbulb, Users, AlertTriangle,
   Zap, FileText, CheckSquare, TestTube, Award, Target,
-  ArrowRight, Play, Pause, RotateCcw
+  ArrowRight, Play, Pause, RotateCcw, Download
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import type { SimulatorSection } from '../../types'
+import { SessionPlanExport } from '../export/SessionPlanExport'
 
 // ─── SLIDE DATA ──────────────────────────────────────────────────────────────
 
@@ -398,6 +399,7 @@ export function PresentationMode({ initialSlide = 0, onOpenSimulator }: Presenta
   const [timeLeft, setTimeLeft] = useState(75 * 60)
   const [timerRunning, setTimerRunning] = useState(false)
   const [showThumb, setShowThumb] = useState(false)
+  const [showExport, setShowExport] = useState(false)
   const slideRef = useRef<HTMLDivElement>(null)
 
   const slide = SLIDES[current]
@@ -489,8 +491,25 @@ export function PresentationMode({ initialSlide = 0, onOpenSimulator }: Presenta
             <span className="hidden sm:block">Notes</span>
             <kbd className="ml-0.5 text-gray-400 text-[10px]">[P]</kbd>
           </button>
+
+          <div className="w-px h-5 bg-gray-200" />
+
+          {/* Download session plan */}
+          <button
+            onClick={() => setShowExport(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors text-gray-700 bg-gray-100 hover:bg-brand-50 hover:text-brand-700"
+            title="Download session plan"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden sm:block">Export</span>
+          </button>
         </div>
       </div>
+
+      {/* Export modal */}
+      <AnimatePresence>
+        {showExport && <SessionPlanExport onClose={() => setShowExport(false)} />}
+      </AnimatePresence>
 
       {/* ── SLIDE THUMBNAILS STRIP ───────────────────────────────────────────── */}
       <AnimatePresence>
