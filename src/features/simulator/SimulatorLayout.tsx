@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, TrendingDown, Users, GitBranch, AlertTriangle,
@@ -51,6 +51,11 @@ export function SimulatorLayout() {
   const [started, setStarted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { visited, markVisited, progress } = useProgress()
+  const mainRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0 })
+  }, [section])
 
   const handleNavigate = (s: SimulatorSection) => {
     setSection(s)
@@ -136,7 +141,7 @@ export function SimulatorLayout() {
           </span>
         </div>
 
-        <main className="flex-1 overflow-y-auto">
+        <main ref={mainRef} className="flex-1 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div key={section}
               initial={{ opacity: 0, y: 12 }}
