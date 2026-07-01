@@ -188,70 +188,9 @@ Key question: "Which step is most likely to fail in production?" Answer: Step 5 
     simulatorSection: 'payment-simulator',
   },
 
-  // ── SLIDE 6: ACTIVITY ──────────────────────────────────────────────────────
+  // ── SLIDE 6: CONCEPT — BRD ────────────────────────────────────────────────
   {
     id: 6,
-    type: 'activity',
-    title: 'Root Cause Analysis — Class Activity',
-    subtitle: 'Why doesn\'t ShopEase already have digital payment?',
-    priyaMoment: 'ShopEase leadership says: "Just add a payment button." The BA knows it\'s not that simple. There are 5 root causes across 5 categories. Find them.',
-    activity: {
-      title: 'Fishbone Diagram — 4 Minutes',
-      task: 'Your team: ShopEase has been losing ₹64 Cr/month for 18 months. Leadership never fixed it. WHY? Use the 5 categories below. Find at least one cause per category.',
-      steps: [
-        { step: '👥 People — Who failed to prioritise this?', time: '1 min' },
-        { step: '⚙️ Process — What process was missing?', time: '1 min' },
-        { step: '💻 Technology — What was not built?', time: '1 min' },
-        { step: '📋 Policy — What compliance gap existed?', time: '1 min' },
-      ],
-      time: '4 min',
-    },
-    keyTakeaway: 'Root Cause Analysis prevents the most expensive mistake in BA work: solving the wrong problem. Fix the symptom and it returns. Fix the root cause and the system heals.',
-    speakerNotes: `Give students exactly 4 minutes for this. Use the timer.
-
-After 4 minutes, ask one group to share. Common correct answers:
-- People: Leadership never assigned a BA or product owner to payments
-- Process: No RFP sent to payment gateways, no vendor evaluation process
-- Technology: Platform built COD-only, no PCI-DSS infrastructure
-- Policy: No RBI compliance framework, no payment failure/refund policy defined
-
-The surprising insight: ShopEase could have integrated Razorpay in 2 weeks. The technical barrier was low. The root causes were organisational — no priority, no process, no compliance awareness.
-
-Key teaching moment: "Policy must be fixed before Technology. You cannot build a UPI payment feature without PCI-DSS certification. The BA must document this dependency order in the BRD."`,
-    duration: 6,
-    accentColor: 'from-amber-500 to-rose-500',
-    simulatorSection: 'root-cause',
-  },
-
-  // ── SLIDE 6: FISHBONE DIAGRAM ─────────────────────────────────────────────
-  {
-    id: 7,
-    type: 'fishbone',
-    title: 'Fishbone Diagram — ShopEase Root Causes',
-    subtitle: 'Why ShopEase has been losing ₹64 Crore/month for 18 months',
-    priyaMoment: 'Every branch of this diagram is a reason Priya had to leave ShopEase and buy from Amazon instead.',
-    keyTakeaway: 'Fix order: Policy → Technology → Process → People → Market. You cannot build UPI without PCI-DSS. Policy comes first.',
-    speakerNotes: `Walk through each bone slowly — left to right, top to bottom.
-
-People bone: No one in ShopEase was assigned to own the payments problem. No BA. No product manager. Without ownership, nothing gets prioritised.
-
-Process bone: No formal process existed to evaluate payment gateways. No RFP. No vendor comparison. No requirements document. The decision to "stay with COD" was made by default — not by design.
-
-Technology bone: The platform was built COD-only from day one. No PCI-DSS infrastructure. No tokenisation. Adding UPI now is not a button — it requires rebuilding the payment layer from scratch.
-
-Policy bone: RBI mandates 2FA for all card transactions above ₹5,000. PCI-DSS requires card data encryption. These are not optional. If the BA doesn't document them as constraints, the project will fail compliance at go-live.
-
-Market bone: 80% of online shoppers in India actively use UPI. Flipkart and Amazon both offer 15+ payment methods. High-value buyers (₹10,000+) simply never pay COD — ShopEase is invisible to its most valuable customers.
-
-Key teaching question: "Which bone must be addressed FIRST before any technology is built?" — Policy. PCI-DSS certification takes 4-8 weeks. If the BA misses this, the project delays by 2 months after development is complete.`,
-    duration: 5,
-    accentColor: 'from-rose-500 to-amber-500',
-    simulatorSection: 'root-cause',
-  },
-
-  // ── SLIDE 7: CONCEPT — BRD ────────────────────────────────────────────────
-  {
-    id: 8,
     type: 'concept',
     title: 'Business Requirements Document (BRD)',
     subtitle: 'The BA\'s contract with the business and the development team',
@@ -284,7 +223,7 @@ Constraints section: emphasise that PCI-DSS is a constraint, not a nice-to-have.
 
   // ── SLIDE 8: ARTIFACT — USER STORIES ──────────────────────────────────────
   {
-    id: 9,
+    id: 7,
     type: 'artifact',
     title: 'User Stories',
     subtitle: 'Requirements written in the customer\'s voice',
@@ -324,7 +263,7 @@ Finance team story is always surprising to students. They forget that internal u
 
   // ── SLIDE 8: ARTIFACT — ACCEPTANCE CRITERIA ───────────────────────────────
   {
-    id: 10,
+    id: 8,
     type: 'artifact',
     title: 'Acceptance Criteria',
     subtitle: 'The exact conditions that define "done" — testable, unambiguous',
@@ -357,7 +296,7 @@ This is where students start to see the depth of BA work. One user story about U
 
   // ── SLIDE 9: CONCEPT — UAT ────────────────────────────────────────────────
   {
-    id: 11,
+    id: 9,
     type: 'concept',
     title: 'User Acceptance Testing (UAT)',
     subtitle: 'The BA\'s final quality gate before production',
@@ -392,7 +331,7 @@ This is why BA work is not documentation — it is risk management.`,
 
   // ── SLIDE 10: SUMMARY ─────────────────────────────────────────────────────
   {
-    id: 12,
+    id: 10,
     type: 'summary',
     title: 'The Complete BA Journey',
     subtitle: 'From ₹64 Crore problem to production-ready payment portal',
