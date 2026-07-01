@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ChevronLeft, ChevronRight, Eye, EyeOff, Clock,
@@ -382,9 +382,12 @@ export function PresentationMode() {
   const [timeLeft, setTimeLeft] = useState(75 * 60)
   const [timerRunning, setTimerRunning] = useState(false)
   const [showThumb, setShowThumb] = useState(false)
+  const slideRef = useRef<HTMLDivElement>(null)
 
   const slide = SLIDES[current]
   const total = SLIDES.length
+
+  useEffect(() => { slideRef.current?.scrollTo({ top: 0 }) }, [current])
 
   // Timer
   useEffect(() => {
@@ -519,6 +522,7 @@ export function PresentationMode() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -32 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
+              ref={slideRef}
               className="flex-1 overflow-y-auto"
             >
               <SlideCanvas slide={slide} accentBg={accentBg} />
