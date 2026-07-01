@@ -46,9 +46,15 @@ const NAV_ITEMS: { id: SimulatorSection; label: string; icon: React.ReactNode; g
 
 const GROUPS = ['Start', 'Investigation', 'Analysis', 'Artifacts', 'Assessment']
 
-export function SimulatorLayout({ isFullscreen = false }: { isFullscreen?: boolean }) {
-  const [section, setSection] = useState<SimulatorSection>('dashboard')
-  const [started, setStarted] = useState(false)
+interface SimulatorLayoutProps {
+  isFullscreen?: boolean
+  initialSection?: SimulatorSection
+  onBack?: () => void
+}
+
+export function SimulatorLayout({ isFullscreen = false, initialSection, onBack }: SimulatorLayoutProps) {
+  const [section, setSection] = useState<SimulatorSection>(initialSection ?? 'dashboard')
+  const [started, setStarted] = useState(!!initialSection)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { visited, markVisited, progress } = useProgress()
   const mainRef = useRef<HTMLElement>(null)
@@ -124,7 +130,16 @@ export function SimulatorLayout({ isFullscreen = false }: { isFullscreen?: boole
           })}
         </nav>
 
-        <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800">
+        <div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800 space-y-2">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-600/20 hover:bg-brand-600/30 border border-brand-500/30 text-brand-400 text-xs font-bold transition-all"
+            >
+              <ChevronRight className="w-3.5 h-3.5 rotate-180" />
+              Back to Presentation
+            </button>
+          )}
           <p className="text-xs text-gray-400 dark:text-gray-600 text-center">
             Business Analyst Interactive Workshop
           </p>
