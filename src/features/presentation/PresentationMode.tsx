@@ -842,6 +842,34 @@ function ActivitySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
   )
 }
 
+// ─── SUMMARY SLIDE — BA TOOLKIT DATA ────────────────────────────────────────
+const PRES_BA_TOOLS = [
+  { name: 'Jira',         category: 'Story Tracking',   url: 'https://www.atlassian.com/software/jira',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0052CC"/><path d="M20 7 L27 29" stroke="#DEEBFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/><path d="M20 7 L13 29" stroke="#4C9AFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/><path d="M13 18 L27 18" stroke="white" strokeWidth="2" strokeLinecap="round"/></svg> },
+  { name: 'Confluence',   category: 'BRD / Docs',       url: 'https://www.atlassian.com/software/confluence',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0065FF"/><path d="M8 26 Q12 18 20 20 Q28 22 32 14" stroke="#4C9AFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/><path d="M8 20 Q12 12 20 14 Q28 16 32 8" stroke="#DEEBFF" strokeWidth="2.5" fill="none" strokeLinecap="round"/></svg> },
+  { name: 'Figma',        category: 'Wireframing',       url: 'https://www.figma.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#1E1E1E"/><rect x="14" y="7" width="8" height="8" rx="4" fill="#F24E1E"/><rect x="22" y="7" width="8" height="8" rx="4" fill="#FF7262"/><rect x="14" y="15" width="8" height="8" rx="4" fill="#A259FF"/><circle cx="26" cy="19" r="4" fill="#1ABCFE"/><rect x="14" y="23" width="8" height="8" rx="4" fill="#0ACF83"/></svg> },
+  { name: 'Lucidchart',   category: 'Process Diagrams',  url: 'https://www.lucidchart.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#F75D00"/><rect x="10" y="9" width="4" height="16" rx="2" fill="white"/><rect x="10" y="22" width="14" height="4" rx="2" fill="white"/><rect x="22" y="14" width="4" height="12" rx="2" fill="white" opacity="0.7"/><rect x="28" y="9" width="4" height="17" rx="2" fill="white" opacity="0.5"/></svg> },
+  { name: 'Miro',         category: 'Brainstorming',     url: 'https://miro.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#FFD02F"/><path d="M9 28 L9 12 L15 22 L20 15 L25 22 L31 12 L31 28" stroke="#1a1a1a" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+  { name: 'Excel',        category: 'Data Analysis',     url: 'https://www.microsoft.com/en-in/microsoft-365/excel',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#217346"/><text x="20" y="26" textAnchor="middle" fill="white" fontSize="20" fontWeight="900" fontFamily="Arial">X</text></svg> },
+  { name: 'Power BI',     category: 'Reporting',         url: 'https://powerbi.microsoft.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#F2C811"/><rect x="9" y="22" width="6" height="8" rx="1.5" fill="#1a1a1a"/><rect x="17" y="15" width="6" height="15" rx="1.5" fill="#1a1a1a" opacity="0.8"/><rect x="25" y="10" width="6" height="20" rx="1.5" fill="#1a1a1a" opacity="0.7"/></svg> },
+  { name: 'Postman',      category: 'API Testing',       url: 'https://www.postman.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#FF6C37"/><circle cx="20" cy="18" r="9" fill="none" stroke="white" strokeWidth="2.5"/><circle cx="20" cy="18" r="4" fill="white" opacity="0.4"/></svg> },
+  { name: 'Slack',        category: 'Communication',     url: 'https://slack.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#4A154B"/><line x1="14" y1="11" x2="12" y2="25" stroke="#E01E5A" strokeWidth="3" strokeLinecap="round"/><line x1="20" y1="11" x2="18" y2="25" stroke="#36C5F0" strokeWidth="3" strokeLinecap="round"/><line x1="10" y1="16" x2="24" y2="16" stroke="#2EB67D" strokeWidth="3" strokeLinecap="round"/><line x1="9" y1="21" x2="23" y2="21" stroke="#ECB22E" strokeWidth="3" strokeLinecap="round"/></svg> },
+  { name: 'Notion',       category: 'Documentation',     url: 'https://www.notion.so',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#191919"/><path d="M11 28 L11 12 L23 25 L23 12" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+  { name: 'Azure DevOps', category: 'ALM / Agile',       url: 'https://azure.microsoft.com/en-in/products/devops',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#0078D4"/><path d="M8 20 Q10 10 20 14 Q30 18 32 10" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round"/><path d="M32 20 Q30 30 20 26 Q10 22 8 30" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.7"/></svg> },
+  { name: 'draw.io',      category: 'Flow Diagrams',     url: 'https://www.drawio.com',
+    logo: <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="8" fill="#F08705"/><rect x="6" y="10" width="12" height="8" rx="2" fill="white" opacity="0.9"/><rect x="22" y="10" width="12" height="8" rx="2" fill="white" opacity="0.9"/><rect x="14" y="24" width="12" height="8" rx="2" fill="white" opacity="0.9"/><line x1="12" y1="18" x2="20" y2="24" stroke="white" strokeWidth="1.5" strokeLinecap="round"/><line x1="28" y1="18" x2="20" y2="24" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+]
+
 // ─── SUMMARY SLIDE ────────────────────────────────────────────────────────────
 function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
   return (
@@ -868,6 +896,24 @@ function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
           ))}
         </motion.div>
       )}
+
+      {/* ── BA Toolkit ── */}
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
+        className="mb-6">
+        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">🛠️ Tools Real BAs Use</p>
+        <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 gap-2">
+          {PRES_BA_TOOLS.map((tool) => (
+            <a key={tool.name} href={tool.url} target="_blank" rel="noopener noreferrer"
+              className="group flex flex-col items-center gap-1 p-2 rounded-xl border border-gray-100 hover:border-gray-300 hover:shadow-sm transition-all bg-white">
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+                {tool.logo}
+              </div>
+              <p className="text-[9px] font-semibold text-gray-600 text-center leading-tight group-hover:text-gray-900 transition-colors">{tool.name}</p>
+              <p className="text-[8px] text-gray-400 text-center leading-tight">{tool.category}</p>
+            </a>
+          ))}
+        </div>
+      </motion.div>
 
       {slide.keyTakeaway && <Callout text={slide.keyTakeaway} color={slide.accentColor} />}
     </div>
