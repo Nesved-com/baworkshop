@@ -30,7 +30,7 @@ export function StakeholdersSection({ onNext }: Props) {
         tip="Ask students: 'If ShopEase only talked to the Dev Team and ignored the Payment Gateway provider, what could go wrong?' Then reveal how NPCI's UPI rules would be missed entirely."
       />
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Diagram */}
         <div className="flex-1">
           <div className="relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-8 shadow-card overflow-hidden" style={{ minHeight: 480 }}>

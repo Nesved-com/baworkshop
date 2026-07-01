@@ -44,7 +44,7 @@ export function ToBeProcess({ onNext }: Props) {
         tip="Compare As-Is Step 4 (COD Confirm only) vs To-Be Step 4 (Choose from 6 payment methods). Ask students: 'As a BA, what new business rules did you introduce at this step? What happens if UPI fails?' That thinking goes into the BRD next."
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         {/* To-Be flow */}
         <div>
           <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">Improved Checkout Flow</h3>

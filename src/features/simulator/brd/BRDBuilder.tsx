@@ -100,9 +100,9 @@ export function BRDBuilder({ onNext }: Props) {
         tip="Highlight the Business Rules section: Every rule you write becomes a test case in UAT. A vague rule like 'UPI should work' gives testers nothing to test. A good BA writes: 'UPI payment must complete within 5 minutes or display a timeout error with retry option.'"
       />
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Section nav */}
-        <div className="w-full lg:w-52 flex-shrink-0">
+        <div className="w-full md:w-48 flex-shrink-0">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-3 shadow-card">
             <div className="mb-3">
               <div className="flex justify-between text-xs mb-1">

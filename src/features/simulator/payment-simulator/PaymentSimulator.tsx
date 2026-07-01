@@ -85,7 +85,7 @@ export function PaymentSimulator({ onNext }: Props) {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {/* ─── LEFT: CHECKOUT MOCK UI ─────────────────────────── */}
         <div className="xl:col-span-2">
           <div className="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-premium overflow-hidden">

@@ -78,7 +78,7 @@ export function UATBuilder({ onNext }: Props) {
               <tr className="bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
                 <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Scenario</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden lg:table-cell">Expected Result</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:table-cell">Expected Result</th>
                 <th className="text-center px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Priority</th>
                 <th className="text-center px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
               </tr>
@@ -93,7 +93,7 @@ export function UATBuilder({ onNext }: Props) {
                     <p className="text-sm font-semibold text-gray-900 dark:text-white mb-1.5">{s.scenario}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400 whitespace-pre-line leading-relaxed">{s.steps}</p>
                   </td>
-                  <td className="px-5 py-4 hidden lg:table-cell">
+                  <td className="px-5 py-4 hidden md:table-cell">
                     <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{s.expectedResult}</p>
                   </td>
                   <td className="px-5 py-4 text-center">

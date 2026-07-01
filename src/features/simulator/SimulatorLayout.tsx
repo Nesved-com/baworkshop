@@ -68,13 +68,13 @@ export function SimulatorLayout() {
         {sidebarOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setSidebarOpen(false)}
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden" />
+            className="fixed inset-0 z-40 bg-black/50 md:hidden" />
         )}
       </AnimatePresence>
 
       {/* Sidebar */}
       <aside className={cn(
-        'fixed left-0 top-14 bottom-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col transition-transform duration-300 lg:translate-x-0',
+        'fixed left-0 top-14 bottom-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 flex flex-col transition-transform duration-300 md:translate-x-0',
         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
       )}>
         <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-800">
@@ -126,8 +126,8 @@ export function SimulatorLayout() {
         </div>
       </aside>
 
-      <div className="flex-1 flex flex-col min-w-0 lg:ml-64">
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+      <div className="flex-1 flex flex-col min-w-0 md:ml-64">
+        <div className="md:hidden flex items-center gap-3 px-4 py-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
           <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800">
             <Menu className="w-5 h-5" />
           </button>
