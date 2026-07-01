@@ -447,7 +447,7 @@ export function PresentationMode({ initialSlide = 0, onOpenSimulator }: Presenta
               transition={{ duration: 0.4 }}
             />
           </div>
-          <span className="text-xs text-gray-400 hidden sm:block">{SLIDE_TYPE_LABEL[slide.type]}</span>
+          <span className="text-xs text-gray-500 hidden sm:block">{SLIDE_TYPE_LABEL[slide.type]}</span>
         </div>
 
         {/* Controls */}
@@ -586,7 +586,7 @@ export function PresentationMode({ initialSlide = 0, onOpenSimulator }: Presenta
               <div className="px-5 py-3 border-b border-gray-200 flex items-center gap-2 flex-shrink-0">
                 <BookOpen className="w-4 h-4 text-violet-700" />
                 <span className="text-sm font-semibold text-gray-900">Speaker Notes</span>
-                <span className="ml-auto text-xs text-gray-400">Slide {current + 1} · {slide.duration} min</span>
+                <span className="ml-auto text-xs text-gray-500">Slide {current + 1} · {slide.duration} min</span>
               </div>
               <div className="flex-1 overflow-y-auto p-5">
                 <AnimatePresence mode="wait">
@@ -631,14 +631,14 @@ function HeroSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         {slide.title}
       </motion.h1>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-        className="text-xl text-gray-400 mb-12 max-w-2xl">
+        className="text-xl text-gray-600 mb-12 max-w-2xl">
         {slide.subtitle}
       </motion.p>
 
       {/* Priya story */}
       {slide.priyaMoment && (
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          className="max-w-2xl bg-amber-950/50 border border-amber-700/50 rounded-2xl p-6 mb-8 text-left">
+          className="max-w-2xl bg-amber-50 border border-amber-300 rounded-2xl p-6 mb-8 text-left">
           <p className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-2">📖 Real Customer Story</p>
           <p className="text-amber-100 text-lg leading-relaxed italic">"{slide.priyaMoment}"</p>
         </motion.div>
@@ -671,10 +671,10 @@ function HeroSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
 // ─── DATA SLIDE ───────────────────────────────────────────────────────────────
 function DataSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
   const statColors: Record<string, string> = {
-    brand: 'text-brand-400 border-brand-800 bg-brand-950/50',
-    rose: 'text-rose-700 border-rose-800 bg-rose-950/50',
-    amber: 'text-amber-700 border-amber-800 bg-amber-950/50',
-    emerald: 'text-emerald-700 border-emerald-800 bg-emerald-950/50',
+    brand: 'text-brand-700 border-brand-300 bg-brand-50',
+    rose: 'text-rose-700 border-rose-300 bg-rose-50',
+    amber: 'text-amber-700 border-amber-300 bg-amber-50',
+    emerald: 'text-emerald-700 border-emerald-300 bg-emerald-50',
   }
   return (
     <div className="min-h-full flex flex-col p-8 lg:p-12">
@@ -689,7 +689,7 @@ function DataSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
             <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.25 + i * 0.08 }}
               className={`rounded-2xl border p-5 text-center ${statColors[s.color] || statColors.brand}`}>
               <p className="text-3xl lg:text-4xl font-black mb-1">{s.value}</p>
-              <p className="text-xs text-gray-400 leading-tight">{s.label}</p>
+              <p className="text-xs text-gray-600 leading-tight">{s.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -720,7 +720,7 @@ function CompareSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
           className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm mb-6">
           <div className="grid grid-cols-3 bg-gray-100">
-            <div className="px-5 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">Metric</div>
+            <div className="px-5 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider">Metric</div>
             <div className="px-5 py-3 text-xs font-bold text-rose-700 uppercase tracking-wider border-l border-gray-300">❌ As-Is (Today)</div>
             <div className="px-5 py-3 text-xs font-bold text-emerald-700 uppercase tracking-wider border-l border-gray-300">✅ To-Be (After BA)</div>
           </div>
@@ -728,7 +728,7 @@ function CompareSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
             <motion.div key={i} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.07 }}
               className="grid grid-cols-3 border-t border-gray-200">
               <div className="px-5 py-3.5 text-sm font-semibold text-gray-900">{row.label}</div>
-              <div className="px-5 py-3.5 text-sm text-rose-300 border-l border-gray-200">{row.before}</div>
+              <div className="px-5 py-3.5 text-sm text-rose-700 border-l border-gray-200">{row.before}</div>
               <div className="px-5 py-3.5 text-sm text-emerald-700 border-l border-gray-200 font-medium">{row.after}</div>
             </motion.div>
           ))}
@@ -765,12 +765,12 @@ function ConceptSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
       {/* Inline activity for artifact slides */}
       {slide.activity && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-          className="bg-amber-950/40 border border-amber-700/50 rounded-2xl p-5 mb-5">
+          className="bg-amber-50 border border-amber-300 rounded-2xl p-5 mb-5">
           <p className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-2">✏️ Class Activity · {slide.activity.time}</p>
           <p className="text-amber-100 text-sm mb-3 font-medium">{slide.activity.task}</p>
           <div className="flex flex-wrap gap-2">
             {slide.activity.steps.map((s, i) => (
-              <span key={i} className="px-3 py-1.5 rounded-lg bg-amber-900/40 border border-amber-700/40 text-amber-900 text-xs">{s.step}</span>
+              <span key={i} className="px-3 py-1.5 rounded-lg bg-amber-100 border border-amber-300 text-amber-900 text-xs">{s.step}</span>
             ))}
           </div>
         </motion.div>
@@ -793,13 +793,13 @@ function ActivitySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
 
       {slide.activity && (
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-          className="bg-amber-950/40 border-2 border-amber-600/50 rounded-2xl p-6 mb-6">
+          className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-6 mb-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
               <Users className="w-5 h-5 text-amber-700" />
             </div>
             <div>
-              <p className="font-bold text-amber-300 text-lg">{slide.activity.title}</p>
+              <p className="font-bold text-amber-800 text-lg">{slide.activity.title}</p>
               <p className="text-amber-500 text-xs">⏱ {slide.activity.time} — Groups of 3</p>
             </div>
           </div>
@@ -807,8 +807,8 @@ function ActivitySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {slide.activity.steps.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.35 + i * 0.1 }}
-                className="flex items-center gap-3 bg-amber-900/30 border border-amber-700/30 rounded-xl px-4 py-3">
-                <span className="w-6 h-6 rounded-full bg-amber-600/30 text-amber-300 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
+                className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                <span className="w-6 h-6 rounded-full bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center flex-shrink-0">{i + 1}</span>
                 <div>
                   <p className="text-amber-100 text-sm font-medium">{s.step}</p>
                   <p className="text-amber-500 text-xs">{s.time}</p>
@@ -833,7 +833,7 @@ function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
 
       {slide.priyaMoment && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-          className="bg-emerald-950/50 border border-emerald-700/50 rounded-2xl p-5 mb-6">
+          className="bg-emerald-50 border border-emerald-300 rounded-2xl p-5 mb-6">
           <p className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">🎉 Mission Accomplished</p>
           <p className="text-emerald-100 text-base leading-relaxed italic">"{slide.priyaMoment}"</p>
         </motion.div>
@@ -844,7 +844,7 @@ function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 mb-6">
           {slide.bullets.map((b, i) => (
             <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.25 + i * 0.06 }}
-              className="flex items-start gap-2.5 bg-white border border-emerald-900/50 rounded-xl px-4 py-3">
+              className="flex items-start gap-2.5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
               <p className="text-gray-800 text-sm leading-relaxed">{b}</p>
             </motion.div>
           ))}
@@ -1073,7 +1073,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
             </motion.button>
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={() => start(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-900/60 hover:bg-rose-800/80 border border-rose-700/50 text-rose-300 text-sm font-bold">
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-700 text-sm font-bold">
               ⚡ Failure Scenario
             </motion.button>
           </>
@@ -1088,7 +1088,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                 disabled={isTraveling}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-all ${
                   isTraveling
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                     : failed && currentStepIdx === 4
                     ? 'bg-rose-600 hover:bg-rose-500 text-gray-900'
                     : 'bg-brand-600 hover:bg-brand-500 text-gray-900'
@@ -1110,7 +1110,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
 
             {/* Step counter */}
             {!isDone && (
-              <span className="text-xs text-gray-400 font-mono">
+              <span className="text-xs text-gray-600 font-mono">
                 Step {Math.min(currentStepIdx + 1, 6)} / 6 — <span className="text-gray-700">{currentStepName}</span>
               </span>
             )}
@@ -1118,7 +1118,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
             {/* Reset always visible */}
             <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
               onClick={reset}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-400 text-xs font-semibold ml-auto">
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-semibold ml-auto">
               <RotateCcw className="w-3.5 h-3.5" /> Reset
             </motion.button>
           </div>
@@ -1167,7 +1167,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                     style={{ color: active ? dotColor : done ? '#10b981' : '#64748b' }}>
                     {step.label}
                   </p>
-                  <p className="text-[8px] text-gray-400 text-center leading-tight">{step.sub}</p>
+                  <p className="text-[8px] text-gray-500 text-center leading-tight">{step.sub}</p>
 
                   {/* BA requirement hints — light up when step is active */}
                   <div className="mt-2 w-full rounded-lg border px-2 py-1.5 transition-all duration-300"
@@ -1176,11 +1176,11 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
                       backgroundColor: active ? `${dotColor}12` : '#f8fafc',
                     }}>
                     <p className="text-[7.5px] leading-relaxed whitespace-pre-line transition-colors duration-300"
-                      style={{ color: active ? '#1e293b' : '#cbd5e1' }}>
+                      style={{ color: active ? '#1e293b' : '#94a3b8' }}>
                       {step.reqs}
                     </p>
                     {step.critical && (
-                      <span className="inline-block mt-1 px-1 py-0.5 bg-rose-900/50 border border-rose-700/50 rounded text-[7px] text-rose-700 font-bold">
+                      <span className="inline-block mt-1 px-1 py-0.5 bg-rose-100 border border-rose-300 rounded text-[7px] text-rose-700 font-bold">
                         ⚠️ FAILURE POINT
                       </span>
                     )}
@@ -1256,7 +1256,7 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             className={`rounded-xl px-5 py-3.5 mb-4 flex items-start gap-3 border ${
-              failed ? 'bg-rose-950/40 border-rose-700/50' : 'bg-emerald-950/40 border-emerald-700/50'
+              failed ? 'bg-rose-50 border-rose-300' : 'bg-emerald-50 border-emerald-300'
             }`}
           >
             <span className="text-xl flex-shrink-0">{failed ? '⚡' : '🎉'}</span>
