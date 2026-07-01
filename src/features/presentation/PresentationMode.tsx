@@ -853,7 +853,7 @@ function SummarySlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           className="bg-emerald-50 border border-emerald-300 rounded-2xl p-5 mb-6">
           <p className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">🎉 Mission Accomplished</p>
-          <p className="text-emerald-100 text-base leading-relaxed italic">"{slide.priyaMoment}"</p>
+          <p className="text-emerald-900 text-base leading-relaxed italic">"{slide.priyaMoment}"</p>
         </motion.div>
       )}
 
