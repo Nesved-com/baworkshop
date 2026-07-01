@@ -1,0 +1,383 @@
+import type { SimulatorSection } from '../types'
+
+export interface MissionMeta {
+  id: SimulatorSection
+  mission: string
+  title: string
+  shortTitle: string
+  completion: number
+  time: string
+  story: string
+  explanation: string
+  activity: string
+  revealConcept: string
+  keyLearning: string
+  quiz: {
+    question: string
+    answer: string
+  }
+  faculty: {
+    objective: string
+    notes: string
+    questions: string[]
+    expectedAnswers: string[]
+    example: string
+    takeaway: string
+  }
+}
+
+export const RAHUL_STORY =
+  'Rahul wants to buy an iPhone worth Rs. 80,000. He has only Rs. 8,000 available today, so he chooses EMI and expects the payment portal to guide him clearly.'
+
+export const MISSION_META: Record<SimulatorSection, MissionMeta> = {
+  dashboard: {
+    id: 'dashboard',
+    mission: 'Briefing',
+    title: 'Save the Payment Portal',
+    shortTitle: 'Briefing',
+    completion: 0,
+    time: '3 min',
+    story: RAHUL_STORY,
+    explanation: 'Students enter the role of Business Analysts and receive the classroom mission.',
+    activity: 'Ask students to name one payment failure they have personally experienced.',
+    revealConcept: 'A Business Analyst starts by understanding the business situation before suggesting solutions.',
+    keyLearning: 'Do not jump to features. First understand the problem.',
+    quiz: {
+      question: 'What should a BA do first: suggest a solution or understand the problem?',
+      answer: 'Understand the problem.',
+    },
+    faculty: {
+      objective: 'Set context and make students feel part of a business simulation.',
+      notes: 'Position the class as a consulting team hired to investigate a payment portal problem.',
+      questions: ['What happens when a customer payment fails?', 'Who loses when Rahul cannot complete payment?'],
+      expectedAnswers: ['Customer gets frustrated', 'Business loses revenue', 'Support calls increase'],
+      example: 'A customer abandons a cart after UPI or EMI fails twice.',
+      takeaway: 'Business Analysis begins with curiosity and context.',
+    },
+  },
+  'business-problem': {
+    id: 'business-problem',
+    mission: 'Mission 1',
+    title: 'Understand the Business',
+    shortTitle: 'Understand Business',
+    completion: 10,
+    time: '8 min',
+    story: RAHUL_STORY,
+    explanation: 'Use the dashboard to identify what the company is really worried about.',
+    activity: 'Vote: Is this mainly a technology issue, revenue issue, or customer experience issue?',
+    revealConcept: 'Business Problem, Business Goal, Business Impact, Revenue Loss, Customer Experience.',
+    keyLearning: 'Good BAs convert confusing numbers into a clear business problem.',
+    quiz: {
+      question: 'If 35,000 customers add to cart and only 15,000 pay, how many abandon?',
+      answer: '20,000 customers.',
+    },
+    faculty: {
+      objective: 'Teach students to read business data and frame a problem simply.',
+      notes: 'Ask students to guess the problem before revealing the formal BA language.',
+      questions: ['What problem do you think the company is facing?', 'Why is this urgent for business?'],
+      expectedAnswers: ['Payment abandonment', 'Revenue loss', 'Poor customer experience'],
+      example: 'Rahul leaves because EMI eligibility appears too late and payment fails.',
+      takeaway: 'A business problem explains the gap between current and desired results.',
+    },
+  },
+  stakeholders: {
+    id: 'stakeholders',
+    mission: 'Mission 2',
+    title: 'Meet the Stakeholders',
+    shortTitle: 'Stakeholders',
+    completion: 20,
+    time: '8 min',
+    story: 'Rahul is only one person in the story. Behind his payment are teams, partners, systems, money movement, and support staff.',
+    explanation: 'Click stakeholder cards to understand what each person wants and how they are affected.',
+    activity: 'Role play: one student is Rahul, one is support, one is product manager.',
+    revealConcept: 'Stakeholders are people or groups affected by the problem or solution.',
+    keyLearning: 'Requirements improve when you listen to every affected group.',
+    quiz: {
+      question: 'Is Rahul the only stakeholder?',
+      answer: 'No. Banks, NBFCs, product, support, finance, QA, developers, and operations are also stakeholders.',
+    },
+    faculty: {
+      objective: 'Show that business problems affect many people differently.',
+      notes: 'Keep the language practical: who cares, what do they want, what pain do they feel?',
+      questions: ['Who is affected when Rahul cannot pay?', 'Whose approval may be needed?'],
+      expectedAnswers: ['Customer', 'Business owner', 'Payment gateway', 'NBFC partner', 'Finance team'],
+      example: 'Finance sees failed settlements; support sees complaints; Rahul sees confusion.',
+      takeaway: 'A BA must collect many perspectives before writing requirements.',
+    },
+  },
+  'as-is-process': {
+    id: 'as-is-process',
+    mission: 'Mission 3',
+    title: 'Investigate the Current Process',
+    shortTitle: 'Current Process',
+    completion: 30,
+    time: '8 min',
+    story: 'Rahul moves from product page to cart, payment selection, EMI check, OTP, and confirmation.',
+    explanation: 'Click each process step and ask: what can go wrong here?',
+    activity: 'Think-Pair-Share: students identify one possible failure at each step.',
+    revealConcept: 'The As-Is process shows how work happens today before improvements.',
+    keyLearning: 'You cannot improve a process you have not mapped.',
+    quiz: {
+      question: 'What does As-Is mean?',
+      answer: 'The current process as it works today.',
+    },
+    faculty: {
+      objective: 'Teach current-state process mapping through Rahul’s journey.',
+      notes: 'Ask students to narrate Rahul’s payment journey step by step.',
+      questions: ['Where might Rahul get confused?', 'Where could the system fail?'],
+      expectedAnswers: ['EMI options', 'Bank redirect', 'OTP', 'Payment timeout'],
+      example: 'Rahul reaches OTP but the timer expires before SMS arrives.',
+      takeaway: 'A process map makes invisible problems visible.',
+    },
+  },
+  'pain-points': {
+    id: 'pain-points',
+    mission: 'Mission 4',
+    title: 'Discover the Pain Points',
+    shortTitle: 'Pain Points',
+    completion: 40,
+    time: '8 min',
+    story: 'Rahul does not care whether the issue is UI, API, bank, or policy. He only feels that the purchase failed.',
+    explanation: 'Explore pain points from customer, business, and technical perspectives.',
+    activity: 'Group discussion: rank the top three pain points by business damage.',
+    revealConcept: 'Pain Point Analysis connects customer frustration to business impact and root causes.',
+    keyLearning: 'A pain point becomes useful when impact and cause are clear.',
+    quiz: {
+      question: 'Why is “payment failed” not enough as a pain point?',
+      answer: 'It does not explain impact, cause, or what needs to change.',
+    },
+    faculty: {
+      objective: 'Help students separate symptoms from real business impact.',
+      notes: 'Push students to explain why each pain point matters.',
+      questions: ['How does Rahul feel?', 'How does business suffer?', 'What might be happening technically?'],
+      expectedAnswers: ['Confusion', 'Lost sale', 'Timeouts', 'Poor messages', 'No retry'],
+      example: 'No retry means Rahul must restart and may abandon the purchase.',
+      takeaway: 'Pain points should be described from multiple perspectives.',
+    },
+  },
+  'root-cause': {
+    id: 'root-cause',
+    mission: 'Mission 5',
+    title: 'Find the Real Cause',
+    shortTitle: 'Root Cause',
+    completion: 50,
+    time: '6 min',
+    story: 'Rahul’s failed payment may look like one issue, but the real cause may be process, technology, people, policy, or customer confusion.',
+    explanation: 'Expand the fishbone diagram to see possible causes behind abandonment.',
+    activity: 'Ask teams to pick one cause and defend why it should be investigated first.',
+    revealConcept: 'Root Cause Analysis prevents teams from fixing only surface-level symptoms.',
+    keyLearning: 'The first visible problem is not always the real problem.',
+    quiz: {
+      question: 'Why do we ask “why” repeatedly?',
+      answer: 'To move from symptom to root cause.',
+    },
+    faculty: {
+      objective: 'Introduce root cause thinking in simple language.',
+      notes: 'Avoid theory first. Start with Rahul’s failed payment and ask why it may have happened.',
+      questions: ['Was Rahul the problem?', 'Could the system, bank, or policy be the cause?'],
+      expectedAnswers: ['Bank delay', 'OTP expiry', 'Unclear messages', 'No retry policy'],
+      example: 'A vague error message makes a technical timeout look like customer mistake.',
+      takeaway: 'Better diagnosis leads to better solutions.',
+    },
+  },
+  'to-be-process': {
+    id: 'to-be-process',
+    mission: 'Mission 6',
+    title: 'Design the Better Process',
+    shortTitle: 'Better Process',
+    completion: 60,
+    time: '8 min',
+    story: 'Rahul should know EMI eligibility early, compare options easily, retry safely, and receive clear status updates.',
+    explanation: 'Compare the improved process with the current one and identify which changes reduce abandonment.',
+    activity: 'Drag-and-decide discussion: which improvement should go first and why?',
+    revealConcept: 'The To-Be process describes how the improved future process should work.',
+    keyLearning: 'Better processes remove friction before customers give up.',
+    quiz: {
+      question: 'Name one improvement that helps Rahul complete payment.',
+      answer: 'Instant EMI eligibility, retry payment, auto-save, better errors, or status tracking.',
+    },
+    faculty: {
+      objective: 'Show how BA thinking moves from problem to improved workflow.',
+      notes: 'Connect every improvement to a pain point from the earlier mission.',
+      questions: ['Which improvement helps Rahul fastest?', 'Which improvement helps business most?'],
+      expectedAnswers: ['Eligibility check', 'Retry payment', 'Clear error messages', 'Auto-save'],
+      example: 'Auto-save prevents Rahul from restarting after network failure.',
+      takeaway: 'A solution should directly address observed pain points.',
+    },
+  },
+  brd: {
+    id: 'brd',
+    mission: 'Mission 7',
+    title: 'Document Business Requirements',
+    shortTitle: 'BRD',
+    completion: 70,
+    time: '8 min',
+    story: 'If developers join tomorrow, they need a clear document explaining what business wants and why.',
+    explanation: 'Build the BRD step by step with examples instead of starting from a blank document.',
+    activity: 'Ask: what would go wrong if requirements stayed only in meeting notes?',
+    revealConcept: 'A BRD captures objectives, scope, stakeholders, rules, assumptions, and success metrics.',
+    keyLearning: 'Documentation creates shared understanding.',
+    quiz: {
+      question: 'Does a BRD explain code details?',
+      answer: 'No. It explains business needs and expected outcomes.',
+    },
+    faculty: {
+      objective: 'Explain why documentation matters without making it feel bureaucratic.',
+      notes: 'Use the “developers join tomorrow” question before showing BRD sections.',
+      questions: ['How will developers know what to build?', 'How will business know success was achieved?'],
+      expectedAnswers: ['Clear requirements', 'Scope', 'Business rules', 'Metrics'],
+      example: '“OTP valid for 5 minutes” is a business rule developers must know.',
+      takeaway: 'A BRD reduces confusion between business and delivery teams.',
+    },
+  },
+  'user-stories': {
+    id: 'user-stories',
+    mission: 'Mission 8',
+    title: 'Write User Stories',
+    shortTitle: 'User Stories',
+    completion: 78,
+    time: '6 min',
+    story: 'Rahul’s needs must be written in a way product and development teams can act on.',
+    explanation: 'Choose actor, goal, and business value to generate user stories.',
+    activity: 'Students create one story for Rahul and one for customer support.',
+    revealConcept: 'User stories express who wants what and why it creates value.',
+    keyLearning: 'A good user story keeps attention on the user and business value.',
+    quiz: {
+      question: 'What are the three parts of a user story?',
+      answer: 'Actor, goal, and benefit/business value.',
+    },
+    faculty: {
+      objective: 'Make Agile requirements easy for non-technical students.',
+      notes: 'Explain the format only after students choose practical examples.',
+      questions: ['Who wants this?', 'What do they want?', 'Why does it matter?'],
+      expectedAnswers: ['Customer', 'See EMI eligibility', 'Avoid wasting time'],
+      example: 'As Rahul, I want to check EMI eligibility early so that I do not reach payment and fail.',
+      takeaway: 'User stories turn needs into buildable slices of value.',
+    },
+  },
+  'acceptance-criteria': {
+    id: 'acceptance-criteria',
+    mission: 'Mission 9',
+    title: 'Validate the Solution',
+    shortTitle: 'Acceptance Criteria',
+    completion: 86,
+    time: '6 min',
+    story: 'Rahul’s feature is not done just because a button exists. It must behave correctly in real situations.',
+    explanation: 'Use Given-When-Then to define what success looks like.',
+    activity: 'Spot the difference between vague and testable acceptance criteria.',
+    revealConcept: 'Acceptance Criteria define clear conditions for when a requirement is complete.',
+    keyLearning: 'If it cannot be tested, it is not clear enough.',
+    quiz: {
+      question: 'Why is “payment should work” weak acceptance criteria?',
+      answer: 'It is vague and not measurable.',
+    },
+    faculty: {
+      objective: 'Teach testable thinking using simple examples.',
+      notes: 'Show a bad criterion first, then improve it with Given-When-Then.',
+      questions: ['What does success look like?', 'Can QA test this sentence?'],
+      expectedAnswers: ['Specific result', 'Time limit', 'Clear message', 'Preserved data'],
+      example: 'Given Rahul is eligible, when he checks EMI, then plans appear within 2 seconds.',
+      takeaway: 'Acceptance criteria remove ambiguity.',
+    },
+  },
+  uat: {
+    id: 'uat',
+    mission: 'Mission 10',
+    title: 'Test the Payment Portal',
+    shortTitle: 'UAT',
+    completion: 94,
+    time: '7 min',
+    story: 'Before launch, business users must confirm Rahul can pay through UPI, card, EMI, wallet, bank transfer, and failure recovery paths.',
+    explanation: 'Review UAT scenarios and mark whether each business journey passes.',
+    activity: 'Teams select one payment method and write one extra UAT scenario.',
+    revealConcept: 'UAT confirms the solution works for real business users before go-live.',
+    keyLearning: 'Testing must include success paths and failure paths.',
+    quiz: {
+      question: 'Who performs UAT from a business point of view?',
+      answer: 'Business users or representatives, supported by BA, QA, and product teams.',
+    },
+    faculty: {
+      objective: 'Show that validation is broader than happy-path testing.',
+      notes: 'Emphasize duplicate payment, network failure, and unclear status as real business risks.',
+      questions: ['What should happen if Rahul is charged twice?', 'What if network fails after payment?'],
+      expectedAnswers: ['Refund/reversal path', 'Status tracking', 'Clear confirmation', 'Support visibility'],
+      example: 'Rahul pays by UPI, app closes, then status must still update correctly.',
+      takeaway: 'UAT protects the customer and the business before production.',
+    },
+  },
+  quiz: {
+    id: 'quiz',
+    mission: 'Knowledge Check',
+    title: 'Check Understanding',
+    shortTitle: 'Quiz',
+    completion: 97,
+    time: '4 min',
+    story: 'Rahul’s journey is now converted into BA concepts.',
+    explanation: 'Answer quick questions to confirm the class can connect scenario to terminology.',
+    activity: 'Individual quiz followed by quick explanation.',
+    revealConcept: 'Assessment helps students reinforce the full BA journey.',
+    keyLearning: 'Concepts are easier when tied to a real customer journey.',
+    quiz: {
+      question: 'What connects all missions?',
+      answer: 'Rahul’s payment journey and the business goal to reduce abandonment.',
+    },
+    faculty: {
+      objective: 'Reinforce learning without making it feel like an exam.',
+      notes: 'Use incorrect answers as teaching moments.',
+      questions: ['Which concept felt most practical?', 'Where did Rahul’s journey become clearer?'],
+      expectedAnswers: ['Stakeholders', 'Process', 'Requirements', 'UAT'],
+      example: 'A missed acceptance criterion can become a failed UAT scenario.',
+      takeaway: 'BA artifacts are connected, not separate paperwork.',
+    },
+  },
+  activity: {
+    id: 'activity',
+    mission: 'Classroom Activity',
+    title: 'Prepare the Business Review',
+    shortTitle: 'Activity',
+    completion: 99,
+    time: '3 min',
+    story: 'Your team must now explain what happened to Rahul and how the business should fix it.',
+    explanation: 'Use the checklist to prepare a final classroom discussion.',
+    activity: 'Group presentation: one-minute business recommendation.',
+    revealConcept: 'A BA communicates findings clearly to business and delivery teams.',
+    keyLearning: 'Analysis is valuable only when it can be explained and acted on.',
+    quiz: {
+      question: 'What should a final recommendation include?',
+      answer: 'Problem, impact, root cause, solution, and success metric.',
+    },
+    faculty: {
+      objective: 'Convert individual learning into classroom discussion.',
+      notes: 'Let teams present briefly and compare recommendations.',
+      questions: ['What would you fix first?', 'How will you measure success?'],
+      expectedAnswers: ['Retry payment', 'Eligibility check', 'Abandonment reduction', 'Success rate increase'],
+      example: 'Prioritize retry payment because it recovers failed transactions immediately.',
+      takeaway: 'Business recommendations need evidence.',
+    },
+  },
+  summary: {
+    id: 'summary',
+    mission: 'Mission Complete',
+    title: 'Business Success',
+    shortTitle: 'Success',
+    completion: 100,
+    time: '2 min',
+    story: 'Rahul can now complete payment with confidence, and the business can measure improvement.',
+    explanation: 'Review the roadmap from business problem to production success.',
+    activity: 'Final reflection: one BA skill students will use in future roles.',
+    revealConcept: 'Business Analysis connects problem discovery, requirements, design, validation, and business outcomes.',
+    keyLearning: 'A BA thinks in problems, people, processes, requirements, and measurable outcomes.',
+    quiz: {
+      question: 'What is the final goal of Business Analysis?',
+      answer: 'Deliver business value by solving the right problem.',
+    },
+    faculty: {
+      objective: 'Close the 75-minute journey with a clear mental model.',
+      notes: 'Summarize the full chain: problem, stakeholders, process, pain, solution, requirements, validation.',
+      questions: ['How does a BA think differently now?', 'Which artifact helps which team?'],
+      expectedAnswers: ['Structured problem solving', 'Shared understanding', 'Clear validation'],
+      example: 'A payment retry feature traces from pain point to BRD to story to UAT.',
+      takeaway: 'Business Analysis is practical problem solving for business outcomes.',
+    },
+  },
+}
