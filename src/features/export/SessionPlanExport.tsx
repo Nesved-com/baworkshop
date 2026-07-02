@@ -27,215 +27,533 @@ function buildAudiencePlan(): string {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Session Plan — Business Analysis Workshop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Plan — Business Analysis Workshop · Madhuri Salunke</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  @page { size: A4; margin: 18mm 20mm; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; font-size: 13px; line-height: 1.55; background: white; }
+  /* ── Reset & base ── */
+  @page { size: A4; margin: 14mm 16mm 14mm 16mm; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── Header ── */
-  .header { border-bottom: 3px solid #7c3aed; padding-bottom: 14px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
-  .header-left h1 { font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 3px; }
-  .header-left p  { color: #64748b; font-size: 12px; }
-  .header-right   { text-align: right; }
-  .badge { display: inline-block; background: #7c3aed; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 4px; }
-  .meta  { font-size: 11px; color: #64748b; }
+  :root {
+    --purple:     #6d28d9;
+    --purple-lt:  #7c3aed;
+    --purple-bg:  #f5f3ff;
+    --purple-mid: #ede9fe;
+    --purple-bdr: #ddd6fe;
+    --ink:        #0f172a;
+    --ink-2:      #1e293b;
+    --ink-3:      #334155;
+    --muted:      #64748b;
+    --muted-lt:   #94a3b8;
+    --border:     #e2e8f0;
+    --surface:    #f8fafc;
+    --white:      #ffffff;
+  }
 
-  /* ── Case study banner ── */
-  .case-banner { background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); border: 1px solid #ddd6fe; border-left: 4px solid #7c3aed; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; gap: 16px; align-items: flex-start; }
-  .case-banner .emoji { font-size: 28px; flex-shrink: 0; }
-  .case-banner h3 { font-size: 13px; font-weight: 700; color: #4c1d95; margin-bottom: 3px; }
-  .case-banner p  { font-size: 12px; color: #5b21b6; line-height: 1.5; }
+  body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    color: var(--ink-2);
+    font-size: 11.5px;
+    line-height: 1.6;
+    background: var(--white);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
-  /* ── Learning outcomes ── */
-  .outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-  .outcome-item { display: flex; align-items: flex-start; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px 10px; }
-  .outcome-dot { width: 18px; height: 18px; border-radius: 50%; background: #7c3aed; color: white; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .outcome-item p { font-size: 12px; color: #334155; }
+  /* ── Page wrapper ── */
+  .page { max-width: 720px; margin: 0 auto; padding: 8px 0 24px; }
 
-  /* ── Section header ── */
-  h2 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #7c3aed; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+  /* ════════════════════════════════════════
+     HEADER
+  ════════════════════════════════════════ */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+    border-bottom: 2px solid var(--purple-lt);
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 60px; height: 2px;
+    background: var(--purple-lt);
+    opacity: 0.4;
+  }
 
-  /* ── Timeline table ── */
-  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
-  thead th { background: #7c3aed; color: white; padding: 8px 10px; text-align: left; font-weight: 600; }
-  thead th:first-child { border-radius: 6px 0 0 0; }
-  thead th:last-child  { border-radius: 0 6px 0 0; }
-  tbody tr:nth-child(even) { background: #fafafa; }
-  tbody td { padding: 7px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
-  .time-cell { font-weight: 700; color: #7c3aed; white-space: nowrap; }
-  .phase-cell { font-weight: 600; color: #1e293b; }
-  .method-pill { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 600; white-space: nowrap; }
-  .pill-discuss  { background: #dbeafe; color: #1d4ed8; }
+  .header-eyebrow {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--purple-lt);
+    margin-bottom: 5px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .meta-item {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .meta-dot { color: var(--border); margin: 0 2px; }
+
+  .header-right { text-align: right; flex-shrink: 0; }
+  .duration-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--purple-lt);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 24px;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .audience-tag {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════
+     CASE STUDY BANNER
+  ════════════════════════════════════════ */
+  .case-banner {
+    background: linear-gradient(135deg, var(--purple-bg) 0%, var(--purple-mid) 100%);
+    border: 1px solid var(--purple-bdr);
+    border-left: 4px solid var(--purple-lt);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .case-emoji {
+    font-size: 26px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+  .case-body {}
+  .case-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--purple-lt);
+    margin-bottom: 3px;
+  }
+  .case-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #4c1d95;
+    margin-bottom: 5px;
+    line-height: 1.35;
+  }
+  .case-desc {
+    font-size: 11px;
+    color: #5b21b6;
+    line-height: 1.55;
+  }
+  .case-desc strong { font-weight: 700; color: #3b0764; }
+
+  /* ════════════════════════════════════════
+     SECTION LABEL
+  ════════════════════════════════════════ */
+  .section-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--purple-lt);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ════════════════════════════════════════
+     LEARNING OUTCOMES
+  ════════════════════════════════════════ */
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-bottom: 22px;
+  }
+  .outcome-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+  }
+  .outcome-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--purple-lt);
+    color: var(--white);
+    font-size: 9.5px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .outcome-text {
+    font-size: 11px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════
+     SESSION TIMELINE TABLE
+  ════════════════════════════════════════ */
+  .timeline-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 22px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .timeline-table thead tr th {
+    background: var(--purple-lt);
+    color: var(--white);
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .timeline-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .timeline-table tbody tr:nth-child(even) { background: var(--surface); }
+  .timeline-table tbody tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+  .timeline-table tbody tr:last-child td:last-child  { border-radius: 0 0 10px 0; }
+
+  .timeline-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .timeline-table tbody tr:last-child td { border-bottom: none; }
+
+  .t-time  { font-weight: 800; color: var(--purple-lt); white-space: nowrap; font-size: 10.5px; font-variant-numeric: tabular-nums; }
+  .t-phase { font-weight: 700; color: var(--ink); font-size: 11px; white-space: nowrap; }
+  .t-desc  { color: var(--ink-3); line-height: 1.55; }
+  .t-desc em { color: var(--ink-2); font-style: italic; }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 9.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .pill-discuss  { background: #dbeafe; color: #1e40af; }
   .pill-activity { background: #d1fae5; color: #065f46; }
-  .pill-sim      { background: #ede9fe; color: #5b21b6; }
+  .pill-roleplay { background: #fce7f3; color: #9d174d; }
+  .pill-sim      { background: var(--purple-mid); color: #5b21b6; }
   .pill-demo     { background: #fef3c7; color: #92400e; }
+  .pill-writing  { background: #e0f2fe; color: #0369a1; }
+  .pill-group    { background: #ecfdf5; color: #047857; }
   .pill-quiz     { background: #fee2e2; color: #991b1b; }
-  .pill-reflect  { background: #f1f5f9; color: #334155; }
+  .pill-reflect  { background: var(--surface); color: var(--ink-3); border: 1px solid var(--border); }
 
-  /* ── Teaching approach ── */
-  .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-  .approach-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; background: white; }
-  .approach-card .icon { font-size: 18px; margin-bottom: 5px; }
-  .approach-card h4 { font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 3px; }
-  .approach-card p  { font-size: 11px; color: #64748b; line-height: 1.45; }
+  /* ════════════════════════════════════════
+     TEACHING APPROACH
+  ════════════════════════════════════════ */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 22px;
+  }
+  .approach-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 13px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .approach-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple-lt), #a78bfa);
+  }
+  .approach-icon { font-size: 17px; margin-bottom: 6px; display: block; }
+  .approach-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .approach-desc {
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
 
-  /* ── Footer ── */
-  .footer { border-top: 1px solid #e2e8f0; padding-top: 10px; margin-top: 8px; display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; }
+  /* ════════════════════════════════════════
+     KEY TAKEAWAY BOX
+  ════════════════════════════════════════ */
+  .takeaway {
+    background: var(--purple-bg);
+    border: 1px solid var(--purple-bdr);
+    border-radius: 10px;
+    padding: 13px 16px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .takeaway-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .takeaway-text {
+    font-size: 11.5px;
+    color: #3b0764;
+    line-height: 1.6;
+    font-style: italic;
+    font-weight: 500;
+  }
+  .takeaway-text strong { font-style: normal; font-weight: 700; }
 
-  @media print { body { font-size: 12px; } .no-print { display: none; } }
+  /* ════════════════════════════════════════
+     FOOTER
+  ════════════════════════════════════════ */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left  { font-size: 10px; font-weight: 600; color: var(--muted); }
+  .footer-right { font-size: 10px; color: var(--muted-lt); }
+  .footer-dot   { display: inline-block; width: 3px; height: 3px; border-radius: 50%; background: var(--purple-lt); margin: 0 6px; vertical-align: middle; }
+
+  @media print {
+    body  { font-size: 11px; }
+    .page { padding: 0; }
+    .no-print { display: none !important; }
+  }
 </style>
 </head>
 <body>
+<div class="page">
 
-<!-- ── HEADER ── -->
-<div class="header">
-  <div class="header-left">
-    <h1>Business Analysis Workshop — Session Plan</h1>
-    <p>Instructor: Madhuri Salunke &nbsp;·&nbsp; Subject: Business Analysis &nbsp;·&nbsp; Level: MBA</p>
+<!-- ════ HEADER ════ -->
+<header class="header">
+  <div>
+    <p class="header-eyebrow">MBA Guest Session &nbsp;·&nbsp; Business Analysis</p>
+    <h1 class="header-title">Business Analyst<br>Workshop — Session Plan</h1>
+    <div class="header-meta">
+      <span class="meta-item">👩‍💼 Madhuri Salunke</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">Senior Product Owner, Vois</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-item">IIBA-CBAP Trained</span>
+    </div>
   </div>
   <div class="header-right">
-    <div class="badge">75 Minutes</div>
-    <div class="meta">Audience: MBA Students (Batch Size: 30–60)</div>
+    <div class="duration-badge">⏱ 75 Minutes</div>
+    <div class="audience-tag">MBA Students &nbsp;·&nbsp; Batch 30–60</div>
   </div>
-</div>
+</header>
 
-<!-- ── CASE STUDY BANNER ── -->
+<!-- ════ CASE STUDY ════ -->
 <div class="case-banner">
-  <div class="emoji">🛒</div>
-  <div>
-    <h3>Real-Life Case Study: ShopEase — "Why is this e-commerce company losing ₹64 Crore every month?"</h3>
-    <p>
+  <div class="case-emoji">🛒</div>
+  <div class="case-body">
+    <p class="case-label">Real-Life Case Study</p>
+    <p class="case-title">ShopEase — "Why is this e-commerce company losing ₹64 Crore every month?"</p>
+    <p class="case-desc">
       ShopEase is a fast-growing Indian e-commerce platform that accepts only Cash on Delivery.
-      A customer named Priya wants to buy a ₹12,000 kitchen appliance — but there's no digital payment option.
-      She leaves and buys from Amazon. This session puts <strong>students in the role of Business Analysts</strong> hired
-      to investigate the problem and design a solution: a 6-method digital payment portal.
-      Every concept taught — stakeholders, BRD, user stories, UAT — is applied directly to this live scenario.
+      Customer Priya wants to buy a ₹12,000 appliance — no digital payment option exists, so she leaves and buys from Amazon.
+      This session puts <strong>students in the role of Business Analysts</strong> hired to investigate the problem and build
+      a 6-method digital payment portal — applying every BA concept (stakeholders, BRD, user stories, UAT) to this live scenario.
     </p>
   </div>
 </div>
 
-<!-- ── LEARNING OUTCOMES ── -->
-<h2>Learning Outcomes — By end of session, students will be able to:</h2>
-<div class="outcomes">
-  <div class="outcome-item"><div class="outcome-dot">1</div><p>Define a Business Problem Statement using real data (revenue loss, abandonment rate)</p></div>
-  <div class="outcome-item"><div class="outcome-dot">2</div><p>Identify and map stakeholders across a real payment ecosystem (customers, banks, RBI, dev team)</p></div>
-  <div class="outcome-item"><div class="outcome-dot">3</div><p>Write a BRD, User Story, and Acceptance Criteria for a digital feature</p></div>
-  <div class="outcome-item"><div class="outcome-dot">4</div><p>Design UAT scenarios that test both success and failure paths</p></div>
-  <div class="outcome-item"><div class="outcome-dot">5</div><p>Explain how a BA bridges business problems and technical delivery</p></div>
-  <div class="outcome-item"><div class="outcome-dot">6</div><p>Apply BA methodology to any real industry problem, not just e-commerce</p></div>
+<!-- ════ LEARNING OUTCOMES ════ -->
+<p class="section-label">Learning Outcomes</p>
+<div class="outcomes-grid">
+  <div class="outcome-card"><div class="outcome-num">1</div><p class="outcome-text">Define a Business Problem Statement using real revenue data and customer behaviour metrics</p></div>
+  <div class="outcome-card"><div class="outcome-num">2</div><p class="outcome-text">Identify and map stakeholders across a real payment ecosystem (Priya, banks, NPCI, RBI, dev team)</p></div>
+  <div class="outcome-card"><div class="outcome-num">3</div><p class="outcome-text">Write a BRD, User Story, and Acceptance Criteria for a live digital payment feature</p></div>
+  <div class="outcome-card"><div class="outcome-num">4</div><p class="outcome-text">Design UAT scenarios that cover success, failure, and edge-case payment paths</p></div>
+  <div class="outcome-card"><div class="outcome-num">5</div><p class="outcome-text">Explain how a BA bridges business problems and technical delivery teams</p></div>
+  <div class="outcome-card"><div class="outcome-num">6</div><p class="outcome-text">Apply BA methodology to any real industry problem — not just e-commerce</p></div>
 </div>
 
-<!-- ── SESSION TIMELINE ── -->
-<h2>Session Timeline</h2>
-<table>
+<!-- ════ SESSION TIMELINE ════ -->
+<p class="section-label">Session Timeline</p>
+<table class="timeline-table">
   <thead>
     <tr>
-      <th style="width:52px;">Time</th>
-      <th style="width:160px;">Phase</th>
-      <th>What Happens</th>
-      <th style="width:90px;">Method</th>
+      <th style="width:58px;">Time</th>
+      <th style="width:158px;">Phase</th>
+      <th>What Students Do</th>
+      <th style="width:82px; text-align:center;">Method</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="time-cell">0–5 min</td>
-      <td class="phase-cell">🎯 Hook: Meet Priya</td>
-      <td>Students hear Priya's story — she abandons her ₹12,000 order because ShopEase has no digital payment. Instructor asks: <em>"Has this happened to you?"</em> — hands go up. Students are now emotionally invested in solving it.</td>
-      <td><span class="method-pill pill-discuss">Discussion</span></td>
+      <td class="t-time">0 – 5 min</td>
+      <td class="t-phase">🎯 Hook: Meet Priya</td>
+      <td class="t-desc">Hear Priya's story — she abandons a ₹12,000 order because ShopEase has no digital payment. Instructor asks <em>"Has this happened to you?"</em> Hands go up. Students are immediately invested in solving a problem they've lived.</td>
+      <td style="text-align:center;"><span class="pill pill-discuss">Discussion</span></td>
     </tr>
     <tr>
-      <td class="time-cell">5–15 min</td>
-      <td class="phase-cell">📊 Business Problem</td>
-      <td>Students see the data: 86,000 cart abandonments/month, 34% COD return rate, ₹64 Crore/month loss. They write a one-sentence Business Problem Statement — then compare with the formal BA version. Students see the difference between casual language and structured BA thinking.</td>
-      <td><span class="method-pill pill-activity">Activity</span></td>
+      <td class="t-time">5 – 15 min</td>
+      <td class="t-phase">📊 Business Problem</td>
+      <td class="t-desc">See the numbers: 86,000 cart abandonments/month, 34% COD return rate, ₹64 Crore/month loss. <strong>Write their own Business Problem Statement</strong> — then compare it with the formal BA version. Instantly see the difference between casual language and structured BA thinking.</td>
+      <td style="text-align:center;"><span class="pill pill-activity">Activity</span></td>
     </tr>
     <tr>
-      <td class="time-cell">15–25 min</td>
-      <td class="phase-cell">👥 Stakeholder Mapping</td>
-      <td>Who has a stake in ShopEase's payment portal? Students map 8 stakeholders — from Priya to NPCI to RBI. Role-play: one student speaks as Finance team, one as Dev team. They discover conflicting requirements — a core BA challenge.</td>
-      <td><span class="method-pill pill-activity">Role-Play</span></td>
+      <td class="t-time">15 – 25 min</td>
+      <td class="t-phase">👥 Stakeholder Mapping</td>
+      <td class="t-desc"><strong>Map 8 stakeholders</strong> — from Priya to NPCI to RBI. Role-play: one student speaks as Finance, another as Dev Team. They discover conflicting requirements first-hand — the core BA challenge no lecture can teach.</td>
+      <td style="text-align:center;"><span class="pill pill-roleplay">Role-Play</span></td>
     </tr>
     <tr>
-      <td class="time-cell">25–35 min</td>
-      <td class="phase-cell">🗺️ As-Is → To-Be Process</td>
-      <td>Side-by-side comparison: ShopEase today (COD only) vs. the future state (6 payment methods). Students identify process gaps and understand why process mapping comes before writing any requirement.</td>
-      <td><span class="method-pill pill-demo">Demo</span></td>
+      <td class="t-time">25 – 35 min</td>
+      <td class="t-phase">🗺️ As-Is → To-Be</td>
+      <td class="t-desc">View the COD-only flow vs. the future 6-method payment portal side by side. <strong>Identify the process gaps</strong> and understand why mapping comes before writing any requirement — a lesson that prevents real-world rework.</td>
+      <td style="text-align:center;"><span class="pill pill-demo">Demo</span></td>
     </tr>
     <tr>
-      <td class="time-cell">35–45 min</td>
-      <td class="phase-cell">💳 Live Payment Simulator</td>
-      <td>Students experience a live payment flow simulator — instructor taps through each step (App → Gateway → Bank → Callback → Notification), dot by dot. When the "Callback Failure" scenario is triggered, students discover what the BA must define: reconciliation, auto-refund, and customer notification.</td>
-      <td><span class="method-pill pill-sim">Simulator</span></td>
+      <td class="t-time">35 – 45 min</td>
+      <td class="t-phase">💳 Live Simulator</td>
+      <td class="t-desc">Experience a live payment flow simulator — instructor taps each step (App → Gateway → Bank → Callback → Notification) one by one. A <strong>deliberate failure scenario</strong> is triggered: students must define what the BA must specify — reconciliation, auto-refund, and customer notification.</td>
+      <td style="text-align:center;"><span class="pill pill-sim">Simulator</span></td>
     </tr>
     <tr>
-      <td class="time-cell">45–55 min</td>
-      <td class="phase-cell">📄 BRD + User Stories</td>
-      <td>Students write their first User Story: <em>"As Priya, I want to pay via UPI so that I can complete my purchase in under 10 seconds."</em> They then add Acceptance Criteria — the testable conditions that define "done." Instructor reveals common mistakes students make at this stage.</td>
-      <td><span class="method-pill pill-activity">Writing</span></td>
+      <td class="t-time">45 – 55 min</td>
+      <td class="t-phase">📄 BRD + User Stories</td>
+      <td class="t-desc"><strong>Write their first User Story:</strong> <em>"As Priya, I want to pay via UPI so that I can complete my purchase in under 10 seconds."</em> Then add Acceptance Criteria — the testable conditions that define "done." Instructor shows the most common mistakes made at this stage.</td>
+      <td style="text-align:center;"><span class="pill pill-writing">Writing</span></td>
     </tr>
     <tr>
-      <td class="time-cell">55–65 min</td>
-      <td class="phase-cell">🧪 UAT Scenarios</td>
-      <td>Groups write UAT test cases covering success, failure, and edge cases for ShopEase's payment portal. Students discover that UAT is not just "does it work?" — it is validation that the business need is fully met.</td>
-      <td><span class="method-pill pill-activity">Group Work</span></td>
+      <td class="t-time">55 – 65 min</td>
+      <td class="t-phase">🧪 UAT Scenarios</td>
+      <td class="t-desc"><strong>Groups write UAT test cases</strong> covering success, failure, and edge cases. Students discover UAT is not "does it work?" — it is validation that the business need is fully met. A BA's Acceptance Criteria quality directly determines UAT quality.</td>
+      <td style="text-align:center;"><span class="pill pill-group">Group Work</span></td>
     </tr>
     <tr>
-      <td class="time-cell">65–70 min</td>
-      <td class="phase-cell">❓ Concept Quiz</td>
-      <td>Quick-fire quiz: students apply what they've learned to a new scenario (not ShopEase). Tests whether they can transfer BA skills, not just recall the case study.</td>
-      <td><span class="method-pill pill-quiz">Quiz</span></td>
+      <td class="t-time">65 – 70 min</td>
+      <td class="t-phase">❓ Concept Quiz</td>
+      <td class="t-desc">Quick-fire quiz using a <strong>new scenario</strong> (not ShopEase). Tests whether BA skills transfer — not just recall of the case study. Students apply what they've learned to an unfamiliar context.</td>
+      <td style="text-align:center;"><span class="pill pill-quiz">Quiz</span></td>
     </tr>
     <tr>
-      <td class="time-cell">70–75 min</td>
-      <td class="phase-cell">🏆 Takeaway & Q&A</td>
-      <td>One sentence per student: <em>"The one thing I'm taking from today is..."</em> Instructor connects the session back to career relevance — where BAs work, what they earn, what makes a great BA vs. an average one.</td>
-      <td><span class="method-pill pill-reflect">Reflection</span></td>
+      <td class="t-time">70 – 75 min</td>
+      <td class="t-phase">🏆 Takeaway & Q&A</td>
+      <td class="t-desc">One sentence each: <em>"The one thing I'm taking from today is…"</em> Instructor connects to career relevance — where BAs work, what they earn, and what separates a great BA from an average one. Open Q&A.</td>
+      <td style="text-align:center;"><span class="pill pill-reflect">Reflection</span></td>
     </tr>
   </tbody>
 </table>
 
-<!-- ── TEACHING APPROACH ── -->
-<h2>Teaching Approach</h2>
+<!-- ════ TEACHING APPROACH ════ -->
+<p class="section-label">Teaching Approach</p>
 <div class="approach-grid">
   <div class="approach-card">
-    <div class="icon">🎭</div>
-    <h4>Case-Based Learning</h4>
-    <p>Every concept is introduced through ShopEase, not through theory. Students never hear "a Business Problem Statement is defined as..." — they discover it by doing it.</p>
+    <span class="approach-icon">🎭</span>
+    <p class="approach-title">Case-Based Learning</p>
+    <p class="approach-desc">Every concept is introduced through ShopEase, not through theory. Students never hear definitions — they discover them by doing.</p>
   </div>
   <div class="approach-card">
-    <div class="icon">💻</div>
-    <h4>Interactive Digital Tools</h4>
-    <p>A custom-built BA simulator lets students experience the payment flow, write live artifacts, and see real-time output — not just listen to slides.</p>
+    <span class="approach-icon">💻</span>
+    <p class="approach-title">Interactive Digital Tools</p>
+    <p class="approach-desc">A custom BA simulator lets students experience the live payment flow, write artifacts, and see real-time output — not just listen to slides.</p>
   </div>
   <div class="approach-card">
-    <div class="icon">🙋</div>
-    <h4>Student-Led Discovery</h4>
-    <p>Students write the Problem Statement before it's revealed. They map stakeholders before the instructor does. They discover gaps themselves — the instructor confirms, not dictates.</p>
+    <span class="approach-icon">🙋</span>
+    <p class="approach-title">Student-Led Discovery</p>
+    <p class="approach-desc">Students write the Problem Statement before it's revealed. They map stakeholders before the instructor. They discover gaps themselves.</p>
   </div>
   <div class="approach-card">
-    <div class="icon">⚡</div>
-    <h4>Failure is a Teaching Moment</h4>
-    <p>The payment simulator includes a deliberate failure scenario. Students learn what happens when a BA misses a requirement — through simulation, not lecture.</p>
+    <span class="approach-icon">⚡</span>
+    <p class="approach-title">Failure as Teaching Moment</p>
+    <p class="approach-desc">A deliberate failure in the payment simulator shows what happens when a BA misses a requirement — through experience, not lecture.</p>
   </div>
   <div class="approach-card">
-    <div class="icon">🏭</div>
-    <h4>Industry Relevance</h4>
-    <p>ShopEase mirrors real Indian fintech challenges: UPI adoption, RBI compliance, PCI-DSS, COD return rates. MBA students recognise these from business news.</p>
+    <span class="approach-icon">🏭</span>
+    <p class="approach-title">Industry Relevance</p>
+    <p class="approach-desc">ShopEase mirrors real Indian fintech challenges: UPI adoption, RBI compliance, PCI-DSS, COD return rates — MBA students recognise these from business news.</p>
   </div>
   <div class="approach-card">
-    <div class="icon">🔄</div>
-    <h4>Full BA Lifecycle</h4>
-    <p>In 75 minutes, students complete the full BA workflow: Problem → Stakeholders → Process → Requirements → UAT. They leave with a complete mental model.</p>
+    <span class="approach-icon">🔄</span>
+    <p class="approach-title">Full BA Lifecycle</p>
+    <p class="approach-desc">In 75 minutes, students complete the entire BA workflow: Problem → Stakeholders → Process → Requirements → UAT. One complete mental model.</p>
   </div>
 </div>
 
-<!-- ── FOOTER ── -->
-<div class="footer">
-  <span>Madhuri Salunke — Business Analysis Workshop</span>
-  <span>Session Duration: 75 Minutes · MBA Level · Case Study: ShopEase</span>
+<!-- ════ KEY TAKEAWAY ════ -->
+<div class="takeaway">
+  <span class="takeaway-icon">💡</span>
+  <p class="takeaway-text">
+    <strong>Core Message:</strong> A Business Analyst does not build the solution.
+    A Business Analyst ensures the <em>right</em> solution gets built — for the right people — with measurable outcomes.
+    Priya started as an abandoned cart statistic. She ends as a confirmed sale.
+    The BA made that possible — not by writing code, but by thinking clearly and documenting precisely.
+  </p>
 </div>
 
+<!-- ════ FOOTER ════ -->
+<footer class="footer">
+  <span class="footer-left">Madhuri Salunke <span class="footer-dot"></span> Senior Product Owner, Vois <span class="footer-dot"></span> IIBA-CBAP Trained</span>
+  <span class="footer-right">75 Min &nbsp;·&nbsp; MBA Level &nbsp;·&nbsp; Case Study: ShopEase Payment Portal</span>
+</footer>
+
+</div><!-- /page -->
 </body>
 </html>`
 }
