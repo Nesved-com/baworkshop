@@ -536,17 +536,6 @@ function buildAudiencePlan(): string {
   </div>
 </div>
 
-<!-- ════ KEY TAKEAWAY ════ -->
-<div class="takeaway">
-  <span class="takeaway-icon">💡</span>
-  <p class="takeaway-text">
-    <strong>Core Message:</strong> A Business Analyst does not build the solution.
-    A Business Analyst ensures the <em>right</em> solution gets built — for the right people — with measurable outcomes.
-    Priya started as an abandoned cart statistic. She ends as a confirmed sale.
-    The BA made that possible — not by writing code, but by thinking clearly and documenting precisely.
-  </p>
-</div>
-
 <!-- ════ FOOTER ════ -->
 <footer class="footer">
   <span class="footer-left">Madhuri Salunke <span class="footer-dot"></span> Senior Product Owner, Vois <span class="footer-dot"></span> IIBA-CBAP Trained</span>
