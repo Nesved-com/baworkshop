@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FileText, Download, Presentation, X, ClipboardList } from 'lucide-react'
 import { MISSION_META } from '../../data/missionWorkshop'
+import PptxGenJS from 'pptxgenjs'
 
 // 75-min ordered sections with display labels
 const PLAN_SECTIONS = [
@@ -736,10 +737,270 @@ export function SessionPlanExport({ onClose }: Props) {
     setTimeout(() => setDownloading(null), 800)
   }
 
-  const handlePpt = () => {
+  const handlePpt = async () => {
     setDownloading('ppt')
-    downloadFile(buildPptxLike(), 'ShopEase-BA-Workshop-Slide-Deck.html', 'text/html')
-    setTimeout(() => setDownloading(null), 800)
+    try {
+      const pptx = new PptxGenJS()
+      pptx.layout  = 'LAYOUT_WIDE'   // 16:9
+      pptx.author  = 'Madhuri Salunke'
+      pptx.company = 'BA Workshop — ShopEase Case Study'
+      pptx.subject = 'Business Analysis Workshop'
+      pptx.title   = 'ShopEase BA Workshop'
+
+      const PURPLE = '6d28d9'
+      const WHITE  = 'ffffff'
+      const DARK   = '0f172a'
+      const LIGHT  = 'f5f3ff'
+      const MUTED  = '64748b'
+
+      const slides = [
+        {
+          title: 'Business Analyst\nInteractive Workshop',
+          subtitle: 'Case Study: ShopEase — Converting a ₹64 Crore Problem into a Payment Portal',
+          tag: 'MBA Guest Session · 75 Minutes',
+          type: 'hero',
+        },
+        {
+          title: '🛒 Meet Priya',
+          subtitle: 'The ₹64 Crore Problem',
+          tag: 'The Hook',
+          bullets: [
+            'Priya wants to buy a ₹12,000 kitchen appliance on ShopEase',
+            'Only payment option: Cash on Delivery',
+            'She leaves and buys from Amazon — in 30 seconds',
+            '86,000 customers like Priya abandon ShopEase every month',
+            'ShopEase loses ₹64 Crore/month — because of one missing feature',
+            'Your mission: Solve this as a Business Analyst',
+          ],
+          type: 'content',
+        },
+        {
+          title: '📊 Business Problem Statement',
+          subtitle: 'From Data to Structured Problem',
+          tag: 'Step 1 · 10 min',
+          bullets: [
+            '43% cart abandonment rate at the payment screen',
+            '86,000 lost orders per month',
+            '34% COD return rate — cash collection cost ₹18 Crore/year',
+            'Competitor average: 15+ payment methods',
+            'Problem: ShopEase loses ₹64 Cr/month because COD-only checkout fails digital-first customers',
+            'BA deliverable: One crisp, quantified Business Problem Statement',
+          ],
+          type: 'content',
+        },
+        {
+          title: '👥 Stakeholder Analysis',
+          subtitle: 'Who Has a Stake in the Payment Portal?',
+          tag: 'Step 2 · 8 min',
+          bullets: [
+            '🛍️ Customer (Priya) — wants fast, familiar digital payment',
+            '🏦 Banks & NBFCs — provide card and EMI authorization',
+            '⚡ Payment Gateway (Razorpay) — single API to all methods',
+            '💻 Dev Team — needs clear BRD and acceptance criteria',
+            '📊 Finance Team — wants T+1 settlement, not 3-day manual COD',
+            '🏢 ShopEase CEO — wants ₹64 Crore recovered within 2 quarters',
+          ],
+          type: 'content',
+        },
+        {
+          title: '🗺️ As-Is → To-Be Process',
+          subtitle: 'Mapping the Gap the BA Must Bridge',
+          tag: 'Step 3 · 8 min',
+          bullets: [
+            'AS-IS: Browse → Cart → Checkout → COD only → Wait for delivery → Cash collection',
+            '6 pain points: No digital payment, no instant confirmation, no EMI, high returns...',
+            'TO-BE: 6 payment methods — UPI, Card, Net Banking, EMI, Wallet, BNPL',
+            'BA maps the gap between current state and desired state',
+            'Every gap = a requirement to document',
+            'Process mapping always comes BEFORE writing requirements',
+          ],
+          type: 'content',
+        },
+        {
+          title: '💳 Live Payment Flow Simulator',
+          subtitle: 'Experiencing the To-Be System as a Customer',
+          tag: 'Step 4 · 10 min',
+          bullets: [
+            'Live simulator: Customer App → ShopEase → Razorpay → Bank → Callback → SMS',
+            'Instructor taps through each step — students see the flow in real time',
+            'Deliberate FAILURE scenario: Callback fails — what does the BA define?',
+            'BA must specify: reconciliation, auto-refund, customer notification',
+            'Key insight: every arrow in the flow is a requirement',
+            'One missed integration = one production incident',
+          ],
+          type: 'content',
+        },
+        {
+          title: '📄 BRD + User Stories',
+          subtitle: 'Writing the Requirements the Dev Team Needs',
+          tag: 'Step 5 · 10 min',
+          bullets: [
+            'BRD: 8 sections — scope, stakeholders, functional/non-functional requirements, rules, risks',
+            'User Story format: As [Priya], I want [to pay via UPI] so that [I complete in <10 sec]',
+            '"So that" = the business justification — never optional',
+            'Acceptance Criteria: Given/When/Then — testable, binary (pass/fail)',
+            'Student activity: write user story + 3 AC for UPI payment',
+            'Common mistake: AC that cannot be answered YES or NO',
+          ],
+          type: 'content',
+        },
+        {
+          title: '🧪 UAT Scenarios',
+          subtitle: 'Validating the Business Need is Fully Met',
+          tag: 'Step 6 · 10 min',
+          bullets: [
+            'UAT = did we build the RIGHT thing? (not just "does it work?")',
+            'Groups write test cases: Happy path, Failure path, Edge cases',
+            'Happy path: Priya pays ₹12,000 via UPI — confirmed in 3 sec',
+            'Failure path: Insufficient funds — clear error, cart preserved, retry option',
+            'Edge case: UPI timeout after 5 min — order NOT created',
+            'If AC were precise → UAT scenarios write themselves',
+          ],
+          type: 'content',
+        },
+        {
+          title: '❓ Concept Quiz',
+          subtitle: 'Applying BA Skills to a New Scenario',
+          tag: 'Step 7 · 5 min',
+          bullets: [
+            'Quick-fire questions on a NEW scenario (not ShopEase)',
+            'Tests skill transfer — not just case study recall',
+            'Q: "What is the FIRST step a BA takes on a new project?"',
+            'Q: "Write one Acceptance Criterion for an EMI payment"',
+            'Q: "Which stakeholder would block go-live if not consulted?"',
+            'Instant reveal: right answer + explanation',
+          ],
+          type: 'content',
+        },
+        {
+          title: '🛠️ BA Toolkit',
+          subtitle: 'Tools Real Business Analysts Use Every Day',
+          tag: 'Reference',
+          bullets: [
+            '📋 Jira — user stories, sprints, backlog management',
+            '📝 Confluence — BRD, meeting notes, requirement wikis',
+            '🎨 Figma — UI wireframes, prototypes, screen flows',
+            '📊 Lucidchart / draw.io — As-Is / To-Be process diagrams',
+            '🗒️ Miro — brainstorming, stakeholder maps, workshops',
+            '📈 Power BI / Excel — KPI dashboards, data analysis',
+          ],
+          type: 'content',
+        },
+        {
+          title: '🏆 The BA Journey — Complete',
+          subtitle: 'From ₹64 Crore Problem to Production-Ready Payment Portal',
+          tag: 'Summary',
+          bullets: [
+            '✅ Business Problem — ₹64 Cr/month loss identified & quantified',
+            '✅ Stakeholder Map — 6 stakeholders with goals & pain points',
+            '✅ As-Is/To-Be — COD flow mapped, 6-method portal designed',
+            '✅ BRD — 8 sections, business rules, success metrics',
+            '✅ User Stories — Priya-centred, "so that" value captured',
+            '✅ Acceptance Criteria — Given/When/Then, every path testable',
+            '✅ UAT — Happy path + failure path + edge cases covered',
+            'A BA ensures the RIGHT solution gets built — for the right people',
+          ],
+          type: 'summary',
+        },
+      ]
+
+      slides.forEach((slide, idx) => {
+        const s = pptx.addSlide()
+
+        // Background
+        s.background = { color: idx === 0 || slide.type === 'summary' ? DARK : WHITE }
+
+        // Purple accent bar at top
+        s.addShape(pptx.ShapeType.rect, {
+          x: 0, y: 0, w: '100%', h: 0.08,
+          fill: { color: PURPLE },
+          line: { color: PURPLE },
+        })
+
+        // Tag pill (top right)
+        if (slide.tag) {
+          s.addText(slide.tag, {
+            x: 7.2, y: 0.15, w: 2.6, h: 0.3,
+            fontSize: 9, bold: true, color: WHITE,
+            fill: { color: PURPLE },
+            align: 'center', valign: 'middle',
+            shape: pptx.ShapeType.roundRect,
+          })
+        }
+
+        const isHero    = idx === 0
+        const isSummary = slide.type === 'summary'
+        const textColor = isHero || isSummary ? WHITE : DARK
+
+        // Title
+        s.addText(slide.title, {
+          x: 0.5, y: isHero ? 1.4 : 0.55,
+          w: 9, h: isHero ? 1.5 : 0.85,
+          fontSize: isHero ? 36 : 24,
+          bold: true,
+          color: textColor,
+          fontFace: 'Calibri',
+        })
+
+        // Subtitle
+        s.addText(slide.subtitle, {
+          x: 0.5, y: isHero ? 3.0 : 1.45,
+          w: 9, h: 0.5,
+          fontSize: isHero ? 14 : 13,
+          color: isHero || isSummary ? 'c4b5fd' : MUTED,
+          fontFace: 'Calibri',
+          italic: !isHero,
+        })
+
+        // Divider line
+        if (!isHero) {
+          s.addShape(pptx.ShapeType.line, {
+            x: 0.5, y: 1.98, w: 9, h: 0,
+            line: { color: 'e2e8f0', width: 1 },
+          })
+        }
+
+        // Bullets
+        if (slide.bullets) {
+          const bulletItems = slide.bullets.map(b => ({
+            text: b,
+            options: {
+              bullet: isSummary
+                ? false
+                : { type: 'number' as const, style: 'arabicPeriod' as const },
+              color: isHero || isSummary ? WHITE : DARK,
+              fontSize: 13,
+              breakLine: true,
+              paraSpaceAfter: 4,
+            },
+          }))
+
+          s.addText(bulletItems, {
+            x: 0.5, y: 2.1, w: 9.2, h: 4.5,
+            fontFace: 'Calibri',
+            lineSpacingMultiple: 1.15,
+          })
+        }
+
+        // Instructor credit on hero
+        if (isHero) {
+          s.addText('Madhuri Salunke  ·  Senior Product Owner, Vois  ·  IIBA-CBAP Trained', {
+            x: 0.5, y: 4.6, w: 9, h: 0.35,
+            fontSize: 11, color: 'a78bfa', italic: true, fontFace: 'Calibri',
+          })
+        }
+
+        // Slide number
+        s.addText(`${idx + 1} / ${slides.length}`, {
+          x: 9.2, y: 5.35, w: 0.6, h: 0.2,
+          fontSize: 8, color: MUTED, align: 'right',
+        })
+      })
+
+      await pptx.writeFile({ fileName: 'ShopEase-BA-Workshop.pptx' })
+    } finally {
+      setDownloading(null)
+    }
   }
 
   return (
@@ -842,8 +1103,8 @@ export function SessionPlanExport({ onClose }: Props) {
               <Presentation className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 text-left">
-              <p className="text-sm font-bold text-orange-800">Download Slide Deck</p>
-              <p className="text-xs text-orange-600">15 slide-format pages · Print or open in browser</p>
+              <p className="text-sm font-bold text-orange-800">Download PowerPoint (.pptx)</p>
+              <p className="text-xs text-orange-600">10 slides · Opens in PowerPoint, Keynote, or Google Slides</p>
             </div>
             <Download className="w-4 h-4 text-orange-400 group-hover:text-orange-600 transition-colors" />
           </motion.button>
