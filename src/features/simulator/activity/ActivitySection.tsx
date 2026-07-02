@@ -13,7 +13,7 @@ const ACTIVITIES = [
     title: 'Activity 1: Identify Stakeholders',
     prompt: 'ShopEase is building a digital payment portal. List ALL stakeholders who are affected. For each, state their PRIMARY goal and their biggest fear.',
     solution: `Key Stakeholders:
-1. Customer (Priya) — Goal: Pay easily with any method. Fear: Card fraud / money lost
+1. Customer (Rahul) — Goal: Pay easily with any method. Fear: Card fraud / money lost
 2. Bank / NBFC — Goal: More digital transactions. Fear: Failed authorization hurting trust
 3. Payment Gateway (Razorpay) — Goal: High transaction volume. Fear: Merchant chargeback disputes
 4. ShopEase Dev Team — Goal: Clean integration. Fear: Unclear requirements causing rework

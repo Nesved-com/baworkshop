@@ -415,7 +415,7 @@ function buildAudiencePlan(): string {
     <p class="case-title">ShopEase — "Why is this e-commerce company losing ₹64 Crore every month?"</p>
     <p class="case-desc">
       ShopEase is a fast-growing Indian e-commerce platform that accepts only Cash on Delivery.
-      Customer Priya wants to buy a ₹12,000 appliance — no digital payment option exists, so she leaves and buys from Amazon.
+      Customer Rahul wants to buy a ₹12,000 appliance — no digital payment option exists, so she leaves and buys from Amazon.
       This session puts <strong>students in the role of Business Analysts</strong> hired to investigate the problem and build
       a 6-method digital payment portal — applying every BA concept (stakeholders, BRD, user stories, UAT) to this live scenario.
     </p>
@@ -426,7 +426,7 @@ function buildAudiencePlan(): string {
 <p class="section-label">Learning Outcomes</p>
 <div class="outcomes-grid">
   <div class="outcome-card"><div class="outcome-num">1</div><p class="outcome-text">Define a Business Problem Statement using real revenue data and customer behaviour metrics</p></div>
-  <div class="outcome-card"><div class="outcome-num">2</div><p class="outcome-text">Identify and map stakeholders across a real payment ecosystem (Priya, banks, Razorpay, dev team, finance, CEO)</p></div>
+  <div class="outcome-card"><div class="outcome-num">2</div><p class="outcome-text">Identify and map stakeholders across a real payment ecosystem (Rahul, banks, Razorpay, dev team, finance, CEO)</p></div>
   <div class="outcome-card"><div class="outcome-num">3</div><p class="outcome-text">Write a BRD, User Story, and Acceptance Criteria for a live digital payment feature</p></div>
   <div class="outcome-card"><div class="outcome-num">4</div><p class="outcome-text">Design UAT scenarios that cover success, failure, and edge-case payment paths</p></div>
   <div class="outcome-card"><div class="outcome-num">5</div><p class="outcome-text">Explain how a BA bridges business problems and technical delivery teams</p></div>
@@ -447,8 +447,8 @@ function buildAudiencePlan(): string {
   <tbody>
     <tr>
       <td class="t-time">0 – 5 min</td>
-      <td class="t-phase">🎯 Hook: Meet Priya</td>
-      <td class="t-desc">Hear Priya's story — she abandons a ₹12,000 order because ShopEase has no digital payment. Instructor asks <em>"Has this happened to you?"</em> Hands go up. Students are immediately invested in solving a problem they've lived.</td>
+      <td class="t-phase">🎯 Hook: Meet Rahul</td>
+      <td class="t-desc">Hear Rahul's story — she abandons a ₹12,000 order because ShopEase has no digital payment. Instructor asks <em>"Has this happened to you?"</em> Hands go up. Students are immediately invested in solving a problem they've lived.</td>
       <td style="text-align:center;"><span class="pill pill-discuss">Discussion</span></td>
     </tr>
     <tr>
@@ -478,7 +478,7 @@ function buildAudiencePlan(): string {
     <tr>
       <td class="t-time">45 – 55 min</td>
       <td class="t-phase">📄 BRD + User Stories</td>
-      <td class="t-desc"><strong>Write their first User Story:</strong> <em>"As Priya, I want to pay via UPI so that I can complete my purchase in under 10 seconds."</em> Then add Acceptance Criteria — the testable conditions that define "done." Instructor shows the most common mistakes made at this stage.</td>
+      <td class="t-desc"><strong>Write their first User Story:</strong> <em>"As Rahul, I want to pay via UPI so that I can complete my purchase in under 10 seconds."</em> Then add Acceptance Criteria — the testable conditions that define "done." Instructor shows the most common mistakes made at this stage.</td>
       <td style="text-align:center;"><span class="pill pill-writing">Writing</span></td>
     </tr>
     <tr>
@@ -761,14 +761,14 @@ export function SessionPlanExport({ onClose }: Props) {
           type: 'hero',
         },
         {
-          title: '🛒 Meet Priya',
+          title: '🛒 Meet Rahul',
           subtitle: 'The ₹64 Crore Problem',
           tag: 'The Hook',
           bullets: [
-            'Priya wants to buy a ₹12,000 kitchen appliance on ShopEase',
+            'Rahul wants to buy a ₹12,000 kitchen appliance on ShopEase',
             'Only payment option: Cash on Delivery',
             'She leaves and buys from Amazon — in 30 seconds',
-            '86,000 customers like Priya abandon ShopEase every month',
+            '86,000 customers like Rahul abandon ShopEase every month',
             'ShopEase loses ₹64 Crore/month — because of one missing feature',
             'Your mission: Solve this as a Business Analyst',
           ],
@@ -793,7 +793,7 @@ export function SessionPlanExport({ onClose }: Props) {
           subtitle: 'Who Has a Stake in the Payment Portal?',
           tag: 'Step 2 · 8 min',
           bullets: [
-            '🛍️ Customer (Priya) — wants fast, familiar digital payment',
+            '🛍️ Customer (Rahul) — wants fast, familiar digital payment',
             '🏦 Banks & NBFCs — provide card and EMI authorization',
             '⚡ Payment Gateway (Razorpay) — single API to all methods',
             '💻 Dev Team — needs clear BRD and acceptance criteria',
@@ -836,7 +836,7 @@ export function SessionPlanExport({ onClose }: Props) {
           tag: 'Step 5 · 10 min',
           bullets: [
             'BRD: 8 sections — scope, stakeholders, functional/non-functional requirements, rules, risks',
-            'User Story format: As [Priya], I want [to pay via UPI] so that [I complete in <10 sec]',
+            'User Story format: As [Rahul], I want [to pay via UPI] so that [I complete in <10 sec]',
             '"So that" = the business justification — never optional',
             'Acceptance Criteria: Given/When/Then — testable, binary (pass/fail)',
             'Student activity: write user story + 3 AC for UPI payment',
@@ -851,7 +851,7 @@ export function SessionPlanExport({ onClose }: Props) {
           bullets: [
             'UAT = did we build the RIGHT thing? (not just "does it work?")',
             'Groups write test cases: Happy path, Failure path, Edge cases',
-            'Happy path: Priya pays ₹12,000 via UPI — confirmed in 3 sec',
+            'Happy path: Rahul pays ₹12,000 via UPI — confirmed in 3 sec',
             'Failure path: Insufficient funds — clear error, cart preserved, retry option',
             'Edge case: UPI timeout after 5 min — order NOT created',
             'If AC were precise → UAT scenarios write themselves',
@@ -895,7 +895,7 @@ export function SessionPlanExport({ onClose }: Props) {
             '✅ Stakeholder Map — 6 stakeholders with goals & pain points',
             '✅ As-Is/To-Be — COD flow mapped, 6-method portal designed',
             '✅ BRD — 8 sections, business rules, success metrics',
-            '✅ User Stories — Priya-centred, "so that" value captured',
+            '✅ User Stories — Rahul-centred, "so that" value captured',
             '✅ Acceptance Criteria — Given/When/Then, every path testable',
             '✅ UAT — Happy path + failure path + edge cases covered',
             'A BA ensures the RIGHT solution gets built — for the right people',

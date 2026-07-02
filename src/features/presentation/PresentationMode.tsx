@@ -23,7 +23,7 @@ interface Slide {
   type: SlideType
   title: string
   subtitle: string
-  priyaMoment?: string          // Priya story hook shown on slide
+  priyaMoment?: string          // Rahul story hook shown on slide
   keyTakeaway?: string          // Bold callout box per slide
   bullets?: string[]
   stats?: Stat[]
@@ -43,8 +43,8 @@ const SLIDES: Slide[] = [
     type: 'hero',
     title: 'Business Analyst Workshop',
     subtitle: 'ShopEase Case Study — COD to Digital Payment Portal',
-    priyaMoment: 'Priya wants to buy a ₹12,000 kitchen appliance on ShopEase. She reaches checkout and sees: "Cash on Delivery Only." She doesn\'t keep large cash at home. She closes the tab and buys from Amazon instead.',
-    keyTakeaway: 'Your mission today: Solve Priya\'s problem — and recover ₹64 Crore/month for ShopEase.',
+    priyaMoment: 'Rahul wants to buy a ₹12,000 kitchen appliance on ShopEase. She reaches checkout and sees: "Cash on Delivery Only." She doesn\'t keep large cash at home. She closes the tab and buys from Amazon instead.',
+    keyTakeaway: 'Your mission today: Solve Rahul\'s problem — and recover ₹64 Crore/month for ShopEase.',
     bullets: [
       'You are the Business Analyst hired by ShopEase leadership',
       'ShopEase has only COD — losing ₹64 Crore every month',
@@ -55,7 +55,7 @@ const SLIDES: Slide[] = [
 
 The client: ShopEase, a fast-growing Indian e-commerce company. The problem: they only accept Cash on Delivery. The business impact: ₹64 Crore in monthly revenue loss.
 
-Start with Priya's story on the slide. Ask the class: "Has anyone here ever abandoned an online purchase because the payment option wasn't available?" Almost every hand will go up. That is your hook — the class just became ShopEase's target customer.
+Start with Rahul's story on the slide. Ask the class: "Has anyone here ever abandoned an online purchase because the payment option wasn't available?" Almost every hand will go up. That is your hook — the class just became ShopEase's target customer.
 
 Your job today is not to explain BA theory. Your job is to guide them through doing BA work — the theory will emerge from the doing.`,
     duration: 3,
@@ -69,7 +69,7 @@ Your job today is not to explain BA theory. Your job is to guide them through do
     type: 'data',
     title: 'The Business Problem in Numbers',
     subtitle: 'Why ShopEase Cannot Wait Another Month',
-    priyaMoment: 'Priya is one of 86,000 customers who abandoned ShopEase this month. She didn\'t complain — she just left. ShopEase doesn\'t even know she was there.',
+    priyaMoment: 'Rahul is one of 86,000 customers who abandoned ShopEase this month. She didn\'t complain — she just left. ShopEase doesn\'t even know she was there.',
     stats: [
       { value: '2,00,000', label: 'Monthly Visitors', color: 'brand' },
       { value: '86,000', label: 'Cart Abandonments / Month', color: 'rose' },
@@ -101,9 +101,9 @@ Have students calculate: ₹64 Cr/month × 12 = ₹768 Crore annual loss. That i
     type: 'concept',
     title: 'Stakeholder Analysis',
     subtitle: 'Who Has a Stake in ShopEase\'s Payment Portal?',
-    priyaMoment: 'Priya is one stakeholder. But behind her abandoned cart are 5 other groups — each with different goals. The BA must understand ALL of them before writing a single requirement.',
+    priyaMoment: 'Rahul is one stakeholder. But behind her abandoned cart are 5 other groups — each with different goals. The BA must understand ALL of them before writing a single requirement.',
     bullets: [
-      '🛍️  Customer (Priya) — wants fast, familiar digital payment options',
+      '🛍️  Customer (Rahul) — wants fast, familiar digital payment options',
       '🏦  Banks & NBFCs — provide card and EMI credit authorization',
       '⚡  Payment Gateway (Razorpay) — single API connecting ShopEase to all payment methods',
       '💻  Dev Team — needs clear BRD and acceptance criteria to build',
@@ -133,7 +133,7 @@ Activity: Ask one student to role-play as the Finance team. Ask them: "You curre
     type: 'compare',
     title: 'As-Is vs To-Be Process',
     subtitle: 'What ShopEase looks like today — and what the BA will design',
-    priyaMoment: 'Today: Priya reaches checkout → sees COD only → leaves. Tomorrow: Priya reaches checkout → picks UPI → pays in 8 seconds → gets instant receipt.',
+    priyaMoment: 'Today: Rahul reaches checkout → sees COD only → leaves. Tomorrow: Rahul reaches checkout → picks UPI → pays in 8 seconds → gets instant receipt.',
     compare: [
       { label: 'Payment Options', before: 'Cash on Delivery only', after: '6 methods: UPI, Card, Net Banking, EMI, Wallet, BNPL' },
       { label: 'Checkout Time', before: '3–5 days (cash + delivery)', after: '8 seconds (digital payment)' },
@@ -162,14 +162,14 @@ Point out: the right column is not technology. It is a business outcome. The tec
     id: 5,
     type: 'flowdiagram' as SlideType,
     title: 'Payment Flow Diagram',
-    subtitle: 'How Priya\'s UPI payment travels from her phone to ShopEase\'s bank in 4 seconds',
-    priyaMoment: 'Priya taps Pay ₹12,000. In 4 seconds her money passes through 6 systems before ShopEase gets confirmed. The BA must document every hop — because any one of them can fail.',
+    subtitle: 'How Rahul\'s UPI payment travels from her phone to ShopEase\'s bank in 4 seconds',
+    priyaMoment: 'Rahul taps Pay ₹12,000. In 4 seconds her money passes through 6 systems before ShopEase gets confirmed. The BA must document every hop — because any one of them can fail.',
     keyTakeaway: 'Each arrow is a system integration. Each integration needs a requirement. Each requirement needs an acceptance criterion. One missed arrow = one production incident.',
     speakerNotes: `The payment flow diagram is one of the most valuable artifacts a BA can produce for a payments project.
 
 Walk through each step:
 
-1. Customer App — Priya taps Pay. BA defines: input fields, button state during processing, timeout message.
+1. Customer App — Rahul taps Pay. BA defines: input fields, button state during processing, timeout message.
 
 2. ShopEase Payment Service — creates a payment order, calls the gateway API. BA defines: what data is sent, what happens if this internal service fails before calling the gateway.
 
@@ -193,7 +193,7 @@ Key question: "Which step is most likely to fail in production?" Answer: Step 5 
     type: 'concept',
     title: 'Business Requirements Document (BRD)',
     subtitle: 'The BA\'s contract with the business and the development team',
-    priyaMoment: 'The development team joins tomorrow. They have never met Priya. They don\'t know about the ₹64 Crore loss. The BRD is the only bridge between business understanding and technical execution.',
+    priyaMoment: 'The development team joins tomorrow. They have never met Rahul. They don\'t know about the ₹64 Crore loss. The BRD is the only bridge between business understanding and technical execution.',
     bullets: [
       '📌  Business Objective — Recover ₹64 Cr/month by adding 6 payment methods',
       '🔲  Scope — What is IN and what is explicitly OUT of this project',
@@ -226,19 +226,19 @@ Constraints section: emphasise that PCI-DSS is a constraint, not a nice-to-have.
     type: 'artifact',
     title: 'User Stories',
     subtitle: 'Requirements written in the customer\'s voice',
-    priyaMoment: 'Priya\'s need, written as a User Story: "As Priya, a working professional, I want to pay using UPI at checkout, so that I can complete my purchase in under 10 seconds without needing to arrange cash."',
+    priyaMoment: 'Rahul\'s need, written as a User Story: "As Rahul, a working professional, I want to pay using UPI at checkout, so that I can complete my purchase in under 10 seconds without needing to arrange cash."',
     bullets: [
       'Format: As a [who], I want to [what], so that [why / business value]',
-      '"As Priya, I want to pay via UPI → so that I pay in 8 seconds without cash"',
-      '"As Priya, I want to pay in EMI → so that I can afford the ₹50,000 laptop today"',
-      '"As Priya, I want retry on failure → so that I don\'t lose my cart and start over"',
+      '"As Rahul, I want to pay via UPI → so that I pay in 8 seconds without cash"',
+      '"As Rahul, I want to pay in EMI → so that I can afford the ₹50,000 laptop today"',
+      '"As Rahul, I want retry on failure → so that I don\'t lose my cart and start over"',
       '"As the Finance team, I want T+1 settlement report → so that I track GMV daily"',
       'Each story = one sprint deliverable + acceptance criteria',
     ],
     keyTakeaway: 'The "so that" clause is not optional — it is the business justification. Without it, a story is a feature request. With it, it is a business requirement.',
     activity: {
       title: 'Write a BNPL User Story — 2 Minutes',
-      task: 'Priya wants to buy a ₹15,000 air purifier but doesn\'t want to pay now. ShopEase is launching BNPL (Buy Now, Pay Later). Write her user story.',
+      task: 'Rahul wants to buy a ₹15,000 air purifier but doesn\'t want to pay now. ShopEase is launching BNPL (Buy Now, Pay Later). Write her user story.',
       steps: [
         { step: 'Who is the actor?', time: '30 sec' },
         { step: 'What does she want to DO?', time: '30 sec' },
@@ -250,7 +250,7 @@ Constraints section: emphasise that PCI-DSS is a constraint, not a nice-to-have.
 
 Most students write: "As a user, I want to use BNPL so that I can buy things." That is meaningless.
 
-A good answer: "As Priya, a customer with limited cash flow, I want to use BNPL at checkout so that I can purchase high-value appliances today and pay after my next salary credit, without paying interest."
+A good answer: "As Rahul, a customer with limited cash flow, I want to use BNPL at checkout so that I can purchase high-value appliances today and pay after my next salary credit, without paying interest."
 
 The difference: the second version tells the developer why this feature is worth building, helps the product manager prioritise it, and gives the QA team the context to test it correctly.
 
@@ -266,10 +266,10 @@ Finance team story is always surprising to students. They forget that internal u
     type: 'artifact',
     title: 'Acceptance Criteria',
     subtitle: 'The exact conditions that define "done" — testable, unambiguous',
-    priyaMoment: 'Priya enters her UPI ID and clicks Pay. The developer built it. Is it done? Only the Acceptance Criteria can answer that — not the developer\'s opinion.',
+    priyaMoment: 'Rahul enters her UPI ID and clicks Pay. The developer built it. Is it done? Only the Acceptance Criteria can answer that — not the developer\'s opinion.',
     bullets: [
       'Format: GIVEN [context] — WHEN [action] — THEN [result]',
-      'Given Priya enters a valid UPI ID and clicks Pay,',
+      'Given Rahul enters a valid UPI ID and clicks Pay,',
       '→ When the bank approves the request,',
       '→ Then the order is created and success screen appears within 5 seconds',
       'Given her UPI payment fails,',
@@ -279,7 +279,7 @@ Finance team story is always surprising to students. They forget that internal u
     keyTakeaway: 'If an Acceptance Criterion cannot be answered YES or NO by a tester — it is not specific enough. Rewrite it.',
     example: {
       label: 'Bad AC vs Good AC',
-      text: '❌ BAD: "UPI payment should work properly."\n✅ GOOD: "Given Priya submits a valid UPI VPA, when the bank approves, then a success screen with Order ID, amount, and estimated delivery date appears within 5 seconds — and an SMS is sent to her registered number within 30 seconds."',
+      text: '❌ BAD: "UPI payment should work properly."\n✅ GOOD: "Given Rahul submits a valid UPI VPA, when the bank approves, then a success screen with Order ID, amount, and estimated delivery date appears within 5 seconds — and an SMS is sent to her registered number within 30 seconds."',
     },
     speakerNotes: `Acceptance Criteria are the most important artifact a BA produces for the development team.
 
@@ -299,20 +299,20 @@ This is where students start to see the depth of BA work. One user story about U
     type: 'concept',
     title: 'User Acceptance Testing (UAT)',
     subtitle: 'The BA\'s final quality gate before production',
-    priyaMoment: 'The payment portal is built. Before Priya uses it in production, business users must validate every scenario. UAT is where all of the BA\'s earlier decisions are tested as a system.',
+    priyaMoment: 'The payment portal is built. Before Rahul uses it in production, business users must validate every scenario. UAT is where all of the BA\'s earlier decisions are tested as a system.',
     bullets: [
       'UAT ≠ QA testing. QA tests code. UAT tests business requirements.',
-      'Scenario 1: Priya pays ₹12,000 via UPI → order confirmed in 5 sec ✓',
-      'Scenario 2: Priya\'s card is declined → cart preserved, clear error, retry offered ✓',
-      'Scenario 3: Priya selects 6-month EMI → monthly amount + schedule shown ✓',
-      'Scenario 4: Priya pays, app closes mid-transaction → no duplicate charge ✓',
-      'Scenario 5: Priya uses BNPL → 30-day payment window confirmed ✓',
+      'Scenario 1: Rahul pays ₹12,000 via UPI → order confirmed in 5 sec ✓',
+      'Scenario 2: Rahul\'s card is declined → cart preserved, clear error, retry offered ✓',
+      'Scenario 3: Rahul selects 6-month EMI → monthly amount + schedule shown ✓',
+      'Scenario 4: Rahul pays, app closes mid-transaction → no duplicate charge ✓',
+      'Scenario 5: Rahul uses BNPL → 30-day payment window confirmed ✓',
       'ONLY when all critical scenarios pass → go-live approved',
     ],
     keyTakeaway: 'If your Acceptance Criteria were precise, UAT scenarios write themselves. If UAT is chaotic, the Acceptance Criteria were vague. The quality of UAT reflects the quality of the BA\'s earlier work.',
     example: {
       label: 'The most dangerous UAT scenario',
-      text: 'Priya clicks Pay → bank deducts ₹12,000 → app crashes → order is NOT created. Who is responsible? The BA — who must have defined: "If payment is confirmed by the bank but order creation fails, the system must auto-reverse the payment within 60 seconds and notify the customer." This is called a payment-order mismatch scenario. Every payment BA must document it.',
+      text: 'Rahul clicks Pay → bank deducts ₹12,000 → app crashes → order is NOT created. Who is responsible? The BA — who must have defined: "If payment is confirmed by the bank but order creation fails, the system must auto-reverse the payment within 60 seconds and notify the customer." This is called a payment-order mismatch scenario. Every payment BA must document it.',
     },
     speakerNotes: `UAT is where all earlier decisions land — as a system.
 
@@ -334,19 +334,19 @@ This is why BA work is not documentation — it is risk management.`,
     type: 'summary',
     title: 'The Complete BA Journey',
     subtitle: 'From ₹64 Crore problem to production-ready payment portal',
-    priyaMoment: 'Priya returns to ShopEase. She sees 6 payment options. She pays via UPI in 8 seconds. She gets an instant receipt. ShopEase gets a confirmed sale, T+1 settlement, and a loyal customer. The BA made this possible.',
+    priyaMoment: 'Rahul returns to ShopEase. She sees 6 payment options. She pays via UPI in 8 seconds. She gets an instant receipt. ShopEase gets a confirmed sale, T+1 settlement, and a loyal customer. The BA made this possible.',
     bullets: [
       '✅ Business Problem — ₹64 Cr/month loss identified and quantified',
       '✅ Stakeholder Map — 8 stakeholders with goals, pain points, authority',
       '✅ As-Is Process — COD flow mapped with 6 documented pain points',
       '✅ To-Be Process — 6-method payment portal, all flows designed',
       '✅ BRD — 8 sections, business rules, constraints, success metrics',
-      '✅ User Stories — Priya-centred, "so that" business value captured',
+      '✅ User Stories — Rahul-centred, "so that" business value captured',
       '✅ Acceptance Criteria — Given/When/Then, every path testable',
       '✅ UAT Scenarios — Happy path + failure path + edge cases covered',
     ],
     keyTakeaway: 'A Business Analyst does not build the solution. A Business Analyst ensures the right solution gets built — for the right people — with measurable outcomes.',
-    speakerNotes: `Close with Priya. She started as an abandoned cart statistic. She ends as a confident, loyal customer. The BA created the conditions for that outcome — not by writing code, but by thinking clearly and documenting precisely.
+    speakerNotes: `Close with Rahul. She started as an abandoned cart statistic. She ends as a confident, loyal customer. The BA created the conditions for that outcome — not by writing code, but by thinking clearly and documenting precisely.
 
 The chain: Business Problem → Stakeholders → Pain Points → Root Cause → To-Be → BRD → User Stories → AC → UAT. Every link depends on the one before. A weak problem statement creates a weak BRD. A vague BRD creates untestable AC. Untestable AC creates a failed UAT. A failed UAT delays go-live. A delayed go-live costs ₹64 Crore another month.
 
@@ -651,7 +651,7 @@ function HeroSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         {slide.subtitle}
       </motion.p>
 
-      {/* Priya story */}
+      {/* Rahul story */}
       {slide.priyaMoment && (
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           className="max-w-2xl bg-amber-50 border border-amber-300 rounded-2xl p-6 mb-8 text-left">
@@ -711,7 +711,7 @@ function DataSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) {
         </motion.div>
       )}
 
-      {/* Priya moment */}
+      {/* Rahul moment */}
       {slide.priyaMoment && <PriyaBox text={slide.priyaMoment} />}
 
       {/* Example */}
@@ -1048,7 +1048,7 @@ function FishboneSlide({ slide, accentBg }: { slide: Slide; accentBg: string }) 
 // phase 1=s0, 2=c0, 3=s1, 4=c1, 5=s2, 6=c2, 7=s3, 8=c3, 9=s4, 10=c4, 11=s5, 12=done
 // ── Brand logos ──────────────────────────────────────────────────────────────
 
-// Priya's phone — UPI / Google Pay style
+// Rahul's phone — UPI / Google Pay style
 const LogoCustomer = (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="48" height="48" rx="12" fill="#4f46e5"/>
@@ -1149,7 +1149,7 @@ const LogoNotification = (
 )
 
 const SIM_STEPS = [
-  { logo: LogoCustomer,     label: 'Customer App',       sub: 'Priya taps Pay', color: '#4f46e5',
+  { logo: LogoCustomer,     label: 'Customer App',       sub: 'Rahul taps Pay', color: '#4f46e5',
     reqs: 'UPI ID validation\nButton state UI\nTimeout message' },
   { logo: LogoShopEase,     label: 'ShopEase\nService',  sub: 'Creates order',  color: '#2874F0',
     reqs: 'Order ID creation\nGateway API call\nDuplicate check' },
@@ -1168,10 +1168,10 @@ const PHASE_MS =      [0, 700, 380, 550, 320, 900, 480, 1400, 650, 900, 400, 100
 const PHASE_MS_FAIL = [0, 700, 380, 550, 320, 900, 480, 1400, 650, 2800, 400, 1000, 0]
 
 const SIM_MSGS = [
-  'Validating UPI ID: priya@hdfc · Amount: ₹12,000 · Merchant: ShopEase',
+  'Validating UPI ID: rahul@hdfc · Amount: ₹12,000 · Merchant: ShopEase',
   'Order #SHE-29471 created · Calling Razorpay API...',
   'Transaction TXN-892341 routed to NPCI UPI network...',
-  'HDFC Bank: UPI PIN verified ✓ · Debiting ₹12,000 from Priya\'s account...',
+  'HDFC Bank: UPI PIN verified ✓ · Debiting ₹12,000 from Rahul\'s account...',
   'SUCCESS callback received · ShopEase confirms order · Stock reserved',
   '📩 SMS: "Your order #SHE-29471 is confirmed! Delivery in 3 days."',
 ]
@@ -1433,12 +1433,12 @@ function FlowDiagramSlide({ slide, accentBg }: { slide: Slide; accentBg: string 
               {failed ? (
                 <>
                   <p className="text-xs font-bold text-rose-700 mb-1">BA Critical Requirement — Payment-Order Mismatch</p>
-                  <p className="text-rose-800 text-sm">Priya's bank debited ₹12,000 but ShopEase has no order. The BA must define: auto-reconciliation within 60s → if unresolved, trigger auto-refund → send Priya a reference ID via SMS. This is the most common production failure in payment systems.</p>
+                  <p className="text-rose-800 text-sm">Rahul's bank debited ₹12,000 but ShopEase has no order. The BA must define: auto-reconciliation within 60s → if unresolved, trigger auto-refund → send Rahul a reference ID via SMS. This is the most common production failure in payment systems.</p>
                 </>
               ) : (
                 <>
                   <p className="text-xs font-bold text-emerald-700 mb-1">Payment completed — all 6 steps passed ✓</p>
-                  <p className="text-emerald-800 text-sm">Priya's ₹12,000 debited · ShopEase has a confirmed order · SMS delivered. All 6 system hops worked. The BA documented the requirements for every single hop — that's what made this possible.</p>
+                  <p className="text-emerald-800 text-sm">Rahul's ₹12,000 debited · ShopEase has a confirmed order · SMS delivered. All 6 system hops worked. The BA documented the requirements for every single hop — that's what made this possible.</p>
                 </>
               )}
             </div>
@@ -1479,7 +1479,7 @@ function PriyaBox({ text }: { text: string }) {
       className="bg-amber-50 border border-amber-300 rounded-xl px-5 py-3.5 mb-5 flex items-start gap-3">
       <span className="text-xl flex-shrink-0 mt-0.5">👩‍💼</span>
       <div>
-        <p className="text-xs font-bold text-amber-700 mb-1">Priya's Moment</p>
+        <p className="text-xs font-bold text-amber-700 mb-1">Rahul's Moment</p>
         <p className="text-amber-900 text-sm leading-relaxed">{text}</p>
       </div>
     </motion.div>

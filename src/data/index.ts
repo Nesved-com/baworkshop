@@ -496,7 +496,7 @@ export const BRD_SECTIONS: BRDSection[] = [
     id: 'stakeholders',
     title: 'Key Stakeholders',
     description: 'Who is involved or impacted by the payment portal?',
-    placeholder: '• Product Owner: Priya Sharma (ShopEase Head of Payments)\n• Payment Gateway Partner: Razorpay (handles UPI routing, compliance, bank integrations)\n• Bank Partners: HDFC, ICICI, Axis, SBI (EMI + Net Banking)\n• Dev Lead: Rahul Verma (2 frontend + 2 backend engineers)\n• QA Lead: Anjali Singh\n• Security: Cybersecurity team (PCI-DSS audit via Razorpay)\n• Finance: Reconciliation & settlement team',
+    placeholder: '• Product Owner: Rahul Sharma (ShopEase Head of Payments)\n• Payment Gateway Partner: Razorpay (handles UPI routing, compliance, bank integrations)\n• Bank Partners: HDFC, ICICI, Axis, SBI (EMI + Net Banking)\n• Dev Lead: Rahul Verma (2 frontend + 2 backend engineers)\n• QA Lead: Anjali Singh\n• Security: Cybersecurity team (PCI-DSS audit via Razorpay)\n• Finance: Reconciliation & settlement team',
     hint: 'Include the RACI matrix: who is Responsible, Accountable, Consulted, Informed.',
     content: '',
   },

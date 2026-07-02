@@ -217,12 +217,12 @@ function OnboardingScreen({ onStart }: { onStart: () => void }) {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
           className="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
-          <p className="text-gray-400 mb-4 text-sm">Your manager <strong className="text-gray-200">Priya Sharma</strong> sends you this message:</p>
+          <p className="text-gray-400 mb-4 text-sm">Your manager <strong className="text-gray-200">Rahul Sharma</strong> sends you this message:</p>
           <div className="bg-gray-800 rounded-xl p-4 border-l-4 border-brand-500">
             <p className="text-gray-200 text-sm leading-relaxed italic">
               "Welcome aboard! 🎉 Your first project is urgent. ShopEase only has Cash on Delivery — we're losing ₹64 Crore/month because customers can't pay by card or UPI. We need a Business Analyst to design our payment portal from scratch. Start today."
             </p>
-            <p className="text-gray-500 text-xs mt-2">— Priya Sharma, Head of Product</p>
+            <p className="text-gray-500 text-xs mt-2">— Rahul Sharma, Head of Product</p>
           </div>
         </motion.div>
 
