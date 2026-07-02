@@ -3,12 +3,10 @@ import { Navbar } from './components/navigation/Navbar'
 import { HomePage } from './features/home/HomePage'
 import { PresentationMode } from './features/presentation/PresentationMode'
 import { SimulatorLayout } from './features/simulator/SimulatorLayout'
-import { PasswordGate, useAuth } from './components/auth/PasswordGate'
 import { useTheme } from './hooks/useTheme'
 import type { AppMode, SimulatorSection } from './types'
 
 export default function App() {
-  const { authed, unlock } = useAuth()
   const [mode, setMode] = useState<AppMode>('home')
   const { isDark, toggleTheme } = useTheme()
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -32,8 +30,6 @@ export default function App() {
   const handleBackToPresentation = () => {
     setMode('presentation')
   }
-
-  if (!authed) return <PasswordGate onUnlock={unlock} />
 
   return (
     <>
