@@ -101,27 +101,25 @@ Have students calculate: ₹64 Cr/month × 12 = ₹768 Crore annual loss. That i
     type: 'concept',
     title: 'Stakeholder Analysis',
     subtitle: 'Who Has a Stake in ShopEase\'s Payment Portal?',
-    priyaMoment: 'Priya is one stakeholder. But behind her abandoned cart are 7 other groups — each with different goals. The BA must understand ALL of them before writing a single requirement.',
+    priyaMoment: 'Priya is one stakeholder. But behind her abandoned cart are 5 other groups — each with different goals. The BA must understand ALL of them before writing a single requirement.',
     bullets: [
       '🛍️  Customer (Priya) — wants fast, familiar digital payment options',
       '🏦  Banks & NBFCs — provide card and EMI credit authorization',
-      '🔗  NPCI — governs UPI infrastructure and transaction rules',
-      '⚡  Payment Gateway (Razorpay / PayU) — single API to all methods',
-      '⚖️  RBI — non-negotiable: mandates PCI-DSS, 2FA, data localisation',
+      '⚡  Payment Gateway (Razorpay) — single API connecting ShopEase to all payment methods',
       '💻  Dev Team — needs clear BRD and acceptance criteria to build',
       '📊  Finance Team — wants T+1 settlement, not 3-day manual COD cash',
       '🏢  ShopEase CEO — wants ₹64 Crore recovered within 2 quarters',
     ],
     keyTakeaway: 'Every stakeholder you miss in analysis becomes a change request in development — and a delay in go-live.',
     example: {
-      label: 'What happens when RBI is missed?',
-      text: 'A fintech startup built a card payment feature in 2022 without consulting RBI compliance requirements. At launch, they discovered 2FA (OTP) was mandatory for all transactions above ₹5,000. They delayed launch by 6 weeks and lost their first client. The BA had not listed RBI as a stakeholder.',
+      label: 'Why not NPCI or RBI?',
+      text: 'ShopEase never directly deals with NPCI or RBI. Razorpay is already RBI-registered and handles all UPI routing, PCI-DSS compliance, and regulatory requirements on ShopEase\'s behalf. The BA\'s stakeholders are only those the project team must engage with directly.',
     },
     speakerNotes: `Stakeholder analysis is where most student BAs make their first mistake — they only think about the end customer.
 
 Walk through each stakeholder and ask: "What is their goal? What is their fear? What can block this project?"
 
-The RBI example is important. Students sometimes think regulators are "external" — not stakeholders. Wrong. Regulatory requirements are the most rigid constraints in any project. If the BA doesn't understand them early, they surface at UAT or worse, post-launch.
+Important teaching point: NPCI and RBI are NOT stakeholders here. Razorpay abstracts them away — it is already RBI-registered and handles all compliance. ShopEase's BA never needs a meeting with RBI or NPCI. This is a real-world nuance students often miss.
 
 Activity: Ask one student to role-play as the Finance team. Ask them: "You currently reconcile COD cash manually after 2-3 days. What do you need from the payment portal?" Let them articulate their own requirement. That is stakeholder analysis in practice.`,
     duration: 6,
