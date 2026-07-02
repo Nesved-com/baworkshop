@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react'
 
 const AUTH_KEY  = 'ba_workshop_auth'
-const PASSWORD  = 'ShopEase@2025'   // change this anytime
+const PASSWORD  = 'Manjiri@1998'   // change this anytime
 
 export function useAuth() {
   const [authed, setAuthed] = useState(() => localStorage.getItem(AUTH_KEY) === 'true')
