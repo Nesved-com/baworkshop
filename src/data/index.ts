@@ -67,35 +67,6 @@ export const STAKEHOLDERS: Stakeholder[] = [
     position: { x: 220, y: -100 },
   },
   {
-    id: 'npci',
-    name: 'NPCI / UPI Network',
-    role: 'UPI Infrastructure Provider',
-    icon: '🔗',
-    color: '#f59e0b',
-    responsibilities: [
-      'Route UPI payment requests',
-      'Validate VPA (UPI IDs)',
-      'Ensure 99.9% UPI uptime',
-      'Manage inter-bank settlements',
-    ],
-    goals: [
-      'Increase UPI transaction volume in India',
-      'Ensure zero-latency routing',
-      'Onboard new merchants quickly',
-    ],
-    painPoints: [
-      'Peak-hour load spikes',
-      'Merchant onboarding compliance',
-      'Regional bank API inconsistencies',
-    ],
-    expectations: [
-      'Merchant compliance with UPI guidelines',
-      'Proper VPA validation before sending',
-      'Clear dispute resolution flow',
-    ],
-    position: { x: 220, y: 100 },
-  },
-  {
     id: 'payment-gateway',
     name: 'Payment Gateway',
     role: 'Technology Aggregator (Razorpay/PayU)',
@@ -124,35 +95,6 @@ export const STAKEHOLDERS: Stakeholder[] = [
       'Sandbox testing before production go-live',
     ],
     position: { x: 0, y: 200 },
-  },
-  {
-    id: 'rbi',
-    name: 'RBI (Regulator)',
-    role: 'Regulatory Authority',
-    icon: '⚖️',
-    color: '#ef4444',
-    responsibilities: [
-      'Define digital payment regulations',
-      'Mandate 2-Factor Authentication (2FA)',
-      'Enforce data localisation rules',
-      'Regulate EMI interest rates',
-    ],
-    goals: [
-      'Consumer payment security',
-      'Transparent pricing (no hidden fees)',
-      'Financial inclusion across India',
-    ],
-    painPoints: [
-      'Rapid fintech evolution outpaces regulation',
-      'Enforcement across thousands of merchants',
-    ],
-    expectations: [
-      '2FA mandatory for all card transactions',
-      'Data stored in India (localisation)',
-      'Clear refund policy displayed to users',
-      'PCI-DSS Level 1 compliance',
-    ],
-    position: { x: -220, y: -100 },
   },
   {
     id: 'dev-team',
@@ -419,9 +361,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 2,
     question: 'Which stakeholder would be MOST concerned about PCI-DSS compliance in the payment portal?',
-    options: ['Customer (Shopper)', 'Delivery Agent', 'RBI Regulator + Dev Team', 'Marketing Team'],
+    options: ['Customer (Shopper)', 'Delivery Agent', 'Payment Gateway (Razorpay) + Dev Team', 'Marketing Team'],
     correct: 2,
-    explanation: 'RBI mandates PCI-DSS compliance for all payment systems. The Dev Team must implement it. Both have direct accountability for card data security.',
+    explanation: 'Razorpay (the payment gateway) handles PCI-DSS compliance on ShopEase\'s behalf. The Dev Team must implement the integration correctly. Both have direct accountability for card data security.',
     category: 'Stakeholders',
   },
   {
@@ -554,7 +496,7 @@ export const BRD_SECTIONS: BRDSection[] = [
     id: 'stakeholders',
     title: 'Key Stakeholders',
     description: 'Who is involved or impacted by the payment portal?',
-    placeholder: '• Product Owner: Priya Sharma (ShopEase Head of Payments)\n• Payment Gateway Partner: Razorpay\n• Bank Partners: HDFC, ICICI, Axis, SBI (EMI + Net Banking)\n• NPCI: UPI integration authority\n• Dev Lead: Rahul Verma (2 frontend + 2 backend engineers)\n• QA Lead: Anjali Singh\n• Security: Cybersecurity team (PCI-DSS audit)\n• Finance: Reconciliation & settlement team',
+    placeholder: '• Product Owner: Priya Sharma (ShopEase Head of Payments)\n• Payment Gateway Partner: Razorpay (handles UPI routing, compliance, bank integrations)\n• Bank Partners: HDFC, ICICI, Axis, SBI (EMI + Net Banking)\n• Dev Lead: Rahul Verma (2 frontend + 2 backend engineers)\n• QA Lead: Anjali Singh\n• Security: Cybersecurity team (PCI-DSS audit via Razorpay)\n• Finance: Reconciliation & settlement team',
     hint: 'Include the RACI matrix: who is Responsible, Accountable, Consulted, Informed.',
     content: '',
   },
@@ -689,17 +631,13 @@ Ask the class: "If you were the CEO, how urgently would you prioritize this fix?
     content: [
       '🛍️ Customer — wants UPI, card, EMI options',
       '🏦 Banks — provide card/EMI authorization',
-      '🔗 NPCI — enables UPI routing',
-      '⚡ Payment Gateway (Razorpay/PayU) — technical aggregator',
-      '⚖️ RBI — regulates, mandates PCI-DSS & 2FA',
+      '⚡ Payment Gateway (Razorpay) — single API connecting ShopEase to all payment methods',
       '💻 Dev Team — needs clear BRD & acceptance criteria',
       '📊 ShopEase Business — wants GMV growth & fewer returns',
     ],
-    speakerNotes: `Building a payment portal is NOT just a technology project. It involves 7+ stakeholders with very different goals.
+    speakerNotes: `Building a payment portal is NOT just a technology project. It involves multiple stakeholders with very different goals.
 
-Notice: RBI (the regulator) is a stakeholder even though ShopEase can't negotiate with them. Their rules (PCI-DSS, 2FA for cards > ₹5,000) are non-negotiable constraints the BA must document.
-
-The Payment Gateway is often misunderstood. Companies like Razorpay or PayU act as aggregators — they connect to all banks and NPCI through one API. ShopEase doesn't need to integrate with 50 banks separately; they integrate once with the gateway.
+The Payment Gateway (Razorpay) is often misunderstood. It acts as an aggregator — connecting to all banks through one API. ShopEase doesn't need to integrate with 50 banks separately; they integrate once with Razorpay. Razorpay also handles all regulatory compliance (RBI, NPCI) on ShopEase's behalf.
 
 Key BA question to ask each stakeholder: "What does success look like for YOU in this project?"`,
     type: 'concept',

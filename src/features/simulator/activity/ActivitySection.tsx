@@ -13,15 +13,15 @@ const ACTIVITIES = [
     title: 'Activity 1: Identify Stakeholders',
     prompt: 'ShopEase is building a digital payment portal. List ALL stakeholders who are affected. For each, state their PRIMARY goal and their biggest fear.',
     solution: `Key Stakeholders:
-1. Customer — Goal: Pay easily with any method. Fear: Card fraud / money lost
+1. Customer (Priya) — Goal: Pay easily with any method. Fear: Card fraud / money lost
 2. Bank / NBFC — Goal: More digital transactions. Fear: Failed authorization hurting trust
-3. NPCI — Goal: More UPI volume. Fear: Gateway non-compliance with UPI standards
-4. Payment Gateway (Razorpay) — Goal: High transaction volume. Fear: Merchant chargeback disputes
-5. RBI (Regulator) — Goal: Consumer data safety. Fear: PCI-DSS violation on Indian customer data
-6. ShopEase Dev Team — Goal: Clean integration. Fear: Unclear requirements causing rework
-7. QA Team — Goal: Zero payment bugs. Fear: No testable acceptance criteria
-8. ShopEase Merchant Ops — Goal: Higher GMV. Fear: Payment failure damaging customer trust
-9. Finance Team — Goal: Accurate settlement. Fear: Manual reconciliation errors`,
+3. Payment Gateway (Razorpay) — Goal: High transaction volume. Fear: Merchant chargeback disputes
+4. ShopEase Dev Team — Goal: Clean integration. Fear: Unclear requirements causing rework
+5. QA Team — Goal: Zero payment bugs. Fear: No testable acceptance criteria
+6. Finance Team — Goal: Accurate T+1 settlement. Fear: Manual reconciliation errors
+7. ShopEase CEO — Goal: Recover ₹64 Cr/month revenue. Fear: Delayed go-live
+
+Note: NPCI and RBI are NOT direct stakeholders — Razorpay handles all UPI routing and regulatory compliance on ShopEase's behalf.`,
     time: '10 min',
   },
   {
@@ -48,15 +48,15 @@ LOW SEVERITY:
   {
     id: 'business-rules',
     title: 'Activity 3: Define Business Rules',
-    prompt: 'You are documenting the BRD for ShopEase\'s UPI payment method. Write at least 6 Business Rules that must govern the UPI payment flow. Consider RBI regulations, NPCI standards, and UX requirements.',
+    prompt: 'You are documenting the BRD for ShopEase\'s UPI payment method. Write at least 6 Business Rules that must govern the UPI payment flow. Consider payment gateway requirements, timeout rules, and UX requirements.',
     solution: `Business Rules for UPI Payment:
 
-1. UPI Virtual Payment Address (VPA) must be validated against NPCI before payment is initiated — invalid VPA should show error within 2 seconds
-2. UPI payment request must timeout after 5 minutes if customer doesn't approve on UPI app (NPCI standard)
-3. Maximum UPI transaction limit: ₹1,00,000 per transaction (NPCI daily limit per VPA)
+1. UPI Virtual Payment Address (VPA) must be validated via Razorpay API before payment is initiated — invalid VPA should show error within 2 seconds
+2. UPI payment request must timeout after 5 minutes if customer doesn't approve on UPI app
+3. Maximum UPI transaction limit: ₹1,00,000 per transaction
 4. Customer must not be charged if UPI approval is pending — order created ONLY on confirmed payment
 5. If UPI times out, system must display "Payment expired — try again" with retry option (order not created)
-6. ShopEase must send payment confirmation webhook acknowledgement within 30 seconds of NPCI confirmation
+6. ShopEase must acknowledge Razorpay's payment confirmation webhook within 30 seconds
 7. Failed UPI payment must allow retry with same VPA or option to switch payment method — cart must be preserved
 8. UPI transaction ID (UTR number) must be stored against each order for reconciliation`,
     time: '12 min',

@@ -26,8 +26,8 @@ export function StakeholdersSection({ onNext }: Props) {
         color="blue"
         time="8 min"
         what="Stakeholder Analysis is the process of identifying everyone who is affected by — or can affect — your project. A BA maps each stakeholder's goals, concerns, and level of influence before writing a single requirement."
-        why="Missing even one key stakeholder is dangerous. If you forget the Regulator (RBI) in a payments project, your entire system could fail compliance. Requirements written without understanding stakeholders lead to rework after go-live."
-        tip="Ask students: 'If ShopEase only talked to the Dev Team and ignored the Payment Gateway provider, what could go wrong?' Then reveal how NPCI's UPI rules would be missed entirely."
+        why="Missing even one key stakeholder is dangerous. Requirements written without understanding all stakeholders lead to rework after go-live."
+        tip="Ask students: 'If ShopEase only talked to the Dev Team and ignored Razorpay (the Payment Gateway), what could go wrong?' — They'd miss timeout rules, webhook handling, and retry logic entirely."
       />
 
       <div className="flex flex-col md:flex-row gap-6">

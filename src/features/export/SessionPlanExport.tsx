@@ -425,7 +425,7 @@ function buildAudiencePlan(): string {
 <p class="section-label">Learning Outcomes</p>
 <div class="outcomes-grid">
   <div class="outcome-card"><div class="outcome-num">1</div><p class="outcome-text">Define a Business Problem Statement using real revenue data and customer behaviour metrics</p></div>
-  <div class="outcome-card"><div class="outcome-num">2</div><p class="outcome-text">Identify and map stakeholders across a real payment ecosystem (Priya, banks, NPCI, RBI, dev team)</p></div>
+  <div class="outcome-card"><div class="outcome-num">2</div><p class="outcome-text">Identify and map stakeholders across a real payment ecosystem (Priya, banks, Razorpay, dev team, finance, CEO)</p></div>
   <div class="outcome-card"><div class="outcome-num">3</div><p class="outcome-text">Write a BRD, User Story, and Acceptance Criteria for a live digital payment feature</p></div>
   <div class="outcome-card"><div class="outcome-num">4</div><p class="outcome-text">Design UAT scenarios that cover success, failure, and edge-case payment paths</p></div>
   <div class="outcome-card"><div class="outcome-num">5</div><p class="outcome-text">Explain how a BA bridges business problems and technical delivery teams</p></div>
@@ -459,7 +459,7 @@ function buildAudiencePlan(): string {
     <tr>
       <td class="t-time">15 – 25 min</td>
       <td class="t-phase">👥 Stakeholder Mapping</td>
-      <td class="t-desc"><strong>Map 8 stakeholders</strong> — from Priya to NPCI to RBI. Role-play: one student speaks as Finance, another as Dev Team. They discover conflicting requirements first-hand — the core BA challenge no lecture can teach.</td>
+      <td class="t-desc"><strong>Map 6 stakeholders</strong> — Customer, Banks, Razorpay, Dev Team, Finance, CEO. Role-play: one student speaks as Finance, another as Dev Team. They discover conflicting requirements first-hand — the core BA challenge no lecture can teach.</td>
       <td style="text-align:center;"><span class="pill pill-roleplay">Role-Play</span></td>
     </tr>
     <tr>
